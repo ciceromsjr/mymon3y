@@ -1,0 +1,29 @@
+#labels Phase-Requirements,Featured
+=US1 - Criação/edição de Conta=
+
+Permitir a um usuário criar uma conta no MyMon3y. Deve ser fornecido um email, que servirá de login, e uma senha.
+
+
+=US2 - Criação/edição de Categorias=
+
+Permitir a um usuário criar uma Categoria, fornecendo um nome. Não deve ser permitida a inserção de categorias com mesmo nome (case insensitive).
+
+=US3 - Criação/edição de uma Transação=
+
+Permitir a inclusão de uma Transação, fornecendo:
+  * Descrição;
+  * Data;
+  * Valor;
+  * Comentário;
+  * O número de dias que um lembrete (e-mail) deve ser enviado antes da data;
+  * Se a transação é um crédito ou débito.
+
+=US4 - Remoção de uma Transação=
+
+=US5 - Remoção de Categoria=
+
+=US6 - Remoção de Conta=
+
+=US7 - Geração de Relatórios=
+
+=US8 - ?=
