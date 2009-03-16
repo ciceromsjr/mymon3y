@@ -30,8 +30,8 @@ Permitir a remoção de uma conta de Usuário.
 
 Deve ser possível a criação dos seguintes relatórios:
 
-  * TODO;
-  * TODO;
+  * Despesas do mês, organizando por Categoria e Transação;
+  * Despesas do ano, organizando por Categoria e Transação;
 
 =US7 - Importação de Dados=
 
