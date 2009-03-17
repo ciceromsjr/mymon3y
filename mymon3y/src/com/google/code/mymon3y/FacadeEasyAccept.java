@@ -43,4 +43,8 @@ public class FacadeEasyAccept {
 		// TODO
 		return null;
 	}
+	
+	public void criarCategoria(String login, String nome){
+		//TODO
+	}
 }
