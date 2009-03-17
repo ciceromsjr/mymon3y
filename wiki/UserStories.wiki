@@ -14,8 +14,8 @@ Permitir a inclusão de uma Transação, fornecendo:
   * Descrição;
   * Data;
   * Valor;
-  * Comentário;
   * Categoria;
+  * Comentário;
   * O número de dias que um lembrete (e-mail) deve ser enviado antes da data;
   * Se a transação é um crédito ou débito.
 
