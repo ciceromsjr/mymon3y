@@ -1,0 +1,34 @@
+# User Story 1 - Criação/edição de Conta
+
+#Permitir a um usuário criar uma conta no MyMon3y. Deve ser fornecido um email, que servirá de login, e uma senha.
+
+zerarSistema
+
+criarUsuario login=fulano@gmail.com senha=12345
+expectError "Login não disponível." criarUsuario login=fulano@gmail.com senha=12345
+expectError "Login não disponível." criarUsuario login=fulano@gmail.com senha=54321
+
+expectError "Login inválido." criarUsuario login= senha=12345
+expectError "Login inválido." criarUsuario login=sicrano@ senha=12345
+expectError "Login inválido." criarUsuario login=sicrano@ senha=
+expectError "Login inválido." criarUsuario login=@gmail.com senha=12345
+expectError "Login inválido." criarUsuario login=sicrano@gmail@com senha=12345
+expectError "Login inválido." criarUsuario login=sicrano@gmail.com. senha=12345
+expectError "Login inválido." criarUsuario login=sicrano@gmail..com senha=12345
+expectError "A senha deve ter no mínimo 5 caracteres." criarUsuario login=sicrano@gmail.com senha=
+expectError "A senha deve ter no mínimo 5 caracteres." criarUsuario login=sicrano@gmail.com senha=1234
+
+expect "fulano@gmail.com" getAtributoUsuario login=fulano@gmail.com atributo="login"
+#A senha deve ser armazenada como hash da senha original (algoritmo SHA-256)
+expect "WZRHGrsBESr8wYFZ9sx0tPURuZgG2lmzyvWpwXPKz8U=" getAtributoUsuario login=fulano@gmail.com atributo="senha"
+
+expectError "Login inexistente." getAtributoUsuario login=beltrano@gmail.com atributo="login"
+expectError "Login inexistente." getAtributoUsuario login=beltrano@gmail.com atributo="senha"
+
+editarAtributoUsuario login=fulano@gmail.com atributo="senha" valor="54321"
+expect "IPN2WIClwmm3R+HpBgVKS0o6mRJZ8eFrXd5HQs7CMZo=" getAtributoUsuario login=fulano@gmail.com atributo="senha"
+
+expectError "Atributo inválido." editarAtributoUsuario login=fulano@gmail.com atributo="login" valor=""
+
+expectError "A senha deve ter no mínimo 5 caracteres." editarAtributoUsuario login=fulano@gmail.com atributo="senha" valor="5432"
+editarAtributoUsuario login=fulano@gmail.com atributo="senha" valor="12345"
