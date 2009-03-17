@@ -1,0 +1,55 @@
+# User Story 2 - Criação/edição de Categorias
+
+#Permitir a um usuário criar uma Categoria, fornecendo um nome.
+#Não deve ser permitida a inserção de categorias com mesmo nome (case insensitive).
+
+zerarSistema
+
+criarUsuario login=fulano@gmail.com senha=12345
+
+criarCategoria login=fulano@gmail.com nome="Categoria 1"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 1"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="categoria 1"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="CATEGORIA 1"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="CaTEGORIa 1"
+
+#Categorias DEFAULT
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Outro"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Automóvel"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Despesas Bancárias"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Faturas"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Retirada de Dinheiro"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Doações"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Babá"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Roupas"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Cartão de Crédito"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Depósito"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Jantar Fora"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Educação"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Eletrônicos"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Entretenimento"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Família"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Alimentação"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Combustível"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Presentes"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Mercearia"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Casa"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Seguros"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Despesas do Trabalho"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Lazer"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Empréstimos"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Saúde"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Pessoal"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Animal de Estimação"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Telefone"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Poupança"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Impostos"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Transporte"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Utilitários"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Férias"
+
+editarCategoria login=fulano@gmail.com nome="Categoria 1" valor="Categoria 2"
+expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 2"
+
+criarCategoria login=fulano@gmail.com nome="Categoria 1"
+
