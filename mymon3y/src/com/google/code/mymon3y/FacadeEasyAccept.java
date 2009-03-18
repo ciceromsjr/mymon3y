@@ -47,4 +47,33 @@ public class FacadeEasyAccept {
 	public void criarCategoria(String login, String nome){
 		//TODO
 	}
+	
+	public void editarCategoria(String login, String nome, String valor){
+		//TODO
+	}
+	
+	public void criarTransacao(String login, String descricao, String data, String valor, String categoria, String comentario, String ndias, String credito){
+		//TODO
+	}
+	
+	public void getAtributoTransacao(String login, String id){
+		//TODO
+	}
+	
+	public void getAtributoTransacao(String login, String id, String nome){
+		//TODO
+	}
+	
+	public void editarAtributoTransacao(String login, String id, String nome, String valor){
+		//TODO
+	}
+	
+	public void removerTransacao(String login, String id){
+		//TODO
+	}
+	
+	public void getNumeroDeTransacoes(String login){
+		//TODO
+	}
+	
 }
