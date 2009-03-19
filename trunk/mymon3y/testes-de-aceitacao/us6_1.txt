@@ -1,0 +1,8 @@
+# User Story 6 - Geração de Relatórios
+
+# Deve ser possível a criação dos seguintes relatórios:
+#
+#    * Despesas do mês, organizando por Categoria e Transação;
+#    * Despesas do ano, organizando por Categoria e Transação;
+
+#TODO

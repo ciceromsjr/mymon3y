@@ -1,0 +1,6 @@
+# User Story 8 - Notificação de Transação
+
+# Verificar as Transações que devem ser notificadas pelo sistema num determinado dia.
+# As notificações são enviadas diariamente.
+
+#TODO 
