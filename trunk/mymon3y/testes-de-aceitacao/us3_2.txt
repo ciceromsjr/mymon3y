@@ -10,3 +10,5 @@
 #    * Se a transação é um crédito ou débito.
 
 expect "1" getNumeroDeTransacoes login=fulano@gmail.com
+
+expectError "Login inexistente." getNumeroDeTransacoes login=beltrano@gmail.com

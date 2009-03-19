@@ -44,27 +44,34 @@ public class FacadeEasyAccept {
 		return null;
 	}
 	
-	public void criarCategoria(String login, String nome){
+	public Long criarCategoria(String login, String nome){
+		//TODO
+		return null;
+	}
+	
+	public Long getIdCategoria(String login, String nome){
+		//TODO
+		return null;
+	}
+	
+	public void editarCategoria(String login, String idCategoria, String atributo, String valor){
 		//TODO
 	}
 	
-	public void editarCategoria(String login, String nome, String valor){
+	public Long criarTransacao(String login, String descricao, String data, String valor, String idCategoria, String comentario, String ndias, String credito){
 		//TODO
-	}
-	
-	public void criarTransacao(String login, String descricao, String data, String valor, String categoria, String comentario, String ndias, String credito){
-		//TODO
+		return null;
 	}
 	
 	public void getAtributoTransacao(String login, String id){
 		//TODO
 	}
 	
-	public void getAtributoTransacao(String login, String id, String nome){
+	public void getAtributoTransacao(String login, String id, String atributo){
 		//TODO
 	}
 	
-	public void editarAtributoTransacao(String login, String id, String nome, String valor){
+	public void editarAtributoTransacao(String login, String id, String atributo, String valor){
 		//TODO
 	}
 	
@@ -73,6 +80,10 @@ public class FacadeEasyAccept {
 	}
 	
 	public void getNumeroDeTransacoes(String login){
+		//TODO
+	}
+	
+	public void removerCategoria(String login, String idCategoria){
 		//TODO
 	}
 	

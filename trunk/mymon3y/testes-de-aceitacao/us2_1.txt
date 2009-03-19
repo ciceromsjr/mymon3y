@@ -7,11 +7,17 @@ zerarSistema
 
 criarUsuario login=fulano@gmail.com senha=12345
 
-criarCategoria login=fulano@gmail.com nome="Categoria 1"
+idCategoria1=criarCategoria login=fulano@gmail.com nome="Categoria 1"
+expect ${idCategoria1} getIdCategoria login=fulano@gmail.com nome="Categoria 1"
+
+expectError "Categoria inexistente." getIdCategoria login=fulano@gmail.com nome="Categoria 2"
+
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 1"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="categoria 1"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="CATEGORIA 1"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="CaTEGORIa 1"
+
+expectError "Login inexistente." criarCategoria login=fulano@gmail.com nome="Categoria 1"
 
 #Categorias DEFAULT
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Outro"
@@ -48,8 +54,8 @@ expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com n
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Utilitários"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Férias"
 
-editarCategoria login=fulano@gmail.com nome="Categoria 1" valor="Categoria 2"
-expectError "Categoria inexistente." editarCategoria login=fulano@gmail.com nome="Categoria 1" valor="Categoria 3"
+editarCategoria login=fulano@gmail.com idCategoria=${idCategoria1} atributo="nome" valor="Categoria 2"
+expectError "Categoria inexistente." editarCategoria login=fulano@gmail.com idCategoria=${idCategoria1} atributo="nome" valor="Categoria 3"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 2"
 
 criarCategoria login=fulano@gmail.com nome="Categoria 1"
