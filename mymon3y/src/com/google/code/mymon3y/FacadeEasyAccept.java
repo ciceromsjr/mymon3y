@@ -87,4 +87,8 @@ public class FacadeEasyAccept {
 		//TODO
 	}
 	
+	public void removerUsuario(String login, String senha){
+		//TODO
+	}
+	
 }

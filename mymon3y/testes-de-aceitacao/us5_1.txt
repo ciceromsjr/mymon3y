@@ -1,0 +1,12 @@
+# User Story 5 - Remoção de Conta
+
+# Permitir a remoção de uma conta de Usuário.
+
+zerarSistema
+
+criarUsuario login=fulano@gmail.com senha=12345
+
+removerUsuario login=fulano@gmail.com senha=12345
+
+expectError "Login inexistente." criarCategoria login=fulano@gmail.com nome="Categoria 1"
+expectError "Login inexistente." getIdCategoria login=fulano@gmail.com nome="Alimentação"
