@@ -3,5 +3,5 @@
 #Permitir a um usuário criar uma Categoria, fornecendo um nome.
 #Não deve ser permitida a inserção de categorias com mesmo nome (case insensitive).
 
-expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 1"
-expectError "Esta categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 2"
+expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 1"
+expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 2"

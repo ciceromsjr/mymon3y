@@ -10,7 +10,6 @@ expectError "Login não disponível." criarUsuario login=fulano@gmail.com senha=
 
 expectError "Login inválido." criarUsuario login= senha=12345
 expectError "Login inválido." criarUsuario login=sicrano@ senha=12345
-expectError "Login inválido." criarUsuario login=sicrano@ senha=
 expectError "Login inválido." criarUsuario login=@gmail.com senha=12345
 expectError "Login inválido." criarUsuario login=sicrano@gmail@com senha=12345
 expectError "Login inválido." criarUsuario login=sicrano@gmail.com. senha=12345
