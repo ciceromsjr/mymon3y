@@ -23,7 +23,10 @@ package com.google.code.mymon3y;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import com.google.code.mymon3y.model.Categoria;
@@ -42,11 +45,14 @@ public class FacadeEasyAccept {
 	private DateFormat dateFormatTransacao;
 
 	private Pattern numberFormatTransacao;
+	
+	private Calendar calendar; 
 
 	public FacadeEasyAccept() {
 		this.sistema = new SistemaMyMon3y();
 		this.dateFormatTransacao = new SimpleDateFormat("dd/MM/yyyy");
 		this.numberFormatTransacao = Pattern.compile("\\d+,\\d\\d");
+		this.calendar = new GregorianCalendar();
 	}
 
 	public void zerarSistema() throws MyMon3yException {
@@ -99,9 +105,26 @@ public class FacadeEasyAccept {
 			String comentario, String ndias, String credito) throws MyMon3yException {
 		Date dataFormatada = validarDataTransacao(data);
 		Integer valorFormatado = validarValorTransacao(valor);
+		Date dataAvisoPrevioFormatada = validarDataAvisoPrevioTransacao(dataFormatada, ndias);
 
 		return this.sistema.adicionarTransacao(login, Long.valueOf(idCategoria), new Transacao(descricao,
-				dataFormatada, valorFormatado, comentario, Integer.valueOf(ndias), Boolean.valueOf(credito)));
+				dataFormatada, valorFormatado, comentario, dataAvisoPrevioFormatada, Boolean.valueOf(credito)));
+	}
+
+	/**
+	 * @param ndias
+	 * @return
+	 * @throws MyMon3yException 
+	 */
+	private Date validarDataAvisoPrevioTransacao(Date data, String ndias) throws MyMon3yException {
+		
+		Integer n = Integer.valueOf(ndias);
+		if(n < 0){
+			throw new MyMon3yException("Número de Dias Inválido.");
+		}
+		this.calendar.setTime(data);
+		this.calendar.add(Calendar.DAY_OF_MONTH, -n);
+		return this.calendar.getTime();
 	}
 
 	/**
@@ -132,6 +155,28 @@ public class FacadeEasyAccept {
 		}
 		return dataFormatada;
 	}
+	
+	private Long getDataAvisoPrevio(Transacao transacao){
+		return getDataAvisoPrevio(transacao.getData(), transacao.getDataAvisoPrevio());
+	}
+	
+	private Long getDataAvisoPrevio(Date dataTransacao, Date dataAvisoPrevio){
+		if(dataAvisoPrevio == null){
+			return null;
+		}
+		
+		return getDiferenca(dataTransacao, dataAvisoPrevio);
+	}
+	
+	private long getDiferenca(Date data1, Date data2){
+		if(data1.before(data2)){
+			Date tmp = data1;
+			data1 = data2;
+			data2 = tmp;
+		}
+		return TimeUnit.DAYS.convert(data1.getTime() - data2.getTime(), TimeUnit.MILLISECONDS);
+	}
+	
 
 	public String getAtributoTransacao(String login, String idTransacao, String atributo) throws MyMon3yException {
 		Transacao transacao = this.sistema.getTransacao(login, Long.valueOf(idTransacao));
@@ -146,7 +191,7 @@ public class FacadeEasyAccept {
 		} else if (atributo.equals("comentario")) {
 			return transacao.getComentario();
 		} else if (atributo.equals("ndias")) {
-			return String.valueOf(transacao.getNDiasAntes());
+			return String.valueOf(getDataAvisoPrevio(transacao));
 		} else if (atributo.equals("credito")) {
 			return String.valueOf(transacao.getCredito());
 		}
@@ -177,7 +222,7 @@ public class FacadeEasyAccept {
 		} else if(atributo.equals("comentario")){
 			transacao.setComentario(valor);
 		} else if(atributo.equals("ndias")){
-			transacao.setNDiasAntes(Integer.valueOf(valor));
+			transacao.setDataAvisoPrevio(validarDataAvisoPrevioTransacao(transacao.getData(), valor));
 		} else if(atributo.equals("credito")){
 			transacao.setCredito(Boolean.valueOf(valor));
 		}
