@@ -32,7 +32,7 @@ expect "Fígado, Estrogonofe e Linguíça" getAtributoTransacao login=fulano@gma
 expect "0" getAtributoTransacao login=fulano@gmail.com id=${id1} nome="ndias"
 expect "false" getAtributoTransacao login=fulano@gmail.com id=${id1} nome="credito"
 
-expectError "Login inexistente." getAtributoTransacao login=fulano@gmail.com id=${id1} nome="descricao"
+expectError "Login inexistente." getAtributoTransacao login=beltrano@gmail.com id=${id1} nome="descricao"
 
 #Alguns atributos são obrigatório
 expectError "Descrição Inválida." criarTransacao login=fulano@gmail.com descricao="" data="17/03/2009" valor="5,00" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="0" credito="false"
@@ -42,8 +42,6 @@ expectError "Data Inválida." criarTransacao login=fulano@gmail.com descricao="A
 
 expectError "Valor Inválido." criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="0" credito="false"
 expectError "Valor Inválido." criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="-5,00" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="0" credito="false"
-
-expectError "Categoria Inexistente." criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="5,00" idCategoria="Categoria 1" comentario="Fígado, Estrogonofe e Linguíça" ndias="0" credito="false"
 
 expectError "Número de Dias Inválido." criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="5,00" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="-1" credito="false"
 
@@ -64,19 +62,19 @@ expect "7,00" getAtributoTransacao login=fulano@gmail.com id=${id1} atributo="va
 expectError "Valor Inválido." editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="valor" valor=""
 expectError "Valor Inválido." editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="valor" valor="-5,00"
 
-editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="categoria" valor="Outro"
-expect "Outro" getAtributoTransacao login=fulano@gmail.com id=${id1} atributo="categoria"
-expectError "Categoria Inexistente." editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="categoria" valor="Categoria 1"
-
 editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="comentario" valor="Fígado"
 expect "Fígado" getAtributoTransacao login=fulano@gmail.com id=${id1} atributo="comentario"
 
 editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="ndias" valor="1"
 expect "1" getAtributoTransacao login=fulano@gmail.com id=${id1} atributo="ndias"
-expectError "Número de Dias Inválido." editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="ndias" valor="1"
+expectError "Número de Dias Inválido." editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="ndias" valor="-1"
 
 editarAtributoTransacao login=fulano@gmail.com id=${id1} atributo="credito" valor="false"
 expect "false" getAtributoTransacao login=fulano@gmail.com id=${id1} atributo="credito"
+
+idCatOutro=getIdCategoria login=fulano@gmail.com nome="Outro"
+editarCategoriaDaTransacao login=fulano@gmail.com id=${id1} idCategoria=${idCatOutro}
+expect "Outro" getAtributoTransacao login=fulano@gmail.com id=${id1} atributo="categoria"
 
 #Remoção de uma Transação
 removerTransacao login=fulano@gmail.com id=${id1}

@@ -12,6 +12,9 @@ expect ${idCategoria1} getIdCategoria login=fulano@gmail.com nome="Categoria 1"
 
 expectError "Categoria inexistente." getIdCategoria login=fulano@gmail.com nome="Categoria 2"
 
+expectError "Nome inválido." criarCategoria login=fulano@gmail.com nome=
+expectError "Nome inválido." criarCategoria login=fulano@gmail.com nome="" 
+
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 1"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="categoria 1"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="CATEGORIA 1"
@@ -55,7 +58,6 @@ expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com n
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Férias"
 
 editarCategoria login=fulano@gmail.com idCategoria=${idCategoria1} atributo="nome" valor="Categoria 2"
-expectError "Categoria inexistente." editarCategoria login=fulano@gmail.com idCategoria=${idCategoria1} atributo="nome" valor="Categoria 3"
 expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 2"
 
 criarCategoria login=fulano@gmail.com nome="Categoria 1"

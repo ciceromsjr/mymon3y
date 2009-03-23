@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+ 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+ 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+		<property name="hibernate.connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
+
+		<property name="hibernate.connection.url">
+			jdbc:mysql://localhost:3306/mymon3y
+		</property>
+
+		<property name="hibernate.connection.username">mymon3y</property>
+		<property name="hibernate.connection.password">mymon3y</property>
+
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+
+		<!--
+			<property name="hibernate.hbm2ddl.auto">create</property>
+		-->
+
+		<!-- Utilizar o pool de conexao C3P0 -->
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.timeout">300</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<!-- Mostrar ou nao os SQLs formados pelo Hibernate no stdout -->
+		<property name="show_sql">false</property>
+		<property name="format_sql">false</property>
+		<property name="hibernate.use_sql_comments">false</property>
+		<!--
+			<property
+			name="hibernate.validator.autoregister_listeners">false</property>
+			<property name="hibernate.validator.apply_to_ddl">false</property>
+		-->
+
+		<mapping class="com.google.code.mymon3y.model.Usuario" />
+		<mapping class="com.google.code.mymon3y.model.Categoria" />
+		<mapping class="com.google.code.mymon3y.model.Transacao" />
+
+		<!--
+			<event type="pre-update"> <listener
+			class="org.hibernate.validator.event.ValidateEventListener" />
+			</event> <event type="pre-insert"> <listener
+			class="org.hibernate.validator.event.ValidateEventListener" />
+			</event>
+		-->
+
+
+	</session-factory>
+</hibernate-configuration>
