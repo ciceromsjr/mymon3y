@@ -35,15 +35,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.ForeignKey;
-import org.hibernate.validator.Min;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
 @Entity
 @Table(name = "tb_transacao")
-@NamedQueries( {
-		@NamedQuery(name = "transacao.loginDoUsuario", query = "select count(*) from Transacao t join t.categoria c join c.usuario u where u.login like :loginDoUsuario"),
-})		
+@NamedQueries( { @NamedQuery(name = "transacao.loginDoUsuario", query = "select count(*) from Transacao t join t.categoria c join c.usuario u where u.login like :loginDoUsuario") })
 /*
  * *
  * 
@@ -77,9 +74,8 @@ public class Transacao implements Identificavel {
 	@Column
 	private String comentario;
 
-	@Min(value = 0, message = "Número de Dias Inválido.")
 	@Column
-	private Integer nDiasAntes;
+	private Date dataAvisoPrevio;
 
 	@Column(nullable = false)
 	private Boolean credito;
@@ -93,13 +89,14 @@ public class Transacao implements Identificavel {
 		super();
 	}
 
-	public Transacao(String descricao, Date data, Integer valor, String comentario, Integer nDiasAntes, Boolean credito) {
+	public Transacao(String descricao, Date data, Integer valor, String comentario, Date dataAvisoPrevio,
+			Boolean credito) {
 		super();
 		setDescricao(descricao);
 		this.data = data;
 		this.valor = valor;
 		this.comentario = comentario;
-		this.nDiasAntes = nDiasAntes;
+		this.dataAvisoPrevio = dataAvisoPrevio;
 		this.credito = credito;
 	}
 
@@ -143,12 +140,12 @@ public class Transacao implements Identificavel {
 		this.comentario = comentario;
 	}
 
-	public Integer getNDiasAntes() {
-		return nDiasAntes;
+	public Date getDataAvisoPrevio() {
+		return dataAvisoPrevio;
 	}
 
-	public void setNDiasAntes(Integer diasAntes) {
-		nDiasAntes = diasAntes;
+	public void setDataAvisoPrevio(Date dataAvisoPrevio) {
+		this.dataAvisoPrevio = dataAvisoPrevio;
 	}
 
 	public Boolean getCredito() {
