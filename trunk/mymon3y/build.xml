@@ -9,7 +9,7 @@
 	<property name="build.dir" value="build" />
 	<property name="webroot.dir" value="${basedir}/web" />
 	<property name="webinf.dir" value="${webroot.dir}/WEB-INF" />	
-	<property name="project.distname" value="mymon3y" />	
+	<property name="project.distname" value="mymon3y" />
 
 	<path id="cobertura.classpath">
 		<fileset dir="${mymon3y.lib.cobertura}">
@@ -53,7 +53,6 @@
 		<delete dir="${mymon3y.docs}" />
 		<delete dir="${mymon3y.release}" />
 		<delete dir="${mymon3y.java2html}" />
-		<delete dir="${mymon3y.banco}"/>
 		<delete file="${mymon3y.jar}" />
 		<delete file="cobertura.ser" />
 	</target>
@@ -88,6 +87,7 @@
 	<target name="compilar" depends="preparar" description="Compila o código principal">
 		<javac srcdir="${mymon3y.src}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
 			<classpath refid="mymon3y.classpathref" />
+			<include name="**/*.java" />
 		</javac>
 	</target>
 	<!-- /COMPILAR -->
@@ -96,7 +96,7 @@
 	<target name="compilar-testes" depends="compilar" description="Compila os códigos de teste de unidade">
 		<javac srcdir="${mymon3y.src-testes}" destdir="${mymon3y.classes-teste}" debug="on" optimize="on">
 			<classpath refid="mymon3y.classpathref" />
-			<include name="**" />
+			<include name="**/*.java" />
 		</javac>
 	</target>
 	<!-- /COMPILAR-TESTES -->
@@ -107,6 +107,9 @@
 
 		<cobertura-instrument todir="${mymon3y.classes-cobertura}">
 			<fileset dir="${mymon3y.classes}">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="${mymon3y.classes-teste}">
 				<include name="**/*.class" />
 			</fileset>
 		</cobertura-instrument>
@@ -192,18 +195,32 @@
 	</target>
 	<!-- /COBERTURA -->
 
-	<!-- (NÃO FUNCIONA) TESTES DE ACEITAÇÃO EASY ACCEPT (NÃO FUNCIONA)-->
-	<target name="testesdeaceitacao" depends="compilar" description="Executa os testes de aceitação EasyAccept (NÃO FUNCIONA)">
+	<!-- EASY_ACCEPT-->
+	<target name="testesdeaceitacao" depends="cobertura-instr" description="Executa os testes de aceitação EasyAccept (NÃO FUNCIONA)">
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
 			<jvmarg value="-Dfile.encoding=UTF-8"/>
 			<!--
 			<arg line="com.google.code.mymon3y.Facade testesDeAceitacao/us1_1.txt testesDeAceitacao/us1_2.txt testesDeAceitacao/us2_1.txt testesDeAceitacao/us2_2.txt testesDeAceitacao/us3_1.txt testesDeAceitacao/us3_2.txt testesDeAceitacao/us4_1.txt testesDeAceitacao/us4_2.txt testesDeAceitacao/us5_1.txt testesDeAceitacao/us5_2.txt testesDeAceitacao/us6_1.txt testesDeAceitacao/us6_2.txt testesDeAceitacao/us7_1.txt"/>
 			<classpath refid="mymon3y.classpathref" />
 			-->
-			<arg line="com.google.code.mymon3y.Facade testesDeAceitacao/us1_1.txt testesDeAceitacao/us1_2.txt"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us1_1.txt" />
+			<arg value="testes-de-aceitacao/us1_2.txt" />
+			<arg value="testes-de-aceitacao/us2_1.txt" />
+			<arg value="testes-de-aceitacao/us2_2.txt" />
+			<arg value="testes-de-aceitacao/us3_1.txt" />
+			<arg value="testes-de-aceitacao/us3_2.txt" />
+			<arg value="testes-de-aceitacao/us4_1.txt" />
+			<arg value="testes-de-aceitacao/us4_2.txt" />
+			<arg value="testes-de-aceitacao/us5_1.txt" />
+			<arg value="testes-de-aceitacao/us5_2.txt" />
+			<arg value="testes-de-aceitacao/us6_1.txt" />
+			<arg value="testes-de-aceitacao/us7_1.txt" />
+			<arg value="testes-de-aceitacao/us8_1.txt" />
 		</java>
 	</target>
-	<!-- (NÃO FUNCIONA) /TESTES DE ACEITAÇÃO EASY ACCEPT (NÃO FUNCIONA) -->
+	<!-- EASY_ACCEPT -->
 
 	<!-- RELEASE //TODO -->
 <!--
@@ -232,47 +249,9 @@
 
 	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="mymon3y.classpathref" />
 
-	<!-- BD-GERAR-DDL -->
-	<target name="bd-gerar-ddl" depends="compilar" description="Gera o script de criacao do BD. Nome do arquivo: ddl.sql">
-		<hibernatetool destdir="${mymon3y.base}">
-			<annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
-			<hbm2ddl drop="false" create="true" export="false" outputfilename="ddl.sql" delimiter=";" format="true" />
-		</hibernatetool>
-	</target>
-	<!-- BD-GERAR-DDL -->
-
-	<!-- BD-GERAR-BANCO -->
-	<target name="bd-gerar-banco" depends="compilar, bd-remover-banco" description="Gera o Esquema Logico no Banco de Dados">
-		<hibernatetool destdir="${mymon3y.base}">
-			<annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
-			<hbm2ddl drop="true" create="true" export="true" delimiter=";" format="false" />
-		</hibernatetool>
-		<!--
-		<java dir="${mymon3y.classes}" classname="com.google.code.mymon3y.persistencia.ManipuladorDeBanco" fork="true">
-			<arg value="gerar" />
-			<classpath refid="mymon3y.classpathref" />
-		</java>
-		-->
-	</target>
-	<!-- /BD-GERAR-BANCO -->
-
 	<!-- BD-REMOVER-BANCO -->
-	<target name="bd-remover-banco" depends="compilar" description="Remove o Esquema Logico no Banco de Dados">
-		<hibernatetool destdir="${mymon3y.base}">
-			<annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
-			<hbm2ddl drop="true" create="false" export="true" delimiter=";" format="false" />
-		</hibernatetool>
-		<!--
-		dir="${mymon3y.classes}" 
-		classpathref="mymon3y.classpathref"
-			<classpath refid="mymon3y.classpathref" />
-		<java dir="${mymon3y.classes}"  classname="com.google.code.mymon3y.persistencia.ManipuladorDeBanco" fork="true">
-			<arg value="apagar" />
-			<classpath>
-				<path refid="mymon3y.classpathref" />
-			</classpath>
-		</java>
-		-->
+	<target name="bd-remover-banco" description="Remove o Esquema Logico no Banco de Dados">
+		<delete dir="${mymon3y.db}" />
 	</target>
 	<!-- /BD-REMOVER-BANCO -->
 
