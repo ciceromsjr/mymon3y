@@ -1,3 +1,12 @@
 # User Story 7 - Importação de Dados
 
-#TODO
+zerarSistema
+
+criarUsuario login=fulano@gmail.com senha=12345
+
+idCatAlimentacao=getIdCategoria login=fulano@gmail.com nome="Outro"
+
+importarOFX arquivo=extrato.ofx
+
+expect "10" getNumeroDeTransacoes login=fulano@gmail.com credito="False"
+expect "1" getNumeroDeTransacoes login=fulano@gmail.com credito="True"
