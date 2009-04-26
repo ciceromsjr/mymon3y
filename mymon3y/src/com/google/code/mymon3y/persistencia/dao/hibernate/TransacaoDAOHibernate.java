@@ -27,7 +27,6 @@ import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 import com.google.code.mymon3y.persistencia.dao.Comando;
 import com.google.code.mymon3y.persistencia.dao.TransacaoDAO;
 
-
 /**
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
@@ -38,7 +37,6 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 	/* (non-Javadoc)
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String)
 	 */
-	@Override
 	public Long getNumeroDeTransacoes(final String login) throws PersistenciaMyMon3yException {
 		Long result = null;
 
@@ -59,7 +57,6 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 	/* (non-Javadoc)
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String, java.lang.Long)
 	 */
-	@Override
 	public Long getNumeroDeTransacoes(final String login, final Long idCategoria) throws PersistenciaMyMon3yException {
 		
 		Long result = null;

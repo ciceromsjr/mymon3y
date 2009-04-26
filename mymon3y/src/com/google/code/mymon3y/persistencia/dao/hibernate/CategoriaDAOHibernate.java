@@ -27,7 +27,6 @@ import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 import com.google.code.mymon3y.persistencia.dao.CategoriaDAO;
 import com.google.code.mymon3y.persistencia.dao.Comando;
 
-
 /**
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
@@ -38,7 +37,6 @@ public class CategoriaDAOHibernate extends AbstractGenericHibernateDAO<Categoria
 	/* (non-Javadoc)
 	 * @see com.google.code.mymon3y.persistencia.dao.CategoriaDAO#findByNomeELoginDoUsuario(java.lang.String, java.lang.String)
 	 */
-	@Override
 	public Categoria findByNomeELoginDoUsuario(final String nome, final String login) throws PersistenciaMyMon3yException {
 		Categoria result = null;
 

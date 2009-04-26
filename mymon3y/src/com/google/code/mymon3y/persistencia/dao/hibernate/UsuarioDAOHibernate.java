@@ -22,9 +22,12 @@ package com.google.code.mymon3y.persistencia.dao.hibernate;
 
 import org.hibernate.Query;
 
+import com.google.code.mymon3y.model.Categoria;
+import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 import com.google.code.mymon3y.persistencia.dao.Comando;
+import com.google.code.mymon3y.persistencia.dao.TransacaoDAO;
 import com.google.code.mymon3y.persistencia.dao.UsuarioDAO;
 
 /**
@@ -33,6 +36,18 @@ import com.google.code.mymon3y.persistencia.dao.UsuarioDAO;
  * 
  */
 public class UsuarioDAOHibernate extends AbstractGenericHibernateDAO<Usuario, Long> implements UsuarioDAO {
+	
+	protected void fazerAntesDeApagarSessaoAberta(Usuario usuario) throws PersistenciaMyMon3yException {
+		super.fazerAntesDeApagarSessaoAberta(usuario);
+		
+		TransacaoDAO transacaoDAO = new TransacaoDAOHibernate();
+		
+		for (Categoria categoria : usuario.getCategorias()) {
+			for (Transacao transacao : categoria.getTransacoes()) {
+				transacaoDAO.makeTransient(transacao);
+			}
+		}
+	}
 	
 	protected void fazerAntesDoLoadSessaoFechada(Usuario usuario) throws PersistenciaMyMon3yException {
 		if(usuario != null){
@@ -46,7 +61,6 @@ public class UsuarioDAOHibernate extends AbstractGenericHibernateDAO<Usuario, Lo
 	 * 
 	 * @see com.google.code.mymon3y.persistencia.dao.UsuarioDAO#findByLogin(java.lang.String)
 	 */
-	@Override
 	public Usuario findByLogin(final String login) throws PersistenciaMyMon3yException {
 		Usuario result = null;
 
