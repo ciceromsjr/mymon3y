@@ -218,6 +218,7 @@
 			<arg value="testes-de-aceitacao/us6_1.txt" />
 			<arg value="testes-de-aceitacao/us7_1.txt" />
 			<arg value="testes-de-aceitacao/us8_1.txt" />
+			<arg value="testes-de-aceitacao/us8_2.txt" />
 		</java>
 	</target>
 	<!-- EASY_ACCEPT -->
