@@ -45,7 +45,7 @@
 	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
 
 	<!-- LIMPAR -->
-	<target name="limpar" description="Limpa o ambiente">
+	<target name="limpar" depends="bd-remover-banco" description="Limpa o ambiente">
 		<delete dir="${mymon3y.classes}" />
 		<delete dir="${mymon3y.classes-cobertura}" />
 		<delete dir="${mymon3y.classes-teste}" />
@@ -94,7 +94,7 @@
 
 	<!-- COMPILAR-TESTES -->
 	<target name="compilar-testes" depends="compilar" description="Compila os códigos de teste de unidade">
-		<javac srcdir="${mymon3y.src-testes}" destdir="${mymon3y.classes-teste}" debug="on" optimize="on">
+		<javac srcdir="${mymon3y.src-testes}" destdir="${mymon3y.classes-teste}" debug="on" optimize="on" encoding="UTF-8">
 			<classpath refid="mymon3y.classpathref" />
 			<include name="**/*.java" />
 		</javac>
