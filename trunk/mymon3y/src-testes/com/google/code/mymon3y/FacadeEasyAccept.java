@@ -118,6 +118,10 @@ public class FacadeEasyAccept {
 	 */
 	private Date validarDataAvisoPrevioTransacao(Date data, String ndias) throws MyMon3yException {
 		
+		if(ndias == null || ndias.trim().equals("")){
+			return null;
+		}
+		
 		Integer n = Integer.valueOf(ndias);
 		if(n < 0){
 			throw new MyMon3yException("Número de Dias Inválido.");
@@ -249,4 +253,13 @@ public class FacadeEasyAccept {
 		this.sistema.removerUsuario(login, senha);
 	}
 
+	public Long getNotificacoes(String login, String data) throws MyMon3yException {
+		Date dataFormatada = null;
+		try {
+			dataFormatada = this.dateFormatTransacao.parse(data);
+		} catch (ParseException e) {
+			throw new MyMon3yException("Data Inválida.");
+		}
+		return this.sistema.getNotificacoes(login, dataFormatada);
+	}
 }

@@ -20,6 +20,8 @@
  */
 package com.google.code.mymon3y.persistencia.dao.hibernate;
 
+import java.util.Date;
+
 import org.hibernate.Query;
 
 import com.google.code.mymon3y.model.Transacao;
@@ -68,6 +70,28 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 				Query q = getSession().getNamedQuery("transacao.loginDoUsuarioECategoria");
 				q.setString("loginDoUsuario", login);
 				q.setLong("idCategoria", idCategoria);
+
+				return q.uniqueResult();
+			}
+
+		});
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNotificacoes(java.lang.Long, java.util.Date)
+	 */
+	@Override
+	public Long getNotificacoes(final Long idDoUsuario, final Date data) throws PersistenciaMyMon3yException {
+		Long result = null;
+
+		result = (Long) executarOperacao(new Comando() {
+
+			public Object executar() {
+
+				Query q = getSession().getNamedQuery("transacao.porUsuarioEData");
+				q.setLong("idDoUsuario", idDoUsuario);
+				q.setDate("data", data);
 
 				return q.uniqueResult();
 			}

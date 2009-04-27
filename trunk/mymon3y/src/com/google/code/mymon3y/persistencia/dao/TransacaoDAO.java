@@ -20,6 +20,8 @@
  */
 package com.google.code.mymon3y.persistencia.dao;
 
+import java.util.Date;
+
 import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 
@@ -34,5 +36,7 @@ public interface TransacaoDAO extends GenericDAO<Transacao, Long> {
 	Long getNumeroDeTransacoes(String login) throws PersistenciaMyMon3yException;
 	
 	Long getNumeroDeTransacoes(String login, Long idCategoria) throws PersistenciaMyMon3yException;
+
+	Long getNotificacoes(Long idDoUsuario, Date dataFormatada) throws PersistenciaMyMon3yException;
 	
 }
