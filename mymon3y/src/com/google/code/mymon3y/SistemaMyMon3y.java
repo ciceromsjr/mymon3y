@@ -20,6 +20,9 @@
  */
 package com.google.code.mymon3y;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 
@@ -39,9 +42,12 @@ import com.google.code.mymon3y.util.PasswordHasher;
 public class SistemaMyMon3y {
 
 	private GerenciadorDePersistencia gdp;
+	
+	private Calendar calendar;
 
 	public SistemaMyMon3y() {
 		this.gdp = new GerenciadorDePersistencia();
+		this.calendar = Calendar.getInstance();
 	}
 
 	/**
@@ -196,12 +202,36 @@ public class SistemaMyMon3y {
 		Categoria categoria = getCategoria(login, idCategoria);
 		
 		validar(transacao);
+		
+		transacao.setData(getDataNormalizada(transacao.getData()));
+		transacao.setDataAvisoPrevio(getDataNormalizada(transacao.getDataAvisoPrevio()));
+		
 		categoria.addTransacao(transacao);
 		transacao.setCategoria(categoria);
 		
 		this.gdp.atualizar(categoria);
 		
 		return transacao.getId();
+	}
+
+	/**
+	 * @param data
+	 * @return
+	 */
+	private Date getDataNormalizada(Date data) {
+		
+		if(data == null){
+			return null;
+		}
+		
+		this.calendar.setTime(data);
+		this.calendar.set(Calendar.HOUR_OF_DAY, 0);
+		this.calendar.set(Calendar.MINUTE, 0);
+		this.calendar.set(Calendar.SECOND, 0);
+		this.calendar.set(Calendar.MILLISECOND, 0);
+
+		
+		return this.calendar.getTime();
 	}
 
 	/**
@@ -290,6 +320,17 @@ public class SistemaMyMon3y {
 			throw new MyMon3yException("Senha errada.");
 		}
 		this.gdp.removerUsuario(usuario);
+	}
+
+	/**
+	 * @param login
+	 * @param dataFormatada
+	 * @return
+	 * @throws MyMon3yException 
+	 */
+	public Long getNotificacoes(String login, Date data) throws MyMon3yException {
+		Usuario usuario = getUsuario(login);
+		return this.gdp.getNotificacoes(usuario.getId(), getDataNormalizada(data));
 	}
 
 }
