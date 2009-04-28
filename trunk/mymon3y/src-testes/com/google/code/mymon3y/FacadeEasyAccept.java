@@ -20,6 +20,7 @@
  */
 package com.google.code.mymon3y;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,12 @@ import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import com.google.code.mymon3y.model.Categoria;
+import com.google.code.mymon3y.model.Relatorio;
 import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 
@@ -46,7 +52,9 @@ public class FacadeEasyAccept {
 
 	private Pattern numberFormatTransacao;
 	
-	private Calendar calendar; 
+	private Calendar calendar;
+
+	private Relatorio r; 
 
 	public FacadeEasyAccept() {
 		this.sistema = new SistemaMyMon3y();
@@ -262,4 +270,29 @@ public class FacadeEasyAccept {
 		}
 		return this.sistema.getNotificacoes(login, dataFormatada);
 	}
+	
+	public void criarRelatorio(String login, String inicio, String fim) throws MyMon3yException {
+		Date inicioData = null;
+		Date fimData = null;
+		try {
+			inicioData = this.dateFormatTransacao.parse(inicio);
+			fimData = this.dateFormatTransacao.parse(fim);
+		} catch (ParseException e) {
+			throw new MyMon3yException("Data Inválida.");
+		}
+		r = this.sistema.criarRelatorio(login, inicioData, fimData);
+	}
+
+	public int getRelatorioNumeroDeTransacoesDebito() {
+		return r.getNumeroDeTransacoesDebito();
+	}
+	
+	public int getRelatorioNumeroDeTransacoesCredito() {
+		return r.getNumeroDeTransacoesCredito();
+	}
+	
+	public void importarOFX(String login, String arquivo) throws MyMon3yException, SAXException, IOException, ParserConfigurationException {
+		this.sistema.importarOFX(login, arquivo);
+	}
+	
 }

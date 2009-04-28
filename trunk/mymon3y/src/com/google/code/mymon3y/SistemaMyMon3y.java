@@ -20,18 +20,26 @@
  */
 package com.google.code.mymon3y;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
+import org.xml.sax.SAXException;
 
 import com.google.code.mymon3y.model.Categoria;
 import com.google.code.mymon3y.model.Identificavel;
+import com.google.code.mymon3y.model.Relatorio;
 import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.GerenciadorDePersistencia;
 import com.google.code.mymon3y.persistencia.InvalidPropertiesException;
+import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
+import com.google.code.mymon3y.util.OFXImport;
 import com.google.code.mymon3y.util.PasswordHasher;
 
 /**
@@ -333,4 +341,19 @@ public class SistemaMyMon3y {
 		return this.gdp.getNotificacoes(usuario.getId(), getDataNormalizada(data));
 	}
 
+	
+	public Relatorio criarRelatorio(String login, Date inicio, Date fim) throws MyMon3yException {
+		validarLogin(login);
+		List transacoes = this.gdp.getTransacoesByLogin(login, inicio, fim);
+		Relatorio r = new Relatorio(this.getUsuario(login), inicio, fim, transacoes);
+		return r;
+	}
+
+	public void importarOFX(String login, String arquivo) throws MyMon3yException, SAXException, IOException, ParserConfigurationException {
+		List<Transacao> list = OFXImport.readOFX(arquivo);
+		for (Transacao t : list) {
+			adicionarTransacao(login, getCategoriaByNomeELoginDoUsuario(login, "Outro").getId(), t);
+		}
+	}
+	
 }
