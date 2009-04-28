@@ -21,6 +21,7 @@
 package com.google.code.mymon3y.persistencia;
 
 import java.util.Date;
+import java.util.List;
 
 import com.google.code.mymon3y.model.Categoria;
 import com.google.code.mymon3y.model.Transacao;
@@ -137,6 +138,10 @@ public class GerenciadorDePersistencia {
 	 */
 	public Transacao getTransacaoById(Long idTransacao) throws PersistenciaMyMon3yException {
 		return this.transacaoDAO.findById(idTransacao);
+	}
+	
+	public List<Transacao> getTransacoesByLogin(String login, Date inicio, Date fim) throws PersistenciaMyMon3yException {
+		return this.transacaoDAO.getTransacoes(login, inicio, fim);
 	}
 
 	/**

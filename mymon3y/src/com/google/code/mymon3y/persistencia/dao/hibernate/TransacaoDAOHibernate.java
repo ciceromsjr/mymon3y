@@ -21,6 +21,7 @@
 package com.google.code.mymon3y.persistencia.dao.hibernate;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Query;
 
@@ -36,6 +37,28 @@ import com.google.code.mymon3y.persistencia.dao.TransacaoDAO;
  */
 public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao, Long> implements TransacaoDAO {
 
+	/* (non-Javadoc)
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getTransacoes(java.lang.String, Date inicio, Date fim)
+	 */
+	public List<Transacao> getTransacoes(final String login, final Date inicio, final Date fim) throws PersistenciaMyMon3yException {
+		List result = null;
+
+		result = (List) executarOperacao(new Comando() {
+
+			public Object executar() {
+
+				Query q = getSession().getNamedQuery("transacao.transacoes");
+				q.setString("loginDoUsuario", login);
+				q.setDate("dataInicio", inicio);
+				q.setDate("dataFim", fim);
+				return q.list();
+			}
+
+		});
+		return result;
+	}
+
+	
 	/* (non-Javadoc)
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String)
 	 */
