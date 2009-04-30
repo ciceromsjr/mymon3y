@@ -38,7 +38,6 @@ import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.GerenciadorDePersistencia;
 import com.google.code.mymon3y.persistencia.InvalidPropertiesException;
-import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 import com.google.code.mymon3y.util.OFXImport;
 import com.google.code.mymon3y.util.PasswordHasher;
 
@@ -344,7 +343,7 @@ public class SistemaMyMon3y {
 	
 	public Relatorio criarRelatorio(String login, Date inicio, Date fim) throws MyMon3yException {
 		validarLogin(login);
-		List transacoes = this.gdp.getTransacoesByLogin(login, inicio, fim);
+		List<Transacao> transacoes = this.gdp.getTransacoesByLogin(login, inicio, fim);
 		Relatorio r = new Relatorio(this.getUsuario(login), inicio, fim, transacoes);
 		return r;
 	}

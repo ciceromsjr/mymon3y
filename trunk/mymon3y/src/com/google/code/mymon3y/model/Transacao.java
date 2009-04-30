@@ -41,8 +41,8 @@ import org.hibernate.validator.NotNull;
 @Entity
 @Table(name = "tb_transacao")
 @NamedQueries( { @NamedQuery(name = "transacao.transacoes", query = "from Transacao t where t.categoria.usuario.login like :loginDoUsuario and :dataInicio <= t.data and t.data <= :dataFim"),
-			     @NamedQuery(name = "transacao.loginDoUsuario", query = "select count(*) from Transacao t join t.categoria c join c.usuario u where u.login like :loginDoUsuario"),
-				 @NamedQuery(name = "transacao.porUsuarioEData", query = "select count(*) from Transacao t join t.categoria c join c.usuario u where u.id = :idDoUsuario and t.dataAvisoPrevio = :data")})
+			     @NamedQuery(name = "transacao.loginDoUsuario", query = "select count(*) from Transacao t where t.categoria.usuario.login like :loginDoUsuario"),
+				 @NamedQuery(name = "transacao.porUsuarioEData", query = "select count(*) from Transacao t where t.categoria.usuario.id = :idDoUsuario and t.dataAvisoPrevio = :data")})
 /*
  * *
  * 

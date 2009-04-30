@@ -11,7 +11,7 @@ public class Relatorio {
 	private List<Transacao> transacoes;
 	private Usuario usuario;
 
-	public Relatorio(Usuario usuario, Date inicio, Date fim, List transacoes) {
+	public Relatorio(Usuario usuario, Date inicio, Date fim, List<Transacao> transacoes) {
 		this.inicio = inicio;
 		this.fim = fim;
 		this.usuario = usuario;

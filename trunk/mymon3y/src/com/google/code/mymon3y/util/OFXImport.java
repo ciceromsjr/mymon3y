@@ -2,7 +2,6 @@ package com.google.code.mymon3y.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -97,7 +96,7 @@ public class OFXImport {
 			if (data == null || amnt == Integer.MAX_VALUE || memo == null) {
 				// transacao incompleta, ignore
 			} else {
-				Transacao t = new Transacao(memo, data, amnt, "", null, amnt > 0 ? true : false);
+				Transacao t = new Transacao(memo, data, amnt, "", null, amnt > 0);
 				transacoes.add(t);				
 			}
 			data = null;
