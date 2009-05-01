@@ -196,28 +196,89 @@
 	<!-- /COBERTURA -->
 
 	<!-- EASY_ACCEPT-->
-	<target name="testesdeaceitacao" depends="cobertura-instr" description="Executa os testes de aceitação EasyAccept (NÃO FUNCIONA)">
+	<target name="testesdeaceitacao" depends="cobertura-instr" description="Executa os testes de aceitação EasyAccept">
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
 			<jvmarg value="-Dfile.encoding=UTF-8"/>
-			<!--
-			<arg line="com.google.code.mymon3y.Facade testesDeAceitacao/us1_1.txt testesDeAceitacao/us1_2.txt testesDeAceitacao/us2_1.txt testesDeAceitacao/us2_2.txt testesDeAceitacao/us3_1.txt testesDeAceitacao/us3_2.txt testesDeAceitacao/us4_1.txt testesDeAceitacao/us4_2.txt testesDeAceitacao/us5_1.txt testesDeAceitacao/us5_2.txt testesDeAceitacao/us6_1.txt testesDeAceitacao/us6_2.txt testesDeAceitacao/us7_1.txt"/>
-			<classpath refid="mymon3y.classpathref" />
-			-->
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us1_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us1_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us2_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us2_2.txt" />
-			<arg value="testes-de-aceitacao/us3_1.txt" />
+		</java>
+			<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+				<classpath refid="mymon3y.classpathref" />
+				<jvmarg value="-Dfile.encoding=UTF-8"/>
+				<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+				<arg value="testes-de-aceitacao/us3_1.txt" />
+			</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us3_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us4_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us4_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us5_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us5_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us6_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us7_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us8_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us8_2.txt" />
 		</java>
 	</target>
