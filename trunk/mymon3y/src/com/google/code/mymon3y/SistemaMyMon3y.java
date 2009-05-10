@@ -39,7 +39,7 @@ import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.GerenciadorDePersistencia;
 import com.google.code.mymon3y.persistencia.InvalidPropertiesException;
 import com.google.code.mymon3y.util.OFXImport;
-import com.google.code.mymon3y.util.PasswordHasher;
+import com.google.code.mymon3y.util.Hasher;
 
 /**
  * @author Jaindson Valentim Santana
@@ -322,7 +322,7 @@ public class SistemaMyMon3y {
 	public void removerUsuario(String login, String senha) throws MyMon3yException {
 		Usuario usuario = getUsuario(login);
 		String senhaVerdadeira = usuario.getSenha();
-		String senhaInformada = PasswordHasher.getSha256(senha);
+		String senhaInformada = Hasher.getSha256(senha);
 		if(!senhaVerdadeira.equals(senhaInformada)){
 			throw new MyMon3yException("Senha errada.");
 		}
