@@ -45,9 +45,9 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 	T findById(ID id) throws PersistenciaMyMon3yException;
 
 	/**
-	 * Retorna Todas as entidades do tipo {@link T} do banco.
+	 * Retorna Todas as entidades do tipo T do banco.
 	 * 
-	 * @return Todas as entidades do tipo {@link T} do banco.
+	 * @return Todas as entidades do tipo T do banco.
 	 */
 	List<T> findAll() throws PersistenciaMyMon3yException;
 
@@ -56,7 +56,7 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 	 * 
 	 * @param entidade
 	 *            Entidade a ser persistida.
-	 * @return Entidade a ser persistida com o atributo {@link ID} atualizado.
+	 * @return Entidade a ser persistida com o atributo ID atualizado.
 	 */
 	T makePersistent(T entidade) throws PersistenciaMyMon3yException;
 
@@ -65,13 +65,12 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 	 * 
 	 * @param entidades
 	 *            Entidades a serem persistidas.
-	 * @return Entidades a serem persistidas com os atributos {@link ID} atualizados, em caso de atualização.
+	 * @return Entidades a serem persistidas com os atributos ID atualizados, em caso de atualização.
 	 */
 	List<T> makePersistent(List<T> entidades) throws PersistenciaMyMon3yException;
 
 	/**
-	 * Faz com que uma entidade fique no estado transiente. Para maiores informações ver documentação oficial
-	 * {@link http://www.hibernate.org/hib_docs/v3/reference/en/html/objectstate.html}.
+	 * Faz com que uma entidade fique no estado transiente.
 	 * 
 	 * @param entidade
 	 *            Entidade a ser modificado o estado.
@@ -79,7 +78,8 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 	void makeTransient(T entidade) throws PersistenciaMyMon3yException;
 
 	/**
-	 * @param entidades.
+	 * @param entidades
+	 *            .
 	 */
 	void makeTransient(List<T> entidades) throws PersistenciaMyMon3yException;
 
@@ -93,7 +93,7 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 	void makeTransient(ID id) throws PersistenciaMyMon3yException;
 
 	/**
-	 * Elimina do banco todos os objetos do tipo {@link T}.
+	 * Elimina do banco todos os objetos do tipo T.
 	 * 
 	 */
 	void makeTransient() throws PersistenciaMyMon3yException;

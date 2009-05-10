@@ -2,13 +2,13 @@
 
 <!-- Build para o projeto de MyMon3y -->
 
-<project basedir="." default="compilar" name="MyMon3y">
+<project basedir="." default="compila" name="MyMon3y">
 
 	<property file="build.properties" />
-	
+
 	<property name="build.dir" value="build" />
 	<property name="webroot.dir" value="${basedir}/web" />
-	<property name="webinf.dir" value="${webroot.dir}/WEB-INF" />	
+	<property name="webinf.dir" value="${webroot.dir}/WEB-INF" />
 	<property name="project.distname" value="mymon3y" />
 
 	<path id="cobertura.classpath">
@@ -45,7 +45,7 @@
 	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
 
 	<!-- LIMPAR -->
-	<target name="limpar" depends="bd-remover-banco" description="Limpa o ambiente">
+	<target name="limpa" depends="bd-remover-banco" description="Limpa o ambiente">
 		<delete dir="${mymon3y.classes}" />
 		<delete dir="${mymon3y.classes-cobertura}" />
 		<delete dir="${mymon3y.classes-teste}" />
@@ -59,7 +59,7 @@
 	<!-- /LIMPAR -->
 
 	<!-- PREPARAR -->
-	<target name="preparar" depends="limpar" description="Prepara o ambiente para compilação, testes de unidade e de cobertura">
+	<target name="preparar" description="Prepara o ambiente para compilação, testes de unidade e de cobertura">
 		<mkdir dir="${mymon3y.classes}" />
 		<mkdir dir="${mymon3y.classes-cobertura}" />
 		<mkdir dir="${mymon3y.classes-teste}" />
@@ -79,12 +79,20 @@
 			<fileset dir="src" defaultexcludes="yes">
 				<include name="**/*.java" />
 			</fileset>
+			<fileset dir="src-testes" defaultexcludes="yes">
+				<include name="**/*.java" />
+			</fileset>
 		</javadoc>
 	</target>
 	<!-- /JAVADOC -->
 
+	<!-- Alias para JAVADOC -->
+	<target name="doc" depends="javadoc" description="Alias para a tag javadoc">
+	</target>
+	<!-- /Alias para JAVADOC -->
+
 	<!-- COMPILAR -->
-	<target name="compilar" depends="preparar" description="Compila o código principal">
+	<target name="compila" depends="preparar" description="Compila o código principal">
 		<javac srcdir="${mymon3y.src}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
 			<classpath refid="mymon3y.classpathref" />
 			<include name="**/*.java" />
@@ -93,7 +101,7 @@
 	<!-- /COMPILAR -->
 
 	<!-- COMPILAR-TESTES -->
-	<target name="compilar-testes" depends="compilar" description="Compila os códigos de teste de unidade">
+	<target name="compilar-testes" depends="compila" description="Compila os códigos de teste de unidade">
 		<javac srcdir="${mymon3y.src-testes}" destdir="${mymon3y.classes-teste}" debug="on" optimize="on" encoding="UTF-8">
 			<classpath refid="mymon3y.classpathref" />
 			<include name="**/*.java" />
@@ -117,7 +125,7 @@
 	<!-- /COBERTURA-INSTR -->
 
 	<!-- JAR SRC & CLASS -->
-<!--	
+	<!--	
 	<target name="makejar" depends="compilar" description="Cria o .jar do projeto com código fonte e Class">
 		<jar destfile="${mymon3y.jar}">
 			<manifest>
@@ -136,11 +144,11 @@
 			</fileset>
 		</jar>
 	</target>
--->	
+-->
 	<!-- /JAR SRC & CLASS -->
 
 	<!-- JAR CLASS //TODO -->
-<!--	
+	<!--	
 	<target name="makejarclass" depends="compilar" description="Cria o .jar do projeto com os Classes">
 		<jar destfile="${mymon3y.jar}">
 			<manifest>
@@ -156,7 +164,7 @@
 			</fileset>
 		</jar>
 	</target>
--->	
+-->
 	<!-- /JAR SRC & CLASS -->
 
 	<!-- TESTAR -->
@@ -199,93 +207,98 @@
 	<target name="testesdeaceitacao" depends="cobertura-instr" description="Executa os testes de aceitação EasyAccept">
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us1_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us1_2.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us2_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us2_2.txt" />
 		</java>
-			<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
-				<classpath refid="mymon3y.classpathref" />
-				<jvmarg value="-Dfile.encoding=UTF-8"/>
-				<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
-				<arg value="testes-de-aceitacao/us3_1.txt" />
-			</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us3_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us3_2.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us4_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us4_2.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us5_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us5_2.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us6_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us7_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us8_1.txt" />
 		</java>
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
-			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
 			<arg value="testes-de-aceitacao/us8_2.txt" />
 		</java>
 	</target>
-	<!-- EASY_ACCEPT -->
+	<!-- /EASY_ACCEPT -->
 
+	<!-- Alias para EASY_ACCEPT -->
+	<target name="testa" depends="testesdeaceitacao" description="Alias para a tag testesdeaceitacao">
+	</target>
+	<!-- /Alias para EASY_ACCEPT -->
+	
 	<!-- RELEASE //TODO -->
-<!--
+	<!--
 	<target name="release" depends="testar, cobertura, javadoc, makejar" description="Cria uma release do projeto">
 		<zip destfile="${mymon3y.release}/mymon3y.zip">
 			<zipfileset dir="${mymon3y.docs}" prefix="docs" />
@@ -294,7 +307,7 @@
 		</zip>
 		<checksum file="${mymon3y.release}/mymon3y.zip" />
 	</target>
--->	
+-->
 	<!-- /RELEASE -->
 
 	<!-- JAVA2HTML -->
@@ -318,7 +331,7 @@
 	<!-- /BD-REMOVER-BANCO -->
 
 	<!-- Gerar WAR //TODO -->
-<!--
+	<!--
 	<target name="war">
 		<delete dir="${build.dir}" />
 		<mkdir dir="${build.dir}" />
@@ -330,7 +343,7 @@
 	</target>
 -->
 	<!-- /Gerar WAR -->
-	
+
 	<!-- AJUDA -->
 	<target name="ajuda" description="Imprime o comando a ser executado para acessar esta ajuda">
 		<echo>Projeto Remember The Contact</echo>
