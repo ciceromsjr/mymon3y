@@ -23,6 +23,8 @@ package com.google.code.mymon3y.persistencia;
 import com.google.code.mymon3y.MyMon3yException;
 
 /**
+ * Representa uma exceção ocorrida na camada de persistência.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
@@ -30,21 +32,27 @@ import com.google.code.mymon3y.MyMon3yException;
 public class PersistenciaMyMon3yException extends MyMon3yException {
 
 	/**
-	 * 
+	 * Versão da classe.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @param mensagem
+	 * @see MyMon3yException#MyMon3yException(String)
 	 */
 	public PersistenciaMyMon3yException(String mensagem) {
 		super(mensagem);
 	}
 
+	/**
+	 * @see MyMon3yException#MyMon3yException(Throwable)
+	 */
 	public PersistenciaMyMon3yException(Throwable t) {
 		super(t);
 	}
 
+	/**
+	 * @see MyMon3yException#MyMon3yException()
+	 */
 	public PersistenciaMyMon3yException() {
 		super();
 	}

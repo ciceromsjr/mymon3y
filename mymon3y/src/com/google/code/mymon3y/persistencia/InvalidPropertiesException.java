@@ -23,6 +23,8 @@ package com.google.code.mymon3y.persistencia;
 import org.hibernate.validator.InvalidValue;
 
 /**
+ * Encapsula os erros de validação das entidades.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
@@ -30,35 +32,47 @@ import org.hibernate.validator.InvalidValue;
 public class InvalidPropertiesException extends PersistenciaMyMon3yException {
 
 	/**
-	 * 
+	 * Versão da classe.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * Valores inválidos dos atributos das entidades.
+	 */
 	private InvalidValue[] invalidValues;
 
 	/**
+	 * Construtor com mensagem de erro.
+	 * 
 	 * @param mensagem
+	 *            mensagem de erro.
 	 */
 	public InvalidPropertiesException(String mensagem) {
 		super(mensagem);
 	}
-	
+
+	/**
+	 * Construtor com os valores inválidos.
+	 * 
+	 * @param invalidValues
+	 *            Valores inválidos.
+	 */
 	public InvalidPropertiesException(InvalidValue[] invalidValues) {
 		super(invalidValues[0].getMessage());
 		this.invalidValues = invalidValues;
 	}
-	
-	/* (non-Javadoc)
+
+	/**
 	 * @see java.lang.Throwable#toString()
 	 */
 	@Override
 	public String toString() {
-		
-		if(invalidValues == null || invalidValues.length == 0){
+
+		if (invalidValues == null || invalidValues.length == 0) {
 			return this.getMessage();
 		}
-		
+
 		return this.invalidValues[0].getMessage();
 	}
-	
+
 }

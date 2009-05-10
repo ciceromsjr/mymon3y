@@ -29,24 +29,35 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**
+ * Fábrica de sessões do Hibernate.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
  */
 public class HibernateFactory {
 
+	/**
+	 * Log da classe {@link HibernateFactory}.
+	 */
 	private static Logger log = Logger.getLogger(HibernateFactory.class);
 
+	/**
+	 * Fábrica de Sessões.
+	 */
 	private static SessionFactory sessionFactory;
 
+	/**
+	 * Configuração do Hibernate.
+	 */
 	private static Configuration configuration;
 
 	/**
-	 * Constrói um novo singleton SessionFactory
+	 * Constrói um novo singleton SessionFactory.
 	 * 
-	 * @return uma SessionFactory
+	 * @return uma SessionFactory.
 	 * @throws PersistenciaMyMon3yException
-	 *             Caso algum erro de persistência ocorra
+	 *             Caso algum erro de persistência ocorra.
 	 */
 	public static SessionFactory buildSessionFactory() throws PersistenciaMyMon3yException {
 
@@ -57,11 +68,11 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Cria uma SessionFactory caso necessário
+	 * Cria uma SessionFactory caso necessário.
 	 * 
-	 * @return uma SessionFactory
+	 * @return uma SessionFactory.
 	 * @throws PersistenciaMyMon3yException
-	 *             Caso algum erro de persistência ocorra
+	 *             Caso algum erro de persistência ocorra.
 	 */
 	public static SessionFactory buildSeNecessario() {
 
@@ -72,9 +83,9 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Retorna a Fábrica de Sessões sendo utilizada no momento
+	 * Retorna a Fábrica de Sessões sendo utilizada no momento.
 	 * 
-	 * @return a Fábrica de Sessões
+	 * @return a Fábrica de Sessões.
 	 */
 	public static SessionFactory getSessionFactory() {
 
@@ -82,9 +93,9 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Retorna a Configuração sendo utilizada pelo Hibernate
+	 * Retorna a Configuração sendo utilizada pelo Hibernate.
 	 * 
-	 * @return a Configuração sendo utilizada pelo Hibernate
+	 * @return a Configuração sendo utilizada pelo Hibernate.
 	 */
 	public static Configuration getConfiguration() {
 
@@ -92,11 +103,11 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Abre uma nova Sessão
+	 * Abre uma nova Sessão.
 	 * 
-	 * @return uma Sessão
+	 * @return uma Sessão.
 	 * @throws PersistenciaMyMon3yException
-	 *             Caso algum erro de persistência ocorra
+	 *             Caso algum erro de persistência ocorra.
 	 */
 	public static Session openSession() throws PersistenciaMyMon3yException {
 
@@ -105,7 +116,7 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Fecha a Fábrica de Sessões
+	 * Fecha a Fábrica de Sessões.
 	 */
 	public static void closeFactory() {
 
@@ -119,10 +130,10 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Fecha uma determinada Sessão
+	 * Fecha uma determinada Sessão.
 	 * 
 	 * @param session
-	 *            Sessão a ser fechada
+	 *            Sessão a ser fechada.
 	 */
 	public static void close(Session session) {
 
@@ -138,10 +149,10 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Faz o <i>rollback</i> de uma transação
+	 * Faz o <i>rollback</i> de uma transação.
 	 * 
 	 * @param tx
-	 *            Transação a ser utilizada
+	 *            Transação a ser utilizada.
 	 */
 	public static void rollback(Transaction tx) {
 
@@ -155,9 +166,9 @@ public class HibernateFactory {
 	}
 
 	/**
-	 * Configura a Fábrica de Sessões
+	 * Configura a Fábrica de Sessões.
 	 * 
-	 * @return a Fábrica de Sessões
+	 * @return a Fábrica de Sessões.
 	 */
 	private static SessionFactory configureSessionFactory() {
 

@@ -67,7 +67,7 @@ public class SistemaMyMon3y {
 
 	public void criarUsuario(String login, String senha) throws MyMon3yException {
 
-		Usuario usuarioExistente = this.gdp.findUsuarioByLogin(login);
+		Usuario usuarioExistente = this.gdp.getUsuarioByLogin(login);
 		if (usuarioExistente != null) {
 			throw new MyMon3yException("Login não disponível.");
 		}

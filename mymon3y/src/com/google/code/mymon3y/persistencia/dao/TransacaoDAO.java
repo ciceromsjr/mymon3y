@@ -26,20 +26,65 @@ import java.util.List;
 import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 
-
 /**
+ * Interface do DAO de {@link Transacao}.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public interface TransacaoDAO extends GenericDAO<Transacao, Long> {
 
+	/**
+	 * Retorna a quantidade de Transações do Usuário.
+	 * 
+	 * @param login
+	 *            Login do Usuário.
+	 * @return A quantidade de Transações do Usuário.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	Long getNumeroDeTransacoes(String login) throws PersistenciaMyMon3yException;
-	
+
+	/**
+	 * Retorna a quantidade de Transações de uma Categoria do Usuário.
+	 * 
+	 * @param login
+	 *            Login do Usuário.
+	 * @param idCategoria
+	 *            Identificador único da Categoria.
+	 * @return A quantidade de Transações de uma Categoria do Usuário.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	Long getNumeroDeTransacoes(String login, Long idCategoria) throws PersistenciaMyMon3yException;
 
-	Long getNotificacoes(Long idDoUsuario, Date dataFormatada) throws PersistenciaMyMon3yException;
+	/**
+	 * Retorna a quantidade de notificações que um Usuário possui numa determinada data.
+	 * 
+	 * @param idDoUsuario
+	 *            Identificador único do Usuário.
+	 * @param data
+	 *            Data da notificação.
+	 * @return A quantidade de notificações que um Usuário possui numa determinada data.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
+	Long getNotificacoes(Long idDoUsuario, Date data) throws PersistenciaMyMon3yException;
 
+	/**
+	 * Retorna as Transações de um Usuário que estão num dado intervalo.
+	 * 
+	 * @param login
+	 *            Login do Usuário.
+	 * @param inicio
+	 *            Data inicial.
+	 * @param fim
+	 *            Data final.
+	 * @return As Transações de um Usuário que estão num dado intervalo.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	List<Transacao> getTransacoes(String login, Date inicio, Date fim) throws PersistenciaMyMon3yException;
-	
+
 }

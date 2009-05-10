@@ -23,14 +23,24 @@ package com.google.code.mymon3y.persistencia.dao;
 import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 
-
 /**
+ * Interface do DAO de {@link Usuario}.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public interface UsuarioDAO extends GenericDAO<Usuario, Long> {
 
+	/**
+	 * Retorna o Usuário cujo login é igual ao passado como parâmetro.
+	 * 
+	 * @param login
+	 *            Login do Usuário buscado.
+	 * @return O Usuário cujo login é igual ao passado como parâmetro.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	Usuario findByLogin(String login) throws PersistenciaMyMon3yException;
-	
+
 }

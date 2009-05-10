@@ -20,19 +20,20 @@
  */
 package com.google.code.mymon3y.persistencia.dao;
 
-
 /**
+ * Representa um comando qualquer a ser executado. A lógica a ser executada depende do contexto.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public interface Comando {
 
 	/**
-     * Executa uma operação.
-     * 
-     * @return Objeto de retorno da operação.
-     */
-    public Object executar();
-	
+	 * Executa uma operação.
+	 * 
+	 * @return Objeto de retorno da operação.
+	 */
+	public Object executar();
+
 }
