@@ -21,6 +21,8 @@
 package com.google.code.mymon3y;
 
 /**
+ * Exceção geral da aplicação MyMon3y.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
@@ -28,25 +30,48 @@ package com.google.code.mymon3y;
 public class MyMon3yException extends Exception {
 
 	/**
-	 * 
+	 * Versão da classe.
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Construtor que recebe a mensagem de erro.
+	 * 
+	 * @param mensagem
+	 *            Mensagem de erro.
+	 */
 	public MyMon3yException(String mensagem) {
 
 		super(mensagem);
 	}
 
+	/**
+	 * Construtor que recebe um {@link Throwable} associado com o erro.
+	 * 
+	 * @param t
+	 *            {@link Throwable} associado com o erro.
+	 */
 	public MyMon3yException(Throwable t) {
 
 		super(t);
 	}
 
+	/**
+	 * Construtor que recebe a mensagem de erro e o {@link Throwable} associado com o ele.
+	 * 
+	 * @param mensagem
+	 *            Mensagem de erro.
+	 * @param t
+	 *            {@link Throwable} associado com o erro.
+	 */
 	public MyMon3yException(String mensagem, Throwable t) {
 
 		super(mensagem, t);
 	}
 
+	/**
+	 * Construtor vazio.
+	 */
 	public MyMon3yException() {
 		super();
 	}
