@@ -27,6 +27,7 @@ import com.google.code.mymon3y.model.Categoria;
 import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.dao.CategoriaDAO;
+import com.google.code.mymon3y.persistencia.dao.GenericDAO;
 import com.google.code.mymon3y.persistencia.dao.TransacaoDAO;
 import com.google.code.mymon3y.persistencia.dao.UsuarioDAO;
 import com.google.code.mymon3y.persistencia.dao.hibernate.CategoriaDAOHibernate;
@@ -79,7 +80,7 @@ public class GerenciadorDePersistencia {
 	}
 
 	/**
-	 * @see UsuarioDAO#makePersistent(Usuario)
+	 * @see GenericDAO#makePersistent(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void makePersistent(Usuario usuario) throws PersistenciaMyMon3yException {
 		this.usuarioDAO.makePersistent(usuario);
@@ -93,7 +94,7 @@ public class GerenciadorDePersistencia {
 	}
 
 	/**
-	 * @see UsuarioDAO#makePersistent(Usuario)
+	 * @see GenericDAO#makePersistent(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void atualizar(Usuario usuario) throws PersistenciaMyMon3yException {
 		this.usuarioDAO.makePersistent(usuario);
@@ -108,28 +109,28 @@ public class GerenciadorDePersistencia {
 	}
 
 	/**
-	 * @see CategoriaDAO#makePersistent(Categoria)
+	 * @see GenericDAO#makePersistent(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void atualizar(Categoria categoria) throws PersistenciaMyMon3yException {
 		this.categoriaDAO.makePersistent(categoria);
 	}
 
 	/**
-	 * @see TransacaoDAO#makePersistent(Transacao)
+	 * @see GenericDAO#makePersistent(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void atualizar(Transacao transacao) throws PersistenciaMyMon3yException {
 		this.transacaoDAO.makePersistent(transacao);
 	}
 
 	/**
-	 * @see CategoriaDAO#findById(Long)
+	 * @see GenericDAO#findById(java.io.Serializable)
 	 */
 	public Categoria getCategoriaById(Long idCategoria) throws PersistenciaMyMon3yException {
 		return this.categoriaDAO.findById(idCategoria);
 	}
 
 	/**
-	 * @see TransacaoDAO#findById(Long)
+	 * @see GenericDAO#findById(java.io.Serializable)
 	 */
 	public Transacao getTransacaoById(Long idTransacao) throws PersistenciaMyMon3yException {
 		return this.transacaoDAO.findById(idTransacao);
@@ -144,7 +145,7 @@ public class GerenciadorDePersistencia {
 	}
 
 	/**
-	 * @see TransacaoDAO#makeTransient(Transacao)
+	 * @see GenericDAO#makeTransient(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void removerTransacao(Transacao transacao) throws PersistenciaMyMon3yException {
 		this.transacaoDAO.makeTransient(transacao);
@@ -158,14 +159,14 @@ public class GerenciadorDePersistencia {
 	}
 
 	/**
-	 * @see CategoriaDAO#makeTransient(Categoria)
+	 * @see GenericDAO#makeTransient(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void removerCategoria(Categoria categoria) throws PersistenciaMyMon3yException {
 		this.categoriaDAO.makeTransient(categoria);
 	}
 
 	/**
-	 * @see UsuarioDAO#makeTransient(Usuario)
+	 * @see GenericDAO#makeTransient(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void removerUsuario(Usuario usuario) throws PersistenciaMyMon3yException {
 		this.usuarioDAO.makeTransient(usuario);
