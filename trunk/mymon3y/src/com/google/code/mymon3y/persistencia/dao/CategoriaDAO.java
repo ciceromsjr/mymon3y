@@ -23,14 +23,26 @@ package com.google.code.mymon3y.persistencia.dao;
 import com.google.code.mymon3y.model.Categoria;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 
-
 /**
+ * Interface do DAO de {@link Categoria}.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public interface CategoriaDAO extends GenericDAO<Categoria, Long> {
 
+	/**
+	 * Encontra uma {@link Categoria} com base no seu nome no login do Usuário dono.
+	 * 
+	 * @param nome
+	 *            Nome da Categoria.
+	 * @param login
+	 *            Login do Úsuário dono.
+	 * @return Categoria buscada ou null caso não seja encontrada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	Categoria findByNomeELoginDoUsuario(String nome, String login) throws PersistenciaMyMon3yException;
-	
+
 }

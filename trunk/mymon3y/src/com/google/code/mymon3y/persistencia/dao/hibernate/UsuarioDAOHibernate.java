@@ -31,34 +31,39 @@ import com.google.code.mymon3y.persistencia.dao.TransacaoDAO;
 import com.google.code.mymon3y.persistencia.dao.UsuarioDAO;
 
 /**
+ * Implementação do DAO Hibernate da entidade {@link Usuario}.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
  */
 public class UsuarioDAOHibernate extends AbstractGenericHibernateDAO<Usuario, Long> implements UsuarioDAO {
-	
+
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.hibernate.AbstractGenericHibernateDAO#fazerAntesDeApagarSessaoAberta(com.google.code.mymon3y.model.Identificavel)
+	 */
 	protected void fazerAntesDeApagarSessaoAberta(Usuario usuario) throws PersistenciaMyMon3yException {
 		super.fazerAntesDeApagarSessaoAberta(usuario);
-		
+
 		TransacaoDAO transacaoDAO = new TransacaoDAOHibernate();
-		
+
 		for (Categoria categoria : usuario.getCategorias()) {
 			for (Transacao transacao : categoria.getTransacoes()) {
 				transacaoDAO.makeTransient(transacao);
 			}
 		}
 	}
-	
+
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.hibernate.AbstractGenericHibernateDAO#fazerAntesDoLoadSessaoFechada(com.google.code.mymon3y.model.Identificavel)
+	 */
 	protected void fazerAntesDoLoadSessaoFechada(Usuario usuario) throws PersistenciaMyMon3yException {
-		if(usuario != null){
+		if (usuario != null) {
 			usuario.setCriptografada(true);
 		}
 	}
-	
-	
-	/*
-	 * (non-Javadoc)
-	 * 
+
+	/**
 	 * @see com.google.code.mymon3y.persistencia.dao.UsuarioDAO#findByLogin(java.lang.String)
 	 */
 	public Usuario findByLogin(final String login) throws PersistenciaMyMon3yException {

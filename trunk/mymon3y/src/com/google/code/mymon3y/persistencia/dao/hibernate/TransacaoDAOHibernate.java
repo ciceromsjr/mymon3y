@@ -31,17 +31,21 @@ import com.google.code.mymon3y.persistencia.dao.Comando;
 import com.google.code.mymon3y.persistencia.dao.TransacaoDAO;
 
 /**
+ * Implementação do DAO Hibernate da entidade {@link Transacao}.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao, Long> implements TransacaoDAO {
 
-	@SuppressWarnings("unchecked")
-	/* (non-Javadoc)
-	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getTransacoes(java.lang.String, Date inicio, Date fim)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getTransacoes(java.lang.String, java.util.Date,
+	 *      java.util.Date)
 	 */
-	public List<Transacao> getTransacoes(final String login, final Date inicio, final Date fim) throws PersistenciaMyMon3yException {
+	@SuppressWarnings("unchecked")
+	public List<Transacao> getTransacoes(final String login, final Date inicio, final Date fim)
+			throws PersistenciaMyMon3yException {
 		List<Transacao> result = null;
 
 		result = (List<Transacao>) executarOperacao(new Comando() {
@@ -59,8 +63,7 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 		return result;
 	}
 
-	
-	/* (non-Javadoc)
+	/**
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String)
 	 */
 	public Long getNumeroDeTransacoes(final String login) throws PersistenciaMyMon3yException {
@@ -80,11 +83,12 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String, java.lang.Long)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String,
+	 *      java.lang.Long)
 	 */
 	public Long getNumeroDeTransacoes(final String login, final Long idCategoria) throws PersistenciaMyMon3yException {
-		
+
 		Long result = null;
 
 		result = (Long) executarOperacao(new Comando() {
@@ -102,7 +106,7 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNotificacoes(java.lang.Long, java.util.Date)
 	 */
 	@Override

@@ -33,28 +33,44 @@ import com.google.code.mymon3y.persistencia.dao.hibernate.CategoriaDAOHibernate;
 import com.google.code.mymon3y.persistencia.dao.hibernate.TransacaoDAOHibernate;
 import com.google.code.mymon3y.persistencia.dao.hibernate.UsuarioDAOHibernate;
 
-
 /**
+ * Responsável por lidar com a persistência das entidades ou qualquer operação que envolva o banco de dados.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public class GerenciadorDePersistencia {
 
+	/**
+	 * DAO da entidade Usuário.
+	 */
 	private UsuarioDAO usuarioDAO;
 
+	/**
+	 * DAO da entidade Categoria.
+	 */
 	private CategoriaDAO categoriaDAO;
 
+	/**
+	 * DAO da entidade Transação.
+	 */
 	private TransacaoDAO transacaoDAO;
-	
-	public GerenciadorDePersistencia(){
+
+	/**
+	 * Construtor vazio.
+	 */
+	public GerenciadorDePersistencia() {
 		this.usuarioDAO = new UsuarioDAOHibernate();
 		this.categoriaDAO = new CategoriaDAOHibernate();
 		this.transacaoDAO = new TransacaoDAOHibernate();
 	}
-	
+
 	/**
+	 * Elimina todas as entidades do sistema.
+	 * 
 	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
 	 */
 	public void zerarSistema() throws PersistenciaMyMon3yException {
 		this.transacaoDAO.makeTransient();
@@ -63,125 +79,100 @@ public class GerenciadorDePersistencia {
 	}
 
 	/**
-	 * @param usuario
-	 * @throws PersistenciaMyMon3yException 
+	 * @see UsuarioDAO#makePersistent(Usuario)
 	 */
 	public void makePersistent(Usuario usuario) throws PersistenciaMyMon3yException {
 		this.usuarioDAO.makePersistent(usuario);
 	}
 
 	/**
-	 * @param login
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
-	 */
-	public Usuario findUsuarioByLogin(String login) throws PersistenciaMyMon3yException {
-		return this.usuarioDAO.findByLogin(login);
-	}
-
-	/**
-	 * @param login
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
+	 * @see UsuarioDAO#findByLogin(String)
 	 */
 	public Usuario getUsuarioByLogin(String login) throws PersistenciaMyMon3yException {
 		return this.usuarioDAO.findByLogin(login);
 	}
 
 	/**
-	 * @param usuario
-	 * @throws PersistenciaMyMon3yException 
+	 * @see UsuarioDAO#makePersistent(Usuario)
 	 */
 	public void atualizar(Usuario usuario) throws PersistenciaMyMon3yException {
 		this.usuarioDAO.makePersistent(usuario);
 	}
 
 	/**
-	 * @param login
-	 * @param nome
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
+	 * @see CategoriaDAO#findByNomeELoginDoUsuario(String, String)
+	 * 
 	 */
 	public Categoria getCategoriaByNomeELoginDoUsuario(String login, String nome) throws PersistenciaMyMon3yException {
 		return this.categoriaDAO.findByNomeELoginDoUsuario(nome, login);
 	}
 
 	/**
-	 * @param categoria
-	 * @throws PersistenciaMyMon3yException 
+	 * @see CategoriaDAO#makePersistent(Categoria)
 	 */
 	public void atualizar(Categoria categoria) throws PersistenciaMyMon3yException {
 		this.categoriaDAO.makePersistent(categoria);
 	}
 
 	/**
-	 * @param transacao
-	 * @throws PersistenciaMyMon3yException 
+	 * @see TransacaoDAO#makePersistent(Transacao)
 	 */
 	public void atualizar(Transacao transacao) throws PersistenciaMyMon3yException {
 		this.transacaoDAO.makePersistent(transacao);
 	}
-	
+
 	/**
-	 * @param idCategoria
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
+	 * @see CategoriaDAO#findById(Long)
 	 */
 	public Categoria getCategoriaById(Long idCategoria) throws PersistenciaMyMon3yException {
 		return this.categoriaDAO.findById(idCategoria);
 	}
 
 	/**
-	 * @param idTransacao
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
+	 * @see TransacaoDAO#findById(Long)
 	 */
 	public Transacao getTransacaoById(Long idTransacao) throws PersistenciaMyMon3yException {
 		return this.transacaoDAO.findById(idTransacao);
 	}
-	
-	public List<Transacao> getTransacoesByLogin(String login, Date inicio, Date fim) throws PersistenciaMyMon3yException {
+
+	/**
+	 * @see TransacaoDAO#getTransacoes(String, Date, Date)
+	 */
+	public List<Transacao> getTransacoesByLogin(String login, Date inicio, Date fim)
+			throws PersistenciaMyMon3yException {
 		return this.transacaoDAO.getTransacoes(login, inicio, fim);
 	}
 
 	/**
-	 * @param transacao
-	 * @throws PersistenciaMyMon3yException 
+	 * @see TransacaoDAO#makeTransient(Transacao)
 	 */
 	public void removerTransacao(Transacao transacao) throws PersistenciaMyMon3yException {
 		this.transacaoDAO.makeTransient(transacao);
 	}
 
 	/**
-	 * @param login
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
+	 * @see TransacaoDAO#getNumeroDeTransacoes(String)
 	 */
 	public Long getNumeroDeTransacoes(String login) throws PersistenciaMyMon3yException {
 		return this.transacaoDAO.getNumeroDeTransacoes(login);
 	}
 
 	/**
-	 * @param idCategoria
-	 * @throws PersistenciaMyMon3yException 
+	 * @see CategoriaDAO#makeTransient(Categoria)
 	 */
 	public void removerCategoria(Categoria categoria) throws PersistenciaMyMon3yException {
 		this.categoriaDAO.makeTransient(categoria);
 	}
 
 	/**
-	 * @param login
-	 * @throws PersistenciaMyMon3yException 
+	 * @see UsuarioDAO#makeTransient(Usuario)
 	 */
 	public void removerUsuario(Usuario usuario) throws PersistenciaMyMon3yException {
 		this.usuarioDAO.makeTransient(usuario);
 	}
 
 	/**
-	 * @param id
-	 * @param dataFormatada
-	 * @return
-	 * @throws PersistenciaMyMon3yException 
+	 * @see TransacaoDAO#getNotificacoes(Long, Date)
 	 */
 	public Long getNotificacoes(Long idDoUsuario, Date data) throws PersistenciaMyMon3yException {
 		return this.transacaoDAO.getNotificacoes(idDoUsuario, data);

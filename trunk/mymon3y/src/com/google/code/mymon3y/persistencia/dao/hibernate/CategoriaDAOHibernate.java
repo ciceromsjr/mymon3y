@@ -28,16 +28,20 @@ import com.google.code.mymon3y.persistencia.dao.CategoriaDAO;
 import com.google.code.mymon3y.persistencia.dao.Comando;
 
 /**
+ * Implementação do DAO Hibernate da entidade {@link Categoria}.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public class CategoriaDAOHibernate extends AbstractGenericHibernateDAO<Categoria, Long> implements CategoriaDAO {
 
-	/* (non-Javadoc)
-	 * @see com.google.code.mymon3y.persistencia.dao.CategoriaDAO#findByNomeELoginDoUsuario(java.lang.String, java.lang.String)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.CategoriaDAO#findByNomeELoginDoUsuario(java.lang.String,
+	 *      java.lang.String)
 	 */
-	public Categoria findByNomeELoginDoUsuario(final String nome, final String login) throws PersistenciaMyMon3yException {
+	public Categoria findByNomeELoginDoUsuario(final String nome, final String login)
+			throws PersistenciaMyMon3yException {
 		Categoria result = null;
 
 		result = (Categoria) executarOperacao(new Comando() {

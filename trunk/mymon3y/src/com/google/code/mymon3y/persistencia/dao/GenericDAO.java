@@ -27,6 +27,8 @@ import com.google.code.mymon3y.model.Identificavel;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 
 /**
+ * DAO genérico.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
@@ -37,15 +39,15 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 	 * Busca uma entidade baseando-se no seu ID.
 	 * 
 	 * @param id
-	 *            Identificador único da entidade a ser buscada
-	 * @return Entidade cujo ID é o mesmo que o passado como parâmetro
+	 *            Identificador único da entidade a ser buscada.
+	 * @return Entidade cujo ID é o mesmo que o passado como parâmetro.
 	 */
 	T findById(ID id) throws PersistenciaMyMon3yException;
 
 	/**
-	 * Retorna Todas as entidades do tipo{@link T} do banco.
+	 * Retorna Todas as entidades do tipo {@link T} do banco.
 	 * 
-	 * @return Todas as entidades do tipo{@link T} do banco.
+	 * @return Todas as entidades do tipo {@link T} do banco.
 	 */
 	List<T> findAll() throws PersistenciaMyMon3yException;
 
@@ -69,24 +71,24 @@ public interface GenericDAO<T extends Identificavel, ID extends Serializable> {
 
 	/**
 	 * Faz com que uma entidade fique no estado transiente. Para maiores informações ver documentação oficial
-	 * {@link http://www.hibernate.org/hib_docs/v3/reference/en/html/objectstate.html}
+	 * {@link http://www.hibernate.org/hib_docs/v3/reference/en/html/objectstate.html}.
 	 * 
 	 * @param entidade
-	 *            Entidade a ser modificado o estado
+	 *            Entidade a ser modificado o estado.
 	 */
 	void makeTransient(T entidade) throws PersistenciaMyMon3yException;
 
 	/**
-	 * @param entidades
+	 * @param entidades.
 	 */
 	void makeTransient(List<T> entidades) throws PersistenciaMyMon3yException;
 
 	/**
-	 * Mesma semântica que o {@link GenericDAO#makeTransient(Identificavel)} mas utiliza ao invés da entidade em si, um
-	 * atributo identificador
+	 * Mesma semântica que o {@link GenericDAO#makeTransient(Identificavel)} mas utiliza, ao invés da entidade em si, um
+	 * atributo identificador.
 	 * 
 	 * @param id
-	 *            Atributo identificador
+	 *            Atributo identificador.
 	 */
 	void makeTransient(ID id) throws PersistenciaMyMon3yException;
 

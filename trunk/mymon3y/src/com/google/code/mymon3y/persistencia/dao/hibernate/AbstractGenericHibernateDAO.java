@@ -39,6 +39,8 @@ import com.google.code.mymon3y.persistencia.dao.Comando;
 import com.google.code.mymon3y.persistencia.dao.GenericDAO;
 
 /**
+ * DAO genérico do Hibernate.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
@@ -61,10 +63,10 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 	 */
 	protected Class<T> persistentClass;
 
-	@SuppressWarnings("unchecked")
-	/*
+	/**
 	 * Construtor simples da classe abstrata
 	 */
+	@SuppressWarnings("unchecked")
 	public AbstractGenericHibernateDAO() {
 
 		HibernateFactory.buildSeNecessario();
@@ -102,37 +104,83 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		return persistentClass;
 	}
 
+	/**
+	 * Operações a serem realizadas com a entidade antes dela ser apagada e com a sessão ainda aberta.
+	 * 
+	 * @param entity
+	 *            Entidade a ser apagada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	protected void fazerAntesDeApagarSessaoAberta(T entity) throws PersistenciaMyMon3yException {
 
 		verificarInconsistenciasAntesDeApagarSessaoAberta(entity);
 	}
 
+	/**
+	 * Operações a serem realizadas com a entidade depois dela ser apagada e com a sessão ainda aberta.
+	 * 
+	 * @param entity
+	 *            Entidade a ser apagada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	protected void fazerDepoisDeApagarSessaoAberta(T entity) throws PersistenciaMyMon3yException {
 
 	}
 
+	/**
+	 * Operações a serem realizadas antes de carregar uma entidade e com a sessão já aberta.
+	 * 
+	 * @param entity
+	 *            Entidade a ser carregada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	protected void fazerAntesDoLoadSessaoFechada(T entity) throws PersistenciaMyMon3yException {
 
 	}
 
+	/**
+	 * Operações a serem realizadas antes de persistir uma entidade e com a sessão ainda aberta.
+	 * 
+	 * @param entity
+	 *            Entidade a ser persistida.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	protected void fazerAntesDePersistirSessaoAberta(T entity) throws PersistenciaMyMon3yException {
 
 		verificarInconsistenciasAntesDePersistirSessaoAberta(entity);
 
 	}
 
+	/**
+	 * Verificar consistência da entidade antes de persistir e com a sessão ainda aberta.
+	 * 
+	 * @param entity
+	 *            Entidade a ser persistida.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	protected void verificarInconsistenciasAntesDePersistirSessaoAberta(T entity) throws PersistenciaMyMon3yException {
 
 	}
 
+	/**
+	 * Verificar consistência da entidade antes de apagar e com a sessão ainda aberta.
+	 * 
+	 * @param entity
+	 *            Entidade a ser apagada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	protected void verificarInconsistenciasAntesDeApagarSessaoAberta(T entity) throws PersistenciaMyMon3yException {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see persistencia.GenericDAO#makeTransient()
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#makeTransient()
 	 */
 	public void makeTransient() throws PersistenciaMyMon3yException {
 
@@ -148,13 +196,11 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		} finally {
 			HibernateFactory.close(session);
 		}
-		
+
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see persistencia.GenericDAO#makePersistent(java.lang.Object)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#makePersistent(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public T makePersistent(T entity) throws PersistenciaMyMon3yException {
 
@@ -174,7 +220,9 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		return entity;
 	}
 
-
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#makePersistent(java.util.List)
+	 */
 	public List<T> makePersistent(List<T> entidades) throws PersistenciaMyMon3yException {
 
 		List<T> result = entidades;
@@ -196,6 +244,9 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		return result;
 	}
 
+	/**
+	 * @see #makePersistent(List)
+	 */
 	public List<T> makePersistent(T... entidades) throws PersistenciaMyMon3yException {
 
 		List<T> lista = new ArrayList<T>(entidades.length);
@@ -203,10 +254,8 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		return makePersistent(lista);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see persistencia.GenericDAO#makeTransient(java.lang.Object)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#makeTransient(com.google.code.mymon3y.model.Identificavel)
 	 */
 	public void makeTransient(T entity) throws PersistenciaMyMon3yException {
 
@@ -226,6 +275,9 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		}
 	}
 
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#makeTransient(java.util.List)
+	 */
 	public void makeTransient(List<T> entidades) throws PersistenciaMyMon3yException {
 
 		try {
@@ -247,10 +299,8 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see persistencia.GenericDAO#makeTransient(java.io.Serializable)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#makeTransient(java.io.Serializable)
 	 */
 	public void makeTransient(ID id) throws PersistenciaMyMon3yException {
 
@@ -258,10 +308,8 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		makeTransient(t);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see persistencia.GenericDAO#findById(java.io.Serializable)
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	@SuppressWarnings("unchecked")
 	public T findById(ID id) throws PersistenciaMyMon3yException {
@@ -283,6 +331,15 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		return entity;
 	}
 
+	/**
+	 * Executa uma operação envolvendo o banco de dados de forma segura (sessão aberta, controle de transação, etc.).
+	 * 
+	 * @param comando
+	 *            Comando a ser executado.
+	 * @return Objeto de retorno do Comando executado.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
 	public Object executarOperacao(Comando comando) throws PersistenciaMyMon3yException {
 
 		Object result = null;
@@ -303,10 +360,8 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see persistencia.GenericDAO#findAll()
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.GenericDAO#findAll()
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() throws PersistenciaMyMon3yException {
@@ -336,8 +391,8 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 	 * Exceção do tipo {@link PersistenciaMyMon3yException} conhecida pela Aplicação.
 	 * 
 	 * @param e
-	 *            Exceção a ser tratada
-	 * @throws CamadaBDException
+	 *            Exceção a ser tratada.
+	 * @throws PersistenciaMyMon3yException
 	 *             Exceção a ser lançada encapsulando a exceção de mais baixo nível que ocorreu.
 	 */
 	protected void handleException(HibernateException e) throws PersistenciaMyMon3yException {
@@ -346,20 +401,44 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 		throw getException(e);
 	}
 
+	/**
+	 * Faz o rollback da transação sendo utilizada no momento em que houve o lançamento da exceção e relança como uma
+	 * Exceção do tipo {@link PersistenciaMyMon3yException} conhecida pela Aplicação.
+	 * 
+	 * @param e
+	 *            Exceção a ser tratada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Exceção a ser lançada encapsulando a exceção de mais baixo nível que ocorreu.
+	 */
 	private void handleException(RuntimeException e) throws InvalidPropertiesException {
 		HibernateFactory.rollback(tx);
 		throw getException(e);
 	}
-	
-	
+
+	/**
+	 * Retorna uma exceção do tipo {@link PersistenciaMyMon3yException}.
+	 * 
+	 * @param e
+	 *            Exceção {@link HibernateException} que ocorreu.
+	 * @return Uma exceção do tipo {@link PersistenciaMyMon3yException}.
+	 */
 	protected PersistenciaMyMon3yException getException(HibernateException e) {
-		
+
 		return new PersistenciaMyMon3yException(e);
 	}
-	
+
+	/**
+	 * Retorna uma exceção do tipo {@link InvalidPropertiesException} caso a exceção {@link RuntimeException} lançada
+	 * seja do tipo {@link InvalidStateException}.
+	 * 
+	 * @param e
+	 *            Exceção {@link RuntimeException} que ocorreu.
+	 * @return Uma exceção do tipo {@link InvalidPropertiesException} caso a exceção {@link RuntimeException} lançada
+	 *         seja do tipo {@link InvalidStateException}.
+	 */
 	private InvalidPropertiesException getException(RuntimeException e) {
-		if(e instanceof InvalidStateException){
-			InvalidStateException ise = (InvalidStateException)e;
+		if (e instanceof InvalidStateException) {
+			InvalidStateException ise = (InvalidStateException) e;
 			return new InvalidPropertiesException(ise.getInvalidValues());
 		}
 		throw e;
@@ -368,7 +447,7 @@ public abstract class AbstractGenericHibernateDAO<T extends Identificavel, ID ex
 	/**
 	 * Inicializa as entidades necessárias para se fazer uma operação no banco de dados.
 	 * 
-	 * @throws HibernateException
+	 * @throws PersistenciaMyMon3yException
 	 *             Exceção lançada caso haja algum erro de persistência.
 	 */
 	protected void startOperation() throws PersistenciaMyMon3yException {
