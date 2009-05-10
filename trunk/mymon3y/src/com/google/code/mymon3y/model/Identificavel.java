@@ -22,14 +22,20 @@ package com.google.code.mymon3y.model;
 
 import java.io.Serializable;
 
-
 /**
+ * Interface usada para identificar uma entidade capaz de ser identificada unicamente.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
- *
+ * 
  */
 public interface Identificavel extends Serializable {
 
+	/**
+	 * Retorna o id associado com a entidade.
+	 * 
+	 * @return id associado com a entidade.
+	 */
 	public Long getId();
-	
+
 }
