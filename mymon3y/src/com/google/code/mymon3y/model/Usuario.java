@@ -40,7 +40,7 @@ import org.hibernate.validator.Email;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 
-import com.google.code.mymon3y.util.PasswordHasher;
+import com.google.code.mymon3y.util.Hasher;
 
 /**
  * Entidade que representa um Usuário do sistema.
@@ -304,7 +304,7 @@ public class Usuario implements Identificavel {
 	 * Criptografa a senha do Usuário.
 	 */
 	public void criptografarSenha() {
-		this.senha = PasswordHasher.getSha256(this.senha);
+		this.senha = Hasher.getSha256(this.senha);
 	}
 
 }

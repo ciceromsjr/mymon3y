@@ -14,28 +14,63 @@ import org.xml.sax.SAXException;
 
 import com.google.code.mymon3y.model.Transacao;
 
+/**
+ * Responsável por fazer a importação de Transações a partir de um arquivo no formato OFX exportado pelo Banco do
+ * Brasil.
+ * 
+ * @author Jaindson Valentim Santana
+ * @author Matheus Gaudencio do Rêgo
+ * 
+ */
 public class OFXImport {
 
+	/**
+	 * <code>
+		    <STMTTRN>
+		       <TRNTYPE>OTHER</TRNTYPE>
+		       <DTPOSTED>20090302120000[-3:BRT]</DTPOSTED>
+		       <TRNAMT>-150.00</TRNAMT>
+		       <FITID>200903021150000</FITID>
+		       <CHECKNUM>642056848245</CHECKNUM>
+		       <REFNUM>281.642.056.848.245</REFNUM>
+		       <MEMO>Saque no TAA - 28/02 16:42 PAO ACUCAR EPITACIO</MEMO>
+		    </STMTTRN>
+    	</code>
+	 */
 
-	/*
-    <STMTTRN>
-       <TRNTYPE>OTHER</TRNTYPE>
-       <DTPOSTED>20090302120000[-3:BRT]</DTPOSTED>
-       <TRNAMT>-150.00</TRNAMT>
-       <FITID>200903021150000</FITID>
-       <CHECKNUM>642056848245</CHECKNUM>
-       <REFNUM>281.642.056.848.245</REFNUM>
-       <MEMO>Saque no TAA - 28/02 16:42 PAO ACUCAR EPITACIO</MEMO>
-    </STMTTRN>
-	*/
-	
+	/**
+	 * Parser de arquivos no formato OFX exportado pelo do Banco do Brasil.
+	 * 
+	 * @author Jaindson Valentim Santana
+	 * @author Matheus Gaudencio do Rêgo
+	 * 
+	 */
 	static class OFXParser {
+
+		/**
+		 * OFX resultante do Parser.
+		 */
 		private OFX ofx;
 
+		/**
+		 * Construtor de {@link OFXParser}.
+		 * 
+		 * @param ofx
+		 *            Objeto {@link OFX} a ser preenchido.
+		 */
 		public OFXParser(OFX ofx) {
 			this.ofx = ofx;
 		}
-		
+
+		/**
+		 * Lê uma tag.
+		 * 
+		 * @param fis
+		 *            {@link FileInputStream} com a entrada.
+		 * @return Uma tag.
+		 * @throws IOException
+		 *             Caso algum erro de IO ocorra.
+		 */
 		private String readTag(FileInputStream fis) throws IOException {
 			StringBuilder sb = new StringBuilder();
 			int a;
@@ -44,7 +79,16 @@ public class OFXImport {
 			}
 			return sb.toString();
 		}
-		
+
+		/**
+		 * Faz a leitura do conteúdo de uma tag.
+		 * 
+		 * @param fis
+		 *            {@link FileInputStream} com a entrada.
+		 * @return Conteúdo da tag.
+		 * @throws IOException
+		 *             Caso algum erro de IO ocorra.
+		 */
 		private String readContent(FileInputStream fis) throws IOException {
 			StringBuilder sb = new StringBuilder();
 			int a;
@@ -53,7 +97,15 @@ public class OFXImport {
 			}
 			return sb.toString();
 		}
-		
+
+		/**
+		 * Realiza o <i>parsing</i> de um arquivo.
+		 * 
+		 * @param f
+		 *            Arquivo.
+		 * @throws IOException
+		 *             Caso algum erro de IO ocorra.
+		 */
 		public void parse(File f) throws IOException {
 			FileInputStream fis = new FileInputStream(f);
 			int a;
@@ -75,70 +127,92 @@ public class OFXImport {
 			}
 		}
 	}
-	
+
+	/**
+	 * Representa o formato OFX exportado pelo Banco do Brasil.
+	 * 
+	 * @author Jaindson Valentim Santana
+	 * @author Matheus Gaudencio do Rêgo
+	 * 
+	 */
 	static class OFX {
-		
+
 		boolean STMTTRN = false;
+
 		Date data = null;
+
 		int amnt = Integer.MAX_VALUE;
+
 		String memo = null;
+
 		private List<Transacao> transacoes;
-		
+
 		public OFX() {
 			transacoes = new LinkedList<Transacao>();
 		}
-		
+
 		public void readSTMTTRN() {
 			STMTTRN = true;
 		}
-		
+
 		public void endReadSTMTTRN() {
 			if (data == null || amnt == Integer.MAX_VALUE || memo == null) {
 				// transacao incompleta, ignore
 			} else {
 				Transacao t = new Transacao(memo, data, amnt, "", null, amnt > 0);
-				transacoes.add(t);				
+				transacoes.add(t);
 			}
 			data = null;
 			amnt = Integer.MAX_VALUE;
 			memo = null;
 			STMTTRN = false;
 		}
-		
+
 		public void readDTPOSTED(String value) {
 			if (STMTTRN) {
-				data = new GregorianCalendar(Integer.parseInt(value.substring(0, 4)),
-						Integer.parseInt(value.substring(4, 6)),
-						Integer.parseInt(value.substring(6, 8)),
-						Integer.parseInt(value.substring(8, 10)),
-						Integer.parseInt(value.substring(10, 12)),
-						Integer.parseInt(value.substring(12, 14))).getTime();
+				data = new GregorianCalendar(Integer.parseInt(value.substring(0, 4)), Integer.parseInt(value.substring(
+						4, 6)), Integer.parseInt(value.substring(6, 8)), Integer.parseInt(value.substring(8, 10)),
+						Integer.parseInt(value.substring(10, 12)), Integer.parseInt(value.substring(12, 14))).getTime();
 			}
 		}
-		
+
 		public void readTRNAMT(String value) {
 			if (STMTTRN) {
 				amnt = Integer.parseInt(value.replaceAll("\\.", ""));
 			}
 		}
-		
+
 		public void readMEMO(String value) {
 			if (STMTTRN) {
 				memo = value;
 			}
 		}
-		
+
 	}
-	
-	public static List<Transacao> readOFX(String arquivo) throws SAXException, IOException, ParserConfigurationException {
+
+	/**
+	 * Retorna as Transações extraídas do arquivo no formato OFX exportado pelo Banco do Brasil.
+	 * 
+	 * @param arquivo
+	 *            Arquivo com a entrada.
+	 * @return As Transações extraídas do arquivo no formato OFX exportado pelo Banco do Brasil.
+	 * @throws SAXException
+	 *             Caso algum erro ocorra durante a leitura do OFX.
+	 * @throws IOException
+	 *             Caso algum erro de IO ocorra.
+	 * @throws ParserConfigurationException
+	 *             Caso algum erro ocorra durante o <i>parsing</i>.
+	 */
+	public static List<Transacao> readOFX(String arquivo) throws SAXException, IOException,
+			ParserConfigurationException {
 		OFX ofx = new OFX();
 		OFXParser ofxP = new OFXParser(ofx);
 		ofxP.parse(new File(arquivo));
 		return ofx.transacoes;
 	}
-	
+
 	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
 		System.out.println(readOFX("resources/extrato.ofx"));
 	}
-	
+
 }

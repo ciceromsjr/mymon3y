@@ -26,14 +26,19 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Base64;
 
 /**
+ * Entidade capaz de realizar hash de strings.
+ * 
  * @author Jaindson Valentim Santana
  * @author Matheus Gaudencio do Rêgo
  * 
  */
-public class PasswordHasher {
+public class Hasher {
 
+	/**
+	 * {@link MessageDigest} responsável por fazer os hashes das strings.
+	 */
 	private static MessageDigest md;
-	
+
 	static {
 		try {
 			md = MessageDigest.getInstance("SHA-256");
@@ -42,19 +47,29 @@ public class PasswordHasher {
 		}
 	}
 
-	private PasswordHasher(){
-		
-	}
-	
-	public static String getSha256(String senha) {
+	/**
+	 * Construtor vazio.
+	 */
+	private Hasher() {
 
-		if (senha == null || senha.equals("")) {
-			return senha;
+	}
+
+	/**
+	 * Retorna o hash SHA 256 da string.
+	 * 
+	 * @param string
+	 *            String a ser avaliada.
+	 * @return O hash SHA 256 da string.
+	 */
+	public static String getSha256(String string) {
+
+		if (string == null || string.equals("")) {
+			return string;
 		}
 
 		String senhaEncriptada = null;
 
-		byte[] hash = md.digest(senha.getBytes());
+		byte[] hash = md.digest(string.getBytes());
 		senhaEncriptada = new String(Base64.encodeBase64(hash));
 
 		return senhaEncriptada;
