@@ -74,7 +74,7 @@
 
 	<!-- JAVADOC -->
 	<target name="javadoc" depends="preparar" description="Cria a documentação javadoc do projeto. O resultado pode ser visto em 'api-index.html'">
-		<javadoc destdir="docs/api" author="false" version="false" use="true" windowtitle="${profilechecker.docs.api}">
+		<javadoc destdir="docs/api" author="false" version="false" use="true" windowtitle="${profilechecker.docs.api}" encoding="UTF-8">
 			<classpath refid="mymon3y.classpathref" />
 			<fileset dir="src" defaultexcludes="yes">
 				<include name="**/*.java" />
