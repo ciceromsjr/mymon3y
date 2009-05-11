@@ -82,7 +82,7 @@ Foram definidas como entidades do modelo lógico de dados:
 \begin{description}
  \item [Usuário] Representa a conta de um usuário com os atributos \textit{login} (o email do usuário) e \textit{senha}. Cada usuário dispõe de diversas \textit{categorias} onde \textit{transações} podem ser cadastradas.
  \item [Categoria] Uma \textit{categoria} agrupa transações de um determinado usuário.
- \item [Transação] \textit{Transação} representa uma movimentação financeira realizada pelo usuário. Apresenta uma breve \textit{descrição}, a \textit{data}, \textit{comentário} e o \textit{valor} da transação. Uma movimentação financeira de gasto ou entrada é indentificada pelo atributo \textit{booleano} \textit{crédito}, e há um atributo que descreve a \textit{data de aviso prévio}, ou seja, a data em que uma notificação deve ser enviada ao usuário.
+ \item [Transação] \textit{Transação} representa uma movimentação financeira realizada pelo usuário. Apresenta uma breve \textit{descrição}, a \textit{data}, \textit{comentário} e o \textit{valor} da transação. Uma movimentação financeira de gasto ou entrada é identificada pelo atributo \textit{booleano} \textit{crédito}, e há um atributo que descreve a \textit{data de aviso prévio}, ou seja, a data em que uma notificação deve ser enviada ao usuário.
 \end{description}
 
 Estas são as entidades persistidas em que o sistema opera toda lógica de negócio. A apresentação da composição das entidades pode ser vista na figura~\ref{modelo-fig}.
@@ -176,14 +176,15 @@ Cada \textbf{User-Story} é especificada através dos seguintes elementos:
 \section{Arquitetura}
 \label{arquitetura}
 
-O sistema esstá estruturado através dos seguintes pacotes (diagrama de classes com os pacotes representado na figura~\ref{arquitetura-fig}):
+O sistema está estruturado através dos seguintes pacotes (diagrama de classes com os pacotes representado na figura~\ref{arquitetura-fig}):
 
 \begin{description}
- \item [com.google.code.mymon3y] Primeiro pacote na hierarquia do projeto contendo a Facade do modelo de dados do sistema.
+ \item [com.google.code.mymon3y] Primeiro pacote na hierarquia do projeto contendo a \textit{Facade} do modelo de dados do sistema.
  \begin{description}
      \item [com.google.code.mymon3y.model] Entidades do modelo de dados.
      \item [com.google.code.mymon3y.persistencia] Classes responsáveis pela persistência.
-     \item [com.google.code.mymon3y.util] Leitor de OFX e classe para cálculo de hash.
+     \item [com.google.code.mymon3y.util] Leitor de OFX e classe para cálculo
+     de \textit{hash}.
  \end{description}
 \end{description}
 
