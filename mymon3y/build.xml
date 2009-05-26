@@ -167,6 +167,21 @@
 -->
 	<!-- /JAR SRC & CLASS -->
 
+	<!-- WAR -->
+	<target name="war" depends="compila">
+		<war basedir="${webroot.dir}" warfile="${mymon3y.nome}.war" webxml="${webinf.dir}/web.xml">
+			  <fileset file="${webinf.dir}/faces-config.xml" />
+			  <fileset dir="web" includes="*.jsp"/>
+			  <lib dir="${mymon3y.lib}"/>
+			  <lib dir="${mymon3y.lib.hibernate.annotations}"/>
+			  <lib dir="${mymon3y.lib.hibernate.core}"/>
+			  <lib dir="${mymon3y.lib.hibernate.validator}"/>
+			  <lib dir="${mymon3y.lib.jsf}"/>
+			  <classes dir="${mymon3y.classes}"/>
+		</war>
+	</target>
+	<!-- /WAR -->
+	
 	<!-- TESTAR -->
 	<target name="testar" depends="cobertura-instr" description="Executa os testes de unidade e cobertura">
 		<junit fork="yes" printsummary="yes" haltonfailure="no" haltonerror="no">
@@ -329,20 +344,6 @@
 		<delete dir="${mymon3y.db}" />
 	</target>
 	<!-- /BD-REMOVER-BANCO -->
-
-	<!-- Gerar WAR //TODO -->
-	<!--
-	<target name="war">
-		<delete dir="${build.dir}" />
-		<mkdir dir="${build.dir}" />
-		<war basedir="${webroot.dir}" warfile="${build.dir}/${project.distname}.war" webxml="${webinf.dir}/web.xml">
-			<exclude name="WEB-INF/${build.dir}/**" />
-			<exclude name="WEB-INF/src/**" />
-			<exclude name="WEB-INF/web.xml" />
-		</war>
-	</target>
--->
-	<!-- /Gerar WAR -->
 
 	<!-- AJUDA -->
 	<target name="ajuda" description="Imprime o comando a ser executado para acessar esta ajuda">
