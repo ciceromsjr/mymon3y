@@ -22,7 +22,7 @@ public class LoginManager {
 	}
 
 	public String loginAction() {
-		if (user == "Batata")
+		if ("Batata".equalsIgnoreCase(user))
 			return "loginPass";
 		else
 			return "loginFail";

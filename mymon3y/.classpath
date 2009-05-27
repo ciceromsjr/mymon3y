@@ -24,5 +24,13 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib-hibernate-validator/hibernate-validator.jar"/>
 	<classpathentry kind="lib" path="lib/derby.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/commons-collections.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/commons-digester.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/jsf-api.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/jsf-impl.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/jstl.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/standard.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

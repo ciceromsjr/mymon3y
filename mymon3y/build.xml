@@ -124,60 +124,39 @@
 	</target>
 	<!-- /COBERTURA-INSTR -->
 
-	<!-- JAR SRC & CLASS -->
-	<!--	
-	<target name="makejar" depends="compilar" description="Cria o .jar do projeto com código fonte e Class">
+	<!-- JAR -->	
+	<target name="jar" depends="compila" description="Cria o .jar do projeto com código fonte e Class">
 		<jar destfile="${mymon3y.jar}">
 			<manifest>
 				<attribute name="Built-By" value="${mymon3y.nome}" />
 				<attribute name="Implementation-Version" value="${mymon3y.versao}" />
-				<!-
-				<attribute name="Main-Class" value="${mymon3y.classe-}" />
-				<attribute name="Class-Path" value="mymon3y.jar" />
-				->
+				<!--
+					<attribute name="Main-Class" value="${mymon3y.classe-}" />
+					<attribute name="Class-Path" value="mymon3y.jar" />
+				-->
 			</manifest>
 			<fileset dir="${mymon3y.classes}">
 				<include name="**/*.class" />
 			</fileset>
 			<fileset dir="${mymon3y.src}">
 				<include name="**/*.java" />
+				<include name="**/*.xml" />
 			</fileset>
+			<zipgroupfileset dir="${mymon3y.lib}" includes="*.jar" />
+		  	<zipgroupfileset dir="${mymon3y.lib.hibernate.annotations}" includes="*.jar"/>
+		  	<zipgroupfileset dir="${mymon3y.lib.hibernate.core}" includes="*.jar"/>
+		  	<zipgroupfileset dir="${mymon3y.lib.hibernate.validator}" includes="*.jar"/>
 		</jar>
 	</target>
--->
-	<!-- /JAR SRC & CLASS -->
-
-	<!-- JAR CLASS //TODO -->
-	<!--	
-	<target name="makejarclass" depends="compilar" description="Cria o .jar do projeto com os Classes">
-		<jar destfile="${mymon3y.jar}">
-			<manifest>
-				<attribute name="Built-By" value="${mymon3y.nome}" />
-				<attribute name="Implementation-Version" value="${mymon3y.versao}" />
-				<!-
-				<attribute name="Main-Class" value="${mymon3y.classe-}" />
-				<attribute name="Class-Path" value="mymon3y.jar" />
-				->
-			</manifest>
-			<fileset dir="${mymon3y.classes}">
-				<include name="**/*.class" />
-			</fileset>
-		</jar>
-	</target>
--->
-	<!-- /JAR SRC & CLASS -->
+	<!-- /JAR -->
 
 	<!-- WAR -->
-	<target name="war" depends="compila">
-		<war basedir="${webroot.dir}" warfile="${mymon3y.nome}.war" webxml="${webinf.dir}/web.xml">
+	<target name="war" depends="jar">
+		<war basedir="${webroot.dir}" warfile="${mymon3y.war}" webxml="${webinf.dir}/web.xml">
 			  <fileset file="${webinf.dir}/faces-config.xml" />
 			  <fileset dir="web" includes="*.jsp"/>
-			  <lib dir="${mymon3y.lib}"/>
-			  <lib dir="${mymon3y.lib.hibernate.annotations}"/>
-			  <lib dir="${mymon3y.lib.hibernate.core}"/>
-			  <lib dir="${mymon3y.lib.hibernate.validator}"/>
 			  <lib dir="${mymon3y.lib.jsf}"/>
-			  <classes dir="${mymon3y.classes}"/>
+			  <lib file="${mymon3y.jar}"/>
 		</war>
 	</target>
 	<!-- /WAR -->
