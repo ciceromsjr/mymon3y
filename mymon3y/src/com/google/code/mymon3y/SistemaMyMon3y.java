@@ -87,12 +87,22 @@ public class SistemaMyMon3y {
 	 */
 	public void criarUsuario(String login, String senha) throws MyMon3yException {
 
-		Usuario usuarioExistente = this.gdp.getUsuarioByLogin(login);
+		Usuario usuario = new Usuario(login, senha);
+		criarUsuario(usuario);
+	}
+	
+	/**
+	 * Cria um novo Usuário no sistema.
+	 * 
+	 * @param usuario Novo usuário.
+	 * @throws MyMon3yException Caso algum erro ocorra.
+	 */
+	public void criarUsuario(Usuario usuario) throws MyMon3yException {
+		Usuario usuarioExistente = this.gdp.getUsuarioByLogin(usuario.getLogin());
 		if (usuarioExistente != null) {
 			throw new MyMon3yException("Login não disponível.");
 		}
 
-		Usuario usuario = new Usuario(login, senha);
 		validar(usuario);
 		this.gdp.makePersistent(usuario);
 	}
@@ -372,14 +382,21 @@ public class SistemaMyMon3y {
 	 */
 	public void removerUsuario(String login, String senha) throws MyMon3yException {
 		Usuario usuario = getUsuario(login);
-		String senhaVerdadeira = usuario.getSenha();
-		String senhaInformada = Hasher.getSha256(senha);
-		if (!senhaVerdadeira.equals(senhaInformada)) {
-			throw new MyMon3yException("Senha errada.");
+		if(!validoLoginESenha(usuario, senha)){
+			throw new MyMon3yException("Login/Senha errada.");
 		}
 		this.gdp.removerUsuario(usuario);
 	}
 
+	public boolean validoLoginESenha(Usuario usuario, String senha) {
+		if(usuario == null || senha == null){
+			return false;
+		}
+		String senhaVerdadeira = usuario.getSenha();
+		String senhaInformada = Hasher.getSha256(senha);
+		return senhaVerdadeira.equals(senhaInformada);
+	}
+	
 	/**
 	 * @see GerenciadorDePersistencia#getNotificacoes(Long, Date)
 	 */

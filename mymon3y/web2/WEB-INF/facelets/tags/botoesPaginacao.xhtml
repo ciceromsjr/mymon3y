@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition>
+	<f:facet name="footer">
+		<h:panelGroup>
+			<a4j:commandButton id="botaoAjaxFirst" value="#{rotulos.primeiro}" action="#{bean.pageFirst}"
+				disabled="#{bean.myDataTable.first == 0}"
+				styleClass="botoesPaginacao" reRender="table,wizard" />
+			<a4j:commandButton id="botaoAjaxPrevious" value="#{rotulos.anterior}" action="#{bean.pagePrevious}"
+				disabled="#{bean.myDataTable.first == 0}"
+				styleClass="botoesPaginacao" reRender="table,wizard" />
+			<a4j:commandButton id="botaoAjaxNext" value="#{rotulos.proximo}" action="#{bean.pageNext}"
+				disabled="#{bean.myDataTable.first + bean.myDataTable.rows
+                        >= bean.myDataTable.rowCount}"
+				styleClass="botoesPaginacao" reRender="table,wizard" />
+			<a4j:commandButton id="botaoAjaxLast" value="#{rotulos.ultimo}" action="#{bean.pageLast}"
+				disabled="#{bean.myDataTable.first + bean.myDataTable.rows
+                        >= bean.myDataTable.rowCount}"
+				styleClass="botoesPaginacao" reRender="table,wizard" />
+		</h:panelGroup>
+	</f:facet>
+</ui:composition>
+</html>

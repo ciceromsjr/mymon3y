@@ -43,6 +43,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
+import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Entidade que representa uma Categoria. As transações podem ser classificadas numa Categoria. Uma Categoria pode ter
@@ -254,6 +256,12 @@ public class Categoria implements Identificavel {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", id).append("nome", nome).append(
+				"usuario", usuario).append("transacoes", transacoes).toString();
 	}
 
 }

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+       http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+	
+	<!-- VALIDATORs -->
+	<!-- /VALIDATORs -->
+
+	<!-- CONVERTERs -->
+	<!-- /CONVERTERs -->
+
+	<!-- MANAGED BEANs -->
+	<managed-bean>
+		<managed-bean-name>login</managed-bean-name>
+		<managed-bean-class>com.google.code.mymon3y.jsf.LoginMBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>facade</managed-bean-name>
+		<managed-bean-class>com.google.code.mymon3y.jsf.FacadeJSF</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- /MANAGED BEANs -->
+	
+	<!-- NAVIGATION RULEs -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha_login</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso_login</from-outcome>
+			<to-view-id>/pages/bemvindo.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/registrar.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/registrar_usuario_sucesso.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/registrar.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/registrar_usuario_sucesso.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>efetuar_login</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/logout.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/editar_perfil.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>excluir_conta</from-outcome>
+			<to-view-id>/pages/excluir_conta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/detalhar_usuario.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/bemvindo.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/excluir_conta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/excluir_conta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/logout.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- /NAVIGATION RULEs -->
+
+	<!-- MESSAGE BUNDLEs -->
+	<application>
+		<locale-config>
+			<default-locale>br</default-locale>
+			<supported-locale>br</supported-locale>
+		</locale-config>
+		<message-bundle>
+			com.google.code.mymon3y.jsf.messageresource.ApplicationMessages</message-bundle>
+	</application>
+
+	<application>
+		<locale-config>
+			<default-locale>br</default-locale>
+			<supported-locale>br</supported-locale>
+		</locale-config>
+		<message-bundle>
+			com.google.code.mymon3y.jsf.messageresource.ApplicationRotulos</message-bundle>
+	</application>
+	
+	<!-- Indicação para o JSF 1.2 saber de onde tirar as mensagens de erro -->	
+     <application>
+         <message-bundle>com.google.code.mymon3y.jsf.messageresource.ApplicationMessages</message-bundle>
+         <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+     </application>
+	<!-- /MESSAGE BUNDLEs -->
+	
+	<lifecycle>
+		<phase-listener>org.exadel.jsf.PhaseTracker</phase-listener>
+	</lifecycle>
+	
+
+</faces-config>
