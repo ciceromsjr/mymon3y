@@ -1,0 +1,7 @@
+# User Story 2 - Criação/edição de Categorias (Teste de Persistência)
+
+#Permitir a um usuário criar uma Categoria, fornecendo um nome.
+#Não deve ser permitida a inserção de categorias com mesmo nome (case insensitive).
+
+expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 1"
+expectError "Esta Categoria já existe." criarCategoria login=fulano@gmail.com nome="Categoria 2"
