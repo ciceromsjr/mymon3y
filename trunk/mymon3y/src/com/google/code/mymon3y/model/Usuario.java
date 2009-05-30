@@ -41,6 +41,8 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotEmpty;
 
 import com.google.code.mymon3y.util.Hasher;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * Entidade que representa um Usuário do sistema.
@@ -304,7 +306,16 @@ public class Usuario implements Identificavel {
 	 * Criptografa a senha do Usuário.
 	 */
 	public void criptografarSenha() {
-		this.senha = Hasher.getSha256(this.senha);
+		if(!isCriptografada()){
+			this.senha = Hasher.getSha256(this.senha);
+			this.setCriptografada(true);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", id).append("login", login)
+				.append("senha", senha).append("categorias", categorias).toString();
 	}
 
 }

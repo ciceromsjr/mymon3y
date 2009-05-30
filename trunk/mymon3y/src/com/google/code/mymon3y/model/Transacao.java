@@ -37,6 +37,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
+import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Entidade que representa uma Transação. Uma Transação representa qualquer movimento de dinheiro realizado pelo
@@ -326,6 +328,14 @@ public class Transacao implements Identificavel {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", id)
+				.append("descricao", descricao).append("data", data).append("valor", valor).append("comentario",
+						comentario).append("dataAvisoPrevio", dataAvisoPrevio).append("credito", credito).append(
+						"categoria", categoria).toString();
 	}
 
 }

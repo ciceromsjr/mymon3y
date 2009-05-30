@@ -7,7 +7,7 @@ zerarSistema
 #Caso 1: Usuário não tem Transações
 criarUsuario login=fulano@gmail.com senha=12345
 
-expectError "Senha errada." removerUsuario login=fulano@gmail.com senha=54321
+expectError "Login/Senha errada." removerUsuario login=fulano@gmail.com senha=54321
 removerUsuario login=fulano@gmail.com senha=12345
 
 expectError "Login inexistente." criarCategoria login=fulano@gmail.com nome="Categoria 1"
