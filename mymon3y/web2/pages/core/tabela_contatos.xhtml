@@ -1,0 +1,31 @@
+<h:dataTable xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets" var="contato"
+	id="table" value="#{facade.contatosCadastrados}"
+	rows="#{constantes.numColunas}" styleClass="dataTable"
+	headerClass="ordersHeader" footerClass="ordersFooter"
+	rowClasses="evenRow,oddRow">
+
+	<r:colunaAtributo bean="#{contato}" rotulo="Nome" atributo="nome" />
+
+	<r:colunaAtributo bean="#{contato}" rotulo="E-mail" atributo="email" />
+
+	<r:colunaAtributo bean="#{contato}" rotulo="Aniversário"
+		atributo="aniversarioFormatado" />
+
+	<r:colunaAtributo bean="#{contato.dono}" rotulo="Dono do Contato"
+		atributo="login" />
+
+	<r:colunaOpcoes id="opcoes" bean="#{contato}" rotulo="Opções"
+		atributo="id" backingBean="#{facade}"
+		actionRemover="#{facade.removerContato}"
+		listenerRemover="#{facade.removerContatoAction}"
+		actionAtualizar="#{facade.prepararAtualizacaoContato}"
+		listenerAtualizar="#{facade.prepararAtualizacaoContatoAction}"
+		actionDetalhar="#{facade.exibirDetalhesDoContato}" contexto="contato" />
+
+</h:dataTable>

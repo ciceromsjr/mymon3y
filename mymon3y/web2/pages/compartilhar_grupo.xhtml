@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition template="/templates/layout.xhtml">
+
+	<ui:define name="pageTitle">MyMon3y</ui:define>
+
+	<ui:define name="pageHeader">Compartilhar Grupo</ui:define>
+
+	<ui:define name="body">
+
+		<r:mensagem id="form" />
+
+		<h:form id="form">
+
+			<a4j:keepAlive beanName="facade" />
+
+			<table border="0" width="98%" cellpadding="4" cellspacing="4"
+				class="tabelaDetalhes">
+				<tr class="linhaDetalhes">
+					<td class="linhaAtributo"><h:outputText value="Nome:"
+						styleClass="rotuloDetalhes" /> <h:outputText id="nome"
+						value="#{facade.grupo.nome}" styleClass="exibir" /></td>
+					<td colspan="2" class="linhaAtributo"><h:outputText
+						value="Nível de Permissão:" styleClass="rotuloDetalhes" /> <h:outputText
+						id="nivelDePermissao" value="#{facade.grupo.nivelDePermissao}"
+						styleClass="exibir" /></td>
+				</tr>
+			</table>
+
+			<fieldset><legend><h:outputText
+				value="Compartilhar com o usuário:" /></legend> <h:panelGrid columns="3">
+
+				<r:panelGroupPesqCodEntidade label="Login:" id="login"
+					value="#{facade.login}" idBotao="pesquisar"
+					action="popup_usuarios" title="Pesquisar Usuário" required="false"
+					onmousedown="showPlaceList('login',this,'listaDeUsuarios','pesquisa')" />
+
+				<r:botaoAction action="#{facade.compartilharGrupoComUsuario}"
+					value="Compartilhar" />
+			</h:panelGrid></fieldset>
+
+			<fieldset><legend><h:outputText
+				value="Usuários que compartilham este grupo:" /></legend><h:dataTable
+				var="compartilhamento" id="table" value="#{facade.convitesEnviados}"
+				rows="#{constantes.numColunas}" styleClass="dataTable"
+				headerClass="ordersHeader" footerClass="ordersFooter"
+				rowClasses="evenRow,oddRow">
+
+				<r:colunaAtributo bean="#{compartilhamento.usuario}" rotulo="Nome"
+					atributo="nome" />
+
+				<r:colunaAtributo bean="#{compartilhamento.usuario}" rotulo="Login"
+					atributo="login" />
+
+				<r:colunaAtributo bean="#{compartilhamento}" rotulo="Status"
+					atributo="status" />
+
+				<h:column id="colunaRemoverCompartilhamento">
+					<f:facet name="header">
+						<h:outputText value="Ediçao" />
+					</f:facet>
+					<h:commandButton value="Remover" id="botaoRemoverCompartilhamento"
+						styleClass="botaoCentro" title="Excluir Compartilhamento"
+						image="/images/icons/delete.gif"
+						actionListener="#{facade.removerCompartilhamentoAction}"
+						action="#{facade.removerCompartilhamento}" >
+						<f:param id="idRemover" name="idRemover" value="#{compartilhamento.id}" />
+					</h:commandButton>
+				</h:column>
+
+			</h:dataTable></fieldset>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

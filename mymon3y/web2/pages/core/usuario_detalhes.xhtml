@@ -1,0 +1,20 @@
+<table xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets" border="0" width="98%"
+	cellpadding="4" cellspacing="4" class="tabelaDetalhes">
+	<tr class="tituloDetalhes">
+		<td colspan="3" class="linhaAtributo">
+		<h:outputText value="Identificação do Usuário" styleClass="escopoDetalhes" />
+	</td>
+	</tr>
+	<tr class="linhaDetalhes">
+		<td class="linhaAtributo">
+			<h:outputText value="Login:" styleClass="rotuloDetalhes" />
+			<h:outputText id="login" value="#{facade.usuario.login}" styleClass="exibir" />
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title><ui:insert name="pageTitle">MyMon3y</ui:insert></title>
+		<f:loadBundle basename="com.google.code.mymon3y.jsf.messageresource.ApplicationRotulos" var="rotulos" />
+		<link rel="stylesheet" type="text/css"
+		href="/mymon3y/css/default.css" media="screen" />
+		<link rel="StyleSheet" type="text/css"
+		href="/mymon3y/css/estilos.css" media="screen" />
+		
+		<script type="text/javascript" src="/mymon3y/pesquisarEntidades.js">
+		</script>
+
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+	</head>
+
+	<body>
+		
+		<ui:debug hotkey="d" rendered="true"/>
+		
+		<!-- start header -->
+		<div id="header">
+		</div>
+		<!-- end header -->
+
+		<!-- start page -->
+		<div id="page">
+			<!-- start content -->
+			<div id="content">
+
+				<h1 class="pagetitle">
+					<ui:insert name="pageHeader">Page Header</ui:insert>
+				</h1>
+
+				<ui:insert	name="body">Page Body</ui:insert>
+			</div>
+			<!-- end content -->
+
+			<!-- start sidebar -->
+			<div id="sidebar">
+				<ul>
+					<h:panelGroup rendered="#{sessionScope.ID_USUARIO == null}">
+						<li><a href="/mymon3y/principal.jsf">Efetuar Login</a></li>
+						<li><a href="/mymon3y/registrar.jsf">Registrar-se</a></li>
+					</h:panelGroup>					
+					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">					
+						<li><a href="/mymon3y/pages/logout.jsf">Logout</a></li>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">					
+						<li><a href="/mymon3y/pages/editar_perfil.jsf">Editar Perfil</a></li>
+					</h:panelGroup>						
+					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">
+						<!--
+						<li><a href="/mymon3y/pages/gerenciar_grupo.jsf">Gerenciar Grupo</a></li>
+						-->
+						<li><a href="/mymon3y/pages/gerenciar_categoria.jsf">Gerenciar Categorias</a></li>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">
+						<!-- 
+						<li><a href="/mymon3y/pages/gerenciar_contato.jsf">Gerenciar Contato</a></li>
+						 -->
+						<li><a href="/mymon3y/pages/gerenciar_transacao.jsf">Gerenciar Transações</a></li>
+					</h:panelGroup>						
+				</ul>
+			</div>
+			<!-- end sidebar -->
+			
+			<div style="clear: both;">&nbsp;</div>
+		</div>
+		<!-- end page -->
+
+		<!-- start footer -->
+		<div id="footer"> 
+			<p>&copy;2009 All Rights Reserved.</p>
+		</div>
+		<!-- end footer -->
+	</body>
+</html>

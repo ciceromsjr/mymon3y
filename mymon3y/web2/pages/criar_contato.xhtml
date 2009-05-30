@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition template="/templates/layout.xhtml">
+
+	<ui:define name="pageTitle">MyMon3y</ui:define>
+
+	<ui:define name="pageHeader">Criar Contato</ui:define>
+
+	<ui:define name="body">
+
+		<r:mensagem id="form" />
+
+		<a4j:keepAlive beanName="facade" />
+
+		<h:form id="form">
+
+			<fieldset><legend><h:outputText
+				value="Criar Contato" /></legend> <h:panelGrid columns="3" cellpadding="0"
+				cellspacing="0">
+
+				<r:panelGroupDadoDeEntrada id="nome" label="Nome:"
+					value="#{facade.contato.nome}" size="30" />
+
+	<h:panelGroup>
+		<h:panelGrid id="emailPanelGrid" columns="1"
+			styleClass="panelGridInputs" cellpadding="0" cellspacing="0">
+			<h:panelGroup>
+				<h:outputText value="E-mail:" styleClass="rotulos" />
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:message styleClass="error" for="email" />
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:inputText id="email" value="#{facade.contato.email}" required="true" size="30" styleClass="edit" >
+					<f:validator validatorId="rtc.EmailValidator" />
+				</h:inputText>
+			</h:panelGroup>
+		</h:panelGrid>
+	</h:panelGroup>
+
+					<h:panelGroup>
+		<h:panelGrid id="telefonePanelGrid" columns="1"
+			styleClass="panelGridInputs" cellpadding="0" cellspacing="0">
+			<h:panelGroup>
+				<h:outputText value="Telefone (Apenas números):" styleClass="rotulos" />
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:message styleClass="error" for="telefone" />
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:inputText id="telefone" value="#{facade.contato.telefone}" required="true" size="20" styleClass="edit" >
+					<f:validator validatorId="rtc.PhoneValidator" />
+				</h:inputText>
+			</h:panelGroup>
+		</h:panelGrid>
+	</h:panelGroup>
+
+	<h:panelGroup>
+		<h:panelGrid id="dataDeAniversarioPanelGrid" columns="1"
+			styleClass="panelGridInputs" cellpadding="0" cellspacing="0">
+			<h:panelGroup>
+				<h:outputText value="Aniversário (dd/mm):" styleClass="rotulos" />
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:message styleClass="error" for="dataDeAniversario" />
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:inputText id="dataDeAniversario" value="#{facade.contato.aniversario}" required="true" size="20" styleClass="edit" >
+					<f:convertDateTime pattern="dd/MM" timeZone="GMT-3" />
+					<f:converter  converterId="rtc.DataAniversarioConverter" />
+				</h:inputText>
+			</h:panelGroup>
+		</h:panelGrid>
+	</h:panelGroup>
+
+				<h:panelGrid>
+					<r:panelGroupRadio id="ehNotificavel"
+						atributo="#{facade.ehNotificavel}" label="Notificar Aniversário?" />
+				</h:panelGrid>
+
+			</h:panelGrid></fieldset>
+
+			<a4j:region id="regiaoAdicionarAGrupo" selfRendered="false">
+
+				<fieldset><legend><h:outputText
+					value="Grupos do Contato (indicando os donos de cada grupo)" /></legend> <h:panelGrid columns="3"
+					id="PanelAdicionarAGrupo">
+
+					<h:outputText value="Grupos Disponíveis" styleClass="rotulos" />
+					<h:panelGroup />
+
+					<h:outputText styleClass="rotulos" value="Grupos Selecionados" />
+
+					<h:panelGroup>
+						<h:selectManyListbox id="gruposSelecionaveis" size="10"
+							styleClass="selectMany"
+							value="#{facade.gruposSelecionaveisSelecionados}">
+							<f:selectItems value="#{facade.gruposSelecionaveis}" />
+							<f:converter converterId="ConversorDeGrupo" />
+						</h:selectManyListbox>
+					</h:panelGroup>
+
+					<h:panelGrid columns="1">
+						<a4j:commandButton value="Adicionar" image="/images/icons/add.gif"
+							styleClass="botoesLista"
+							reRender="gruposSelecionaveis,gruposAdicionados"
+							actionListener="#{facade.adicionaGrupos}"
+							title="Adicionar os Grupos Selecionados" />
+						<a4j:commandButton value="Adicionar todos os grupos"
+							styleClass="botoesLista" image="/images/icons/addAll.gif"
+							reRender="gruposSelecionaveis,gruposAdicionados"
+							actionListener="#{facade.adicionaTodosOsGrupos}"
+							title="Adicionar Todos os Grupos" />
+						<a4j:commandButton value="Remover" styleClass="botoesLista"
+							reRender="gruposSelecionaveis,gruposAdicionados"
+							actionListener="#{facade.removeGrupos}"
+							image="/images/icons/remove.gif" title="Remover grupos selecionados" />
+						<a4j:commandButton value="Remover Todos" styleClass="botoesLista"
+							reRender="gruposSelecionaveis,gruposAdicionados"
+							actionListener="#{facade.removeTodosOsGrupos}"
+							image="/images/icons/removeAll.gif" title="Remover Todos os Grupos" />
+					</h:panelGrid>
+
+					<h:panelGroup>
+						<h:selectManyListbox id="gruposAdicionados" size="10"
+							styleClass="selectMany"
+							value="#{facade.gruposAdicionadosSelecionados}">
+							<f:selectItems value="#{facade.gruposAdicionados}" />
+							<f:converter converterId="ConversorDeGrupo" />
+						</h:selectManyListbox>
+					</h:panelGroup>
+
+				</h:panelGrid></fieldset>
+
+			</a4j:region>
+
+			<r:botoesCadastrar action="#{facade.criarContato}" label="Criar"/>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition template="/templates/layout.xhtml">
+
+	<ui:define name="pageTitle">MyMon3y</ui:define>
+
+	<ui:define name="pageHeader">Gerenciar Convites</ui:define>
+
+	<ui:define name="body">
+
+		<r:mensagem id="form" />
+
+		<h:form id="form">
+
+			<fieldset><legend><h:outputText value="CONVITES RECEBIDOS" /></legend>
+			<fieldset><legend><h:outputText
+				value="PENDENTES" /></legend><h:dataTable
+				var="compartilhamento" id="tableRecebidosPendentes"
+				value="#{facade.convitesRecebidosPendentes}" rows="#{constantes.numColunas}"
+				styleClass="dataTable" headerClass="ordersHeader"
+				footerClass="ordersFooter" rowClasses="evenRow,oddRow">
+
+				<r:colunaAtributo bean="#{compartilhamento.grupo.usuario}"
+					rotulo="Usuário Dono" atributo="login" />
+
+				<r:colunaAtributo bean="#{compartilhamento.grupo}" rotulo="Grupo"
+					atributo="nome" />
+
+				<h:column id="colunaOpcoes#{atributo}">
+					<f:facet name="header">
+						<h:outputText value="Edição" />
+					</f:facet>
+					<h:commandButton value="Aceitar" id="cButtonOpcAceitar#{atributo}"
+						styleClass="botaoEsquerda" title="Aceitar o convite"
+						actionListener="#{facade.aceitarCompartilhamentoAction}"
+						action="#{facade.aceitarCompartilhamento}">
+						<f:param id="idAceitar" name="idAceitar"
+							value="#{compartilhamento.id}" />
+					</h:commandButton>
+					<h:commandButton value="Recusar" id="cButtonOpcRecusar#{atributo}"
+						styleClass="botaoDireita" title="Recusar o convite."
+						image="/images/icons/delete.gif"
+						actionListener="#{facade.removerCompartilhamentoAction}"
+						action="#{facade.removerCompartilhamento}">
+						<f:param id="idRemover" name="idRemover"
+							value="#{compartilhamento.id}" />
+					</h:commandButton>
+				</h:column>
+
+			</h:dataTable></fieldset>
+
+			<fieldset><legend><h:outputText
+				value="ACEITOS:" /></legend><h:dataTable
+				var="compartilhamento" id="tableRecebidosAceitos"
+				value="#{facade.convitesRecebidosAceitos}" rows="#{constantes.numColunas}"
+				styleClass="dataTable" headerClass="ordersHeader"
+				footerClass="ordersFooter" rowClasses="evenRow,oddRow">
+
+				<r:colunaAtributo bean="#{compartilhamento.grupo.usuario}"
+					rotulo="Usuário Dono" atributo="login" />	
+
+				<r:colunaAtributo bean="#{compartilhamento.grupo}" rotulo="Grupo"
+					atributo="nome" />
+
+				<h:column id="colunaOpcoes#{atributo}">
+					<f:facet name="header">
+						<h:outputText value="Edição" />
+					</f:facet>
+					<h:commandButton value="Recusar" id="cButtonOpcRecusar#{atributo}"
+						styleClass="botaoDireita" title="Recusar o convite."
+						image="/images/icons/delete.gif"
+						actionListener="#{facade.removerCompartilhamentoAction}"
+						action="#{facade.removerCompartilhamento}">
+						<f:param id="idRemover" name="idRemover"
+							value="#{compartilhamento.id}" />
+					</h:commandButton>
+				</h:column>
+
+			</h:dataTable></fieldset></fieldset>
+
+			<fieldset><legend><h:outputText value="CONVITES ENVIADOS" /></legend>
+			<fieldset><legend><h:outputText
+				value="PENDENTES" /></legend><h:dataTable
+				var="compartilhamento" id="tableEnviadosPendentes"
+				value="#{facade.convitesEnviadosPendentes}" rows="#{constantes.numColunas}"
+				styleClass="dataTable" headerClass="ordersHeader"
+				footerClass="ordersFooter" rowClasses="evenRow,oddRow">
+
+				<r:colunaAtributo bean="#{compartilhamento.usuario}"
+					rotulo="Usuário Beneficiado" atributo="login" />
+
+				<r:colunaAtributo bean="#{compartilhamento.grupo}" rotulo="Grupo"
+					atributo="nome" />
+
+				<h:column id="colunaOpcoes#{atributo}">
+					<f:facet name="header">
+						<h:outputText value="Edição" />
+					</f:facet>
+					<h:commandButton value="Cancelar" id="cButtonOpcRecusar#{atributo}"
+						styleClass="botaoDireita" title="Cancelar o convite."
+						image="/images/icons/delete.gif"
+						actionListener="#{facade.removerCompartilhamentoAction}"
+						action="#{facade.removerCompartilhamento}">
+						<f:param id="idRemover" name="idRemover"
+							value="#{compartilhamento.id}" />
+					</h:commandButton>
+				</h:column>
+
+			</h:dataTable></fieldset>
+
+			<fieldset><legend><h:outputText
+				value="ACEITOS:" /></legend><h:dataTable
+				var="compartilhamento" id="tableEnviadosAceitos"
+				value="#{facade.convitesEnviadosAceitos}" rows="#{constantes.numColunas}"
+				styleClass="dataTable" headerClass="ordersHeader"
+				footerClass="ordersFooter" rowClasses="evenRow,oddRow">
+
+				<r:colunaAtributo bean="#{compartilhamento.usuario}"
+					rotulo="Usuário Beneficiado" atributo="login" />
+
+				<r:colunaAtributo bean="#{compartilhamento.grupo}" rotulo="Grupo"
+					atributo="nome" />
+
+				<h:column id="colunaOpcoes#{atributo}">
+					<f:facet name="header">
+						<h:outputText value="Edição" />
+					</f:facet>
+					<h:commandButton value="Cancelar" id="cButtonOpcRecusar#{atributo}"
+						styleClass="botaoDireita" title="Cancelar o convite."
+						image="/images/icons/delete.gif"
+						actionListener="#{facade.removerCompartilhamentoAction}"
+						action="#{facade.removerCompartilhamento}">
+						<f:param id="idRemover" name="idRemover"
+							value="#{compartilhamento.id}" />
+					</h:commandButton>
+				</h:column>
+
+			</h:dataTable></fieldset></fieldset>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
