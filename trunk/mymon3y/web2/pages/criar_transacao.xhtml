@@ -36,14 +36,6 @@
 					
 					<r:panelGroupData id="dataAvisoPrevio" label="Data do Aviso Prévio:" value="#{facade.transacao.dataAvisoPrevio}" required="false" />
 					
-					<!-- 
-					<h:outputText value="Valor:" styleClass="rotulos" />
-					<h:inputText value="#{facade.transacao.valor}" rows="5" styleClass="edit" required="true">
-						<f:validator validatorId="MoedaValidator" />
-						<f:converter  converterId="MoedaConverter" />
-					</h:inputText>
-					-->
-					
 					<h:panelGroup>
 						<h:panelGrid id="valorPanelGrid" columns="1"
 							styleClass="panelGridInputs" cellpadding="0" cellspacing="0">
@@ -62,10 +54,12 @@
 						</h:panelGrid>
 					</h:panelGroup>
 					
+					<r:panelGroupComboBox id="categorias" label="Categorias:" value="#{facade.idNovaCategoriaSelectedItem}" source="#{facade.novaCategoriasSelectItems}" />
+					
 				</h:panelGrid>
 			</fieldset>
 
-			<r:botoesCadastrar action="#{facade.criarTransação}" label="Criar"/>
+			<r:botoesCadastrar action="#{facade.criarTransacao}" label="Criar"/>
 
 		</h:form>
 

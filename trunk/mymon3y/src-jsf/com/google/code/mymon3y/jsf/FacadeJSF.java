@@ -63,6 +63,10 @@ public class FacadeJSF extends ManagedBean {
 
 	private Long idCategoriaSelectedItem;
 
+	private List<SelectItem> novaCategoriasSelectItems;
+
+	private Long idNovaCategoriaSelectedItem;
+
 	private Transacao transacao;
 
 	private List<Transacao> transacoes;
@@ -103,7 +107,7 @@ public class FacadeJSF extends ManagedBean {
 
 	public void setEhCredito(String ehCredito) {
 		this.ehCredito = ehCredito;
-		if(ehCredito.equals("Crédito")){
+		if (ehCredito.equals("Crédito")) {
 			this.transacao.setCredito(true);
 		} else {
 			this.transacao.setCredito(false);
@@ -112,20 +116,48 @@ public class FacadeJSF extends ManagedBean {
 
 	public List<SelectItem> getCategoriasSelectItems() {
 		if (this.categoriasSelectItems == null || ehFase6RenderResponse()) {
-			this.categoria.setNome("");
-			List<Categoria> categorias = getCategorias();
-
-			this.categoriasSelectItems = new ArrayList<SelectItem>(categorias.size());
-			this.categoriasSelectItems.add(new SelectItem(null, ""));
-			for (Categoria c : categorias) {
-				this.categoriasSelectItems.add(new SelectItem(c.getId(), c.getNome()));
-			}
+			this.categoriasSelectItems = getCategoriasSelectItemsDoBanco();
+			this.categoriasSelectItems.add(0, new SelectItem(null, ""));
 		}
+		return categoriasSelectItems;
+	}
+
+	private List<SelectItem> getCategoriasSelectItemsDoBanco() {
+
+		List<SelectItem> categoriasSelectItems = null;
+
+		this.categoria.setNome("");
+		List<Categoria> categorias = getCategorias();
+
+		categoriasSelectItems = new ArrayList<SelectItem>(categorias.size());
+		for (Categoria c : categorias) {
+			categoriasSelectItems.add(new SelectItem(c.getId(), c.getNome()));
+		}
+
 		return categoriasSelectItems;
 	}
 
 	public void setCategoriasSelectItems(List<SelectItem> categoriasSelectItems) {
 		this.categoriasSelectItems = categoriasSelectItems;
+	}
+
+	public List<SelectItem> getNovaCategoriasSelectItems() {
+		if (this.novaCategoriasSelectItems == null || ehFase6RenderResponse()) {
+			this.novaCategoriasSelectItems = getCategoriasSelectItemsDoBanco();
+		}
+		return novaCategoriasSelectItems;
+	}
+
+	public void setNovaCategoriasSelectItems(List<SelectItem> novaCategoriasSelectItems) {
+		this.novaCategoriasSelectItems = novaCategoriasSelectItems;
+	}
+
+	public Long getIdNovaCategoriaSelectedItem() {
+		return idNovaCategoriaSelectedItem;
+	}
+
+	public void setIdNovaCategoriaSelectedItem(Long idNovaCategoriaSelectedItem) {
+		this.idNovaCategoriaSelectedItem = idNovaCategoriaSelectedItem;
 	}
 
 	public Long getIdCategoriaSelectedItem() {
@@ -320,18 +352,6 @@ public class FacadeJSF extends ManagedBean {
 		return ConstantesJSF.BRANCO;
 	}
 
-	public String apagarTransacao() {
-		try {
-			getFacade().removerTransacao(getIdentificadorDoUsuarioNaSessao(), this.transacao.getId());
-			this.transacoes = null;
-		} catch (MyMon3yException e) {
-			e.printStackTrace();
-			addMensagemErro(e.getMessage());
-		}
-
-		return ConstantesJSF.BRANCO;
-	}
-
 	public String atualizarCategoria() {
 
 		try {
@@ -347,6 +367,33 @@ public class FacadeJSF extends ManagedBean {
 		return ConstantesJSF.SUCESSO;
 	}
 
+	public String criarTransacao(){
+		
+		try {
+			getFacade().adicionarTransacao(getLoginUsuarioNaSessao(), this.idNovaCategoriaSelectedItem, this.transacao);
+		} catch (MyMon3yException e) {
+			addMensagemErro(e.getMessage());
+			return ConstantesJSF.FALHA;
+		}
+
+		addMensagemSucesso("A Transação foi inserida com sucesso.");
+		this.transacao = new Transacao();
+		
+		return ConstantesJSF.SUCESSO;
+	}
+	
+	public String apagarTransacao() {
+		try {
+			getFacade().removerTransacao(getIdentificadorDoUsuarioNaSessao(), this.transacao.getId());
+			this.transacoes = null;
+		} catch (MyMon3yException e) {
+			e.printStackTrace();
+			addMensagemErro(e.getMessage());
+		}
+
+		return ConstantesJSF.BRANCO;
+	}
+	
 	// ================================== MÉTODOS QUE RETORNAM CONSTANTES ==================================
 
 	public String pesquisarCategoria() {
