@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id33</td>
+	<td>//input[@value=&quot;Pesquisar&quot;]</td>
 	<td></td>
 </tr>
 <tr>
