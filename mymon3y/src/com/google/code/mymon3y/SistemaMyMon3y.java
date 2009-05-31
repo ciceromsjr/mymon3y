@@ -366,6 +366,12 @@ public class SistemaMyMon3y {
 		validarLogin(login);
 
 		Transacao transacao = getTransacao(login, idTransacao);
+		editarTransacao(login, transacao, idCategoria);
+	}
+
+	public void editarTransacao(String login, Transacao transacao, Long idCategoria) throws MyMon3yException {
+		validarLogin(login);
+
 		Categoria categoria = getCategoria(login, idCategoria);
 
 		Categoria antigaCategoria = transacao.getCategoria();
