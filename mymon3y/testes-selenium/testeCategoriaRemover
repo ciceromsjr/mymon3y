@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id28</td>
+	<td>//input[@value=&quot;Criar&quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id33</td>
+	<td>//input[@value=&quot;Pesquisar&quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id16:0:j_id26</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
 	<td></td>
 </tr>
 <tr>
