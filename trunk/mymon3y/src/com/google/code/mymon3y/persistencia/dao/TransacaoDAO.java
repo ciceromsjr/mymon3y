@@ -64,6 +64,17 @@ public interface TransacaoDAO extends GenericDAO<Transacao, Long> {
 	Long getNotificacoes(Long idDoUsuario, Date data) throws PersistenciaMyMon3yException;
 
 	/**
+	 * Retorna todas as notificaçõesp endentes no dia definido.
+	 * 
+	 * @param dataAvisoPrevio
+	 *            Data da notificação.
+	 * @return Lista das transações a serem notificadas.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
+	List<Transacao> getNotificacoes(final Date dataAvisoPrevio) throws PersistenciaMyMon3yException;
+	
+	/**
 	 * Retorna as Transações de um Usuário que estão num dado intervalo.
 	 * 
 	 * @param login
