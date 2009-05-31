@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id21</td>
+	<td>//input[@value=&quot;Ok&quot;]</td>
 	<td></td>
 </tr>
 <tr>

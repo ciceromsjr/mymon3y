@@ -13,11 +13,6 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/mymon3y/pages/atualizar_categoria.jsf</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
 	<td>/mymon3y/pages/logout.jsf</td>
 	<td></td>
 </tr>
@@ -48,7 +43,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id42</td>
+	<td>//input[@value=&quot;Cadastrar&quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,7 +63,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>form:j_id21</td>
+	<td>//input[@value=&quot;Ok&quot;]</td>
 	<td></td>
 </tr>
 <tr>
