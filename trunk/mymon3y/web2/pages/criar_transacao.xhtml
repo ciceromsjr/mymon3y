@@ -23,14 +23,12 @@
 				<legend>
 					<h:outputText value="Criar Transação" />
 				</legend>
-				<h:panelGrid columns="2" cellpadding="0" cellspacing="0">
-					<r:panelGroupDadoDeEntrada id="descricao" label="Descrição:" value="#{facade.transacao.descricao}" size="48"/>
-				</h:panelGrid>
 				<h:panelGrid columns="1" cellpadding="0" cellspacing="0">
+					<r:panelGroupDadoDeEntrada id="descricao" label="Descrição:" value="#{facade.transacao.descricao}" source="" size="48"/>
 					
 					<r:panelGroupInputTextArea id="comentario" label="Comentário:" atributo="#{facade.transacao.comentario}" rows="5" cols="40" required="false"/>
 					
-					<r:panelGroupRadio id="ehCredito" atributo="#{facade.ehCredito}" label="Crédito?" />
+					<r:panelGroupRadio id="ehCredito" atributo="#{facade.ehCredito}" source="#{facade.ehCreditoSelectItems}" label="Crédito?" />
  					
 					<r:panelGroupData id="data" label="Data:" value="#{facade.transacao.data}" />
 					

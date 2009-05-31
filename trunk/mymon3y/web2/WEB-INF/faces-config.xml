@@ -226,6 +226,22 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/pages/atualizar_transacao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/listar_transacoes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/listar_transacoes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/atualizar_transacao.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 	<!-- /NAVIGATION RULEs -->
 
 	<!-- MESSAGE BUNDLEs -->

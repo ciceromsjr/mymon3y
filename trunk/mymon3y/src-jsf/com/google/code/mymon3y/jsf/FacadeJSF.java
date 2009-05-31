@@ -26,6 +26,7 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import com.google.code.mymon3y.MyMon3yException;
+import com.google.code.mymon3y.jsf.converters.CreditoDebitoConverter;
 import com.google.code.mymon3y.jsf.util.ConstantesJSF;
 import com.google.code.mymon3y.model.Categoria;
 import com.google.code.mymon3y.model.Transacao;
@@ -73,6 +74,14 @@ public class FacadeJSF extends ManagedBean {
 
 	private String ehCredito;
 
+	private List<SelectItem> ehCreditoSelectItems;
+
+	@SuppressWarnings("serial")
+	private List<SelectItem> EH_CREDITO_SELECT_ITEMS = new ArrayList<SelectItem>(){{
+		add(new SelectItem(CreditoDebitoConverter.CREDITO));
+		add(new SelectItem(CreditoDebitoConverter.DEBITO));
+	}};
+
 	public FacadeJSF() {
 		this.usuario = getUsuarioDaSessao();
 		this.usuario = this.usuario != null ? this.usuario : new Usuario();
@@ -82,6 +91,7 @@ public class FacadeJSF extends ManagedBean {
 		this.categoria = new Categoria();
 
 		this.transacao = new Transacao();
+		this.ehCreditoSelectItems = EH_CREDITO_SELECT_ITEMS;
 
 	}
 
@@ -101,13 +111,34 @@ public class FacadeJSF extends ManagedBean {
 		this.usuario = usuario;
 	}
 
+	public List<SelectItem> getEhCreditoSelectItems() {
+		return ehCreditoSelectItems;
+	}
+
+	public void setEhCreditoSelectItems(List<SelectItem> ehCreditoSelectItems) {
+		this.ehCreditoSelectItems = ehCreditoSelectItems;
+	}
+
 	public String getEhCredito() {
-		return ehCredito;
+		debug("getEhCredito FOI CHAMADO - this.transacao != null && this.transacao.getCredito() != null?");
+		if (this.transacao != null && this.transacao.getCredito() != null) {
+			debug("VERDADE");
+			if (this.transacao.getCredito()) {
+				debug(CreditoDebitoConverter.CREDITO);
+				this.ehCredito = CreditoDebitoConverter.CREDITO;
+			} else {
+				debug(CreditoDebitoConverter.DEBITO);
+				this.ehCredito = CreditoDebitoConverter.DEBITO;
+			}
+		} else {
+			debug("FALSO");
+		}
+		return this.ehCredito;
 	}
 
 	public void setEhCredito(String ehCredito) {
 		this.ehCredito = ehCredito;
-		if (ehCredito.equals("Crédito")) {
+		if (ehCredito.equals(CreditoDebitoConverter.CREDITO)) {
 			this.transacao.setCredito(true);
 		} else {
 			this.transacao.setCredito(false);
@@ -153,6 +184,9 @@ public class FacadeJSF extends ManagedBean {
 	}
 
 	public Long getIdNovaCategoriaSelectedItem() {
+		if (this.transacao != null && this.transacao.getCategoria() != null) {
+			this.idNovaCategoriaSelectedItem = this.transacao.getCategoria().getId();
+		}
 		return idNovaCategoriaSelectedItem;
 	}
 
@@ -367,8 +401,8 @@ public class FacadeJSF extends ManagedBean {
 		return ConstantesJSF.SUCESSO;
 	}
 
-	public String criarTransacao(){
-		
+	public String criarTransacao() {
+
 		try {
 			getFacade().adicionarTransacao(getLoginUsuarioNaSessao(), this.idNovaCategoriaSelectedItem, this.transacao);
 		} catch (MyMon3yException e) {
@@ -378,10 +412,10 @@ public class FacadeJSF extends ManagedBean {
 
 		addMensagemSucesso("A Transação foi inserida com sucesso.");
 		this.transacao = new Transacao();
-		
+
 		return ConstantesJSF.SUCESSO;
 	}
-	
+
 	public String apagarTransacao() {
 		try {
 			getFacade().removerTransacao(getIdentificadorDoUsuarioNaSessao(), this.transacao.getId());
@@ -392,6 +426,26 @@ public class FacadeJSF extends ManagedBean {
 		}
 
 		return ConstantesJSF.BRANCO;
+	}
+
+	public String atualizarTransacao(){
+		try {
+			if(!this.transacao.getCategoria().getId().equals(this.idNovaCategoriaSelectedItem)){
+				debug("Atualizando transação mudando a Categoria");
+				getFacade().editarTransacao(getLoginUsuarioNaSessao(), this.transacao, this.idNovaCategoriaSelectedItem);
+			} else {
+				debug("Atualizando transação NÃO mudando a Categoria");
+				getFacade().atualizar(this.transacao);
+			}
+			this.transacao = new Transacao();
+			this.transacoes = null;
+			this.novaCategoriasSelectItems = null;
+		} catch (MyMon3yException e) {
+			addMensagemErro(e.getMessage());
+			return ConstantesJSF.FALHA;
+		}
+		
+		return ConstantesJSF.SUCESSO;
 	}
 	
 	// ================================== MÉTODOS QUE RETORNAM CONSTANTES ==================================
