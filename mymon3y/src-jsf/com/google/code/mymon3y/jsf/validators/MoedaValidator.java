@@ -20,13 +20,13 @@
  */
 package com.google.code.mymon3y.jsf.validators;
 
-import java.util.regex.Pattern;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+
+import com.google.code.mymon3y.jsf.converters.MoedaConverter;
 
 /**
  * @author Jaindson Valentim Santana
@@ -35,17 +35,8 @@ import javax.faces.validator.ValidatorException;
  */
 public class MoedaValidator implements Validator {
 
-	public static final Pattern pMoeda = Pattern.compile("\\d+,\\d+");
-
-	public static boolean matches(String valor) {
-
-		return pMoeda.matcher(valor).matches();
-	}
-	
 	public void validate(FacesContext facesContext, UIComponent uIComponent, Object object) throws ValidatorException {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>.  CHAMANDO VALIDATOR DE MOEDA");
-		String moeda = (String) object;
-		if (!matches(moeda)) {
+		if (object == MoedaConverter.FLAG) {
 			FacesMessage message = new FacesMessage();
 			message.setSummary("Valor inválido.");
 			message.setDetail("Valor inválido. Exemplo: 125,0 ou 125,50");
