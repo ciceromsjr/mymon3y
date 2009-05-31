@@ -7,7 +7,7 @@
 	<property file="build.properties" />
 
 	<property name="build.dir" value="build" />
-	<property name="webroot.dir" value="${basedir}/web" />
+	<property name="webroot.dir" value="${basedir}/web2" />
 	<property name="webinf.dir" value="${webroot.dir}/WEB-INF" />
 	<property name="project.distname" value="mymon3y" />
 
@@ -150,11 +150,35 @@
 	</target>
 	<!-- /JAR -->
 
+	<!-- TOMCAT-CLEAR -->
+	<target name="tomcat-context-clear">
+		<delete dir="${webinf.dir}/lib"/>
+		<mkdir dir="${webinf.dir}/lib" />
+	</target>
+	<!-- /TOMCAT-CLEAR -->
+	
+	<!-- TOMCAT -->
+	<target name="tomcat-context" depends="tomcat-context-clear">
+		<copy todir="${webinf.dir}/lib">
+			<fileset dir="${mymon3y.lib}" includes="*.jar" />
+	 		<fileset dir="${mymon3y.lib.hibernate.annotations}" includes="*.jar"/>
+		 	<fileset dir="${mymon3y.lib.hibernate.core}" includes="*.jar"/>
+		  	<fileset dir="${mymon3y.lib.hibernate.validator}" includes="*.jar"/>
+			<fileset dir="${mymon3y.lib.jsf}"> 
+				<include name="*.jar"/>
+				<exclude name="**/el-api.jar"/>
+			</fileset>
+		</copy>
+	</target>
+	<!-- /TOMCAT -->
+	
 	<!-- WAR -->
 	<target name="war" depends="jar">
 		<war basedir="${webroot.dir}" warfile="${mymon3y.war}" webxml="${webinf.dir}/web.xml">
 			  <fileset file="${webinf.dir}/faces-config.xml" />
-			  <fileset dir="web" includes="*.jsp"/>
+			  <fileset dir="${webroot.dir}" includes="**/*">
+			      <exclude name="**/.svn*" />
+			  </fileset>
 			  <lib dir="${mymon3y.lib.jsf}"/>
 			  <lib file="${mymon3y.jar}"/>
 		</war>
