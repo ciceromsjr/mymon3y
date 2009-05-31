@@ -1,5 +1,6 @@
 package com.google.code.mymon3y.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,6 +90,42 @@ public class Relatorio {
 		return new LinkedList<Transacao>(this.transacoes);
 	}
 
+	/**
+	 * Retorna as Transações em formato CSV.
+	 * 
+	 * @return Transações em formato CSV.
+	 */
+	public List<String> getTransacoesCSV() {
+		List<String> result = new LinkedList<String>();
+		// "05/18/2009","1619-5","Compra com Cart<E3>o - 16/05 20:48 YOKAN COMIDA JAPO","","174895","-48.95",
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		for (Transacao t : transacoes) {
+			String tmp = "\"";
+			tmp += sdf.format(t.getData());
+			tmp += "\":\"";
+			tmp += t.getCategoria().getNome();
+			tmp += "\":\"";
+			tmp += t.getDescricao();
+			tmp += "\":\"";
+			tmp += t.getComentario();
+			tmp += "\":\"";
+			int valor = t.getValor();
+			if (!t.getCredito()) {
+				tmp += '-';
+			}
+			tmp += (valor / 100);
+			tmp += '.';
+			valor = (valor % 100);
+			if (valor < 10) {
+				tmp += '0';
+			}
+			tmp += valor;
+			tmp += "\"";
+			result.add(tmp);
+		}
+		return result;
+	}
+	
 	/**
 	 * Retorna o número de Transações do tipo débito.
 	 * 

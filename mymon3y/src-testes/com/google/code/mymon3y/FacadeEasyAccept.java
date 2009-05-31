@@ -423,6 +423,10 @@ public class FacadeEasyAccept {
 		r = this.sistema.criarRelatorio(login, inicioData, fimData);
 	}
 
+	public String getRelatorioLinha(String linha) {
+		return r.getTransacoesCSV().get(Integer.parseInt(linha));
+	}
+	
 	/**
 	 * @see Relatorio#getNumeroDeTransacoesDebito()
 	 */
