@@ -21,7 +21,6 @@
 package com.google.code.mymon3y;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +39,7 @@ import com.google.code.mymon3y.persistencia.GerenciadorDePersistencia;
 import com.google.code.mymon3y.persistencia.InvalidPropertiesException;
 import com.google.code.mymon3y.util.Hasher;
 import com.google.code.mymon3y.util.OFXImport;
+import com.google.code.mymon3y.util.Util;
 
 /**
  * Fachada principal do sistema.
@@ -56,16 +56,10 @@ public class SistemaMyMon3y {
 	private GerenciadorDePersistencia gdp;
 
 	/**
-	 * Calendário usado na manipulação de datas.
-	 */
-	private Calendar calendar;
-
-	/**
 	 * Construtor vazio.
 	 */
 	public SistemaMyMon3y() {
 		this.gdp = new GerenciadorDePersistencia();
-		this.calendar = Calendar.getInstance();
 	}
 
 	/**
@@ -90,7 +84,7 @@ public class SistemaMyMon3y {
 		Usuario usuario = new Usuario(login, senha);
 		criarUsuario(usuario);
 	}
-	
+
 	/**
 	 * Cria um novo Usuário no sistema.
 	 * 
@@ -196,7 +190,7 @@ public class SistemaMyMon3y {
 	private Categoria getCategoriaById(Long idCategoria) throws MyMon3yException {
 		return this.gdp.getCategoriaById(idCategoria);
 	}
-	
+
 	/**
 	 * Retorna a Categoria associada com o login e cujo id seja igual ao passado como parâmetro.
 	 * 
@@ -246,26 +240,27 @@ public class SistemaMyMon3y {
 	}
 
 	private void validarCategoriaInexistente(Categoria categoria) throws MyMon3yException {
-		//Pode ser que a categoria passada como parâmetro não tenha associação com seu dono
+		// Pode ser que a categoria passada como parâmetro não tenha associação com seu dono
 		String login = getCategoriaById(categoria.getId()).getUsuario().getLogin();
 		validarCategoriaInexistente(login, categoria);
 	}
 
-	private void validarCategoriaInexistente(Categoria categoriaExistente, Categoria novaCategoria) throws MyMon3yException {
-		if(categoriaExistente == null || novaCategoria == null){
+	private void validarCategoriaInexistente(Categoria categoriaExistente, Categoria novaCategoria)
+			throws MyMon3yException {
+		if (categoriaExistente == null || novaCategoria == null) {
 			return;
 		}
-		
-		if(categoriaExistente.getId().equals(novaCategoria.getId())){
+
+		if (categoriaExistente.getId().equals(novaCategoria.getId())) {
 			return;
 		}
-		
-		if(categoriaExistente.getNome().equalsIgnoreCase(novaCategoria.getNome())){
+
+		if (categoriaExistente.getNome().equalsIgnoreCase(novaCategoria.getNome())) {
 			throw new MyMon3yException("Esta Categoria já existe.");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @see GerenciadorDePersistencia#atualizar(Categoria)
 	 */
@@ -321,17 +316,7 @@ public class SistemaMyMon3y {
 	 */
 	private Date getDataNormalizada(Date data) {
 
-		if (data == null) {
-			return null;
-		}
-
-		this.calendar.setTime(data);
-		this.calendar.set(Calendar.HOUR_OF_DAY, 0);
-		this.calendar.set(Calendar.MINUTE, 0);
-		this.calendar.set(Calendar.SECOND, 0);
-		this.calendar.set(Calendar.MILLISECOND, 0);
-
-		return this.calendar.getTime();
+		return Util.getDataNormalizada(data);
 	}
 
 	/**
@@ -480,4 +465,12 @@ public class SistemaMyMon3y {
 		return this.gdp.getCategoriasByNomeELoginDoUsuario(login, nome);
 	}
 
+	public List<Transacao> pesquisarTransacao(String login) throws MyMon3yException {
+		return this.gdp.getTransacoesByLogin(login);
+	}
+
+	public List<Transacao> pesquisarTransacao(String login, Long idCategoria) throws MyMon3yException {
+		return this.gdp.getTransacoesByLoginEidCategoria(login, idCategoria);
+	}
+	
 }

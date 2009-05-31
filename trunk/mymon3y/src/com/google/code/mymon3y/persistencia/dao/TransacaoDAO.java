@@ -45,19 +45,10 @@ public interface TransacaoDAO extends GenericDAO<Transacao, Long> {
 	 *             Caso algum erro de persistência ocorra.
 	 */
 	Long getNumeroDeTransacoes(String login) throws PersistenciaMyMon3yException;
+	
+	List<Transacao> getTransacoes(String login) throws PersistenciaMyMon3yException;
 
-	/**
-	 * Retorna a quantidade de Transações de uma Categoria do Usuário.
-	 * 
-	 * @param login
-	 *            Login do Usuário.
-	 * @param idCategoria
-	 *            Identificador único da Categoria.
-	 * @return A quantidade de Transações de uma Categoria do Usuário.
-	 * @throws PersistenciaMyMon3yException
-	 *             Caso algum erro de persistência ocorra.
-	 */
-	Long getNumeroDeTransacoes(String login, Long idCategoria) throws PersistenciaMyMon3yException;
+	List<Transacao> getTransacoes(String login, Long idCategoria) throws PersistenciaMyMon3yException;
 
 	/**
 	 * Retorna a quantidade de notificações que um Usuário possui numa determinada data.

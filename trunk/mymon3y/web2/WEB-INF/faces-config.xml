@@ -6,9 +6,25 @@
 	version="1.2">
 	
 	<!-- VALIDATORs -->
+	<validator>
+		<validator-id>MoedaValidator</validator-id>
+		<validator-class>com.google.code.mymon3y.jsf.validators.MoedaValidator</validator-class>
+	</validator>
 	<!-- /VALIDATORs -->
 
 	<!-- CONVERTERs -->
+	<converter>
+		<converter-id>DataConverter</converter-id>
+		<converter-class>com.google.code.mymon3y.jsf.converters.DataConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>CreditoDebitoConverter</converter-id>
+		<converter-class>com.google.code.mymon3y.jsf.converters.CreditoDebitoConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>MoedaConverter</converter-id>
+		<converter-class>com.google.code.mymon3y.jsf.converters.MoedaConverter</converter-class>
+	</converter>
 	<!-- /CONVERTERs -->
 
 	<!-- MANAGED BEANs -->
@@ -163,6 +179,50 @@
 		<navigation-case>
 			<from-outcome>falha</from-outcome>
 			<to-view-id>/pages/atualizar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/gerenciar_transacao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>criar_transacao</from-outcome>
+			<to-view-id>/pages/criar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listar_transacoes</from-outcome>
+			<to-view-id>/pages/listar_transacoes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/listar_transacoes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>gerenciar_transacao</from-outcome>
+			<to-view-id>/pages/gerenciar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>criar_transacao</from-outcome>
+			<to-view-id>/pages/criar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>atualizar_transacao</from-outcome>
+			<to-view-id>/pages/atualizar_transacao.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/criar_transacao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/gerenciar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/criar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/gerenciar_transacao.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

@@ -23,9 +23,12 @@ package com.google.code.mymon3y.jsf;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import com.google.code.mymon3y.MyMon3yException;
 import com.google.code.mymon3y.jsf.util.ConstantesJSF;
 import com.google.code.mymon3y.model.Categoria;
+import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 
 /**
@@ -56,6 +59,16 @@ public class FacadeJSF extends ManagedBean {
 
 	private List<Categoria> categorias;
 
+	private List<SelectItem> categoriasSelectItems;
+
+	private Long idCategoriaSelectedItem;
+
+	private Transacao transacao;
+
+	private List<Transacao> transacoes;
+
+	private String ehCredito;
+
 	public FacadeJSF() {
 		this.usuario = getUsuarioDaSessao();
 		this.usuario = this.usuario != null ? this.usuario : new Usuario();
@@ -63,7 +76,9 @@ public class FacadeJSF extends ManagedBean {
 		this.usuarioAtualizar = new Usuario();
 
 		this.categoria = new Categoria();
-		
+
+		this.transacao = new Transacao();
+
 	}
 
 	public String getConfirmacaoDeSenha() {
@@ -82,6 +97,55 @@ public class FacadeJSF extends ManagedBean {
 		this.usuario = usuario;
 	}
 
+	public String getEhCredito() {
+		return ehCredito;
+	}
+
+	public void setEhCredito(String ehCredito) {
+		this.ehCredito = ehCredito;
+		if(ehCredito.equals("Crédito")){
+			this.transacao.setCredito(true);
+		} else {
+			this.transacao.setCredito(false);
+		}
+	}
+
+	public List<SelectItem> getCategoriasSelectItems() {
+		if (this.categoriasSelectItems == null || ehFase6RenderResponse()) {
+			this.categoria.setNome("");
+			List<Categoria> categorias = getCategorias();
+
+			this.categoriasSelectItems = new ArrayList<SelectItem>(categorias.size());
+			this.categoriasSelectItems.add(new SelectItem(null, ""));
+			for (Categoria c : categorias) {
+				this.categoriasSelectItems.add(new SelectItem(c.getId(), c.getNome()));
+			}
+		}
+		return categoriasSelectItems;
+	}
+
+	public void setCategoriasSelectItems(List<SelectItem> categoriasSelectItems) {
+		this.categoriasSelectItems = categoriasSelectItems;
+	}
+
+	public Long getIdCategoriaSelectedItem() {
+		return idCategoriaSelectedItem;
+	}
+
+	public void setIdCategoriaSelectedItem(Long idCategoriaSelectedItem) {
+		debug("Setado valor para categoriaSelectedItem:");
+		debug(idCategoriaSelectedItem);
+		this.idCategoriaSelectedItem = idCategoriaSelectedItem;
+	}
+
+	public Transacao getTransacao() {
+		return transacao;
+	}
+
+	public void setTransacao(Transacao transacao) {
+		this.transacao = transacao;
+	}
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -91,7 +155,7 @@ public class FacadeJSF extends ManagedBean {
 	}
 
 	public List<Categoria> getCategorias() {
-		if(this.categorias == null || ehFase6RenderResponse()){
+		if (this.categorias == null || ehFase6RenderResponse()) {
 			try {
 				debug("Pesquisando Categorias com o seguinte nome: " + this.categoria.getNome());
 				this.categorias = getFacade().pesquisarCategorias(getLoginUsuarioNaSessao(), this.categoria.getNome());
@@ -101,12 +165,52 @@ public class FacadeJSF extends ManagedBean {
 				this.categorias = new ArrayList<Categoria>();
 			}
 		}
-		
+
 		return this.categorias;
 	}
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public List<Transacao> getTransacoes() {
+		debug("\"getTransacoes\" foi chamado!!! this.idCategoriaSelectedItem:");
+		debug(this.idCategoriaSelectedItem);
+
+		if (this.transacoes == null || ehFase6RenderResponse()) {
+			debug("Pesquisando Transacoes da seguinte Categoria (id): " + this.idCategoriaSelectedItem);
+
+			if (this.idCategoriaSelectedItem == null) {
+				// Buscar todas as Transações do Usuário
+				try {
+					this.transacoes = getFacade().pesquisarTransacao(getLoginUsuarioNaSessao());
+				} catch (MyMon3yException e) {
+					e.printStackTrace();
+					debug("Não foi possível recuperar as Transacoes cadastradas (busca por TODAS)!");
+					this.transacoes = new ArrayList<Transacao>();
+				}
+
+			} else {
+				// Buscar apenas as Transações que estão associadas com a Categoria informada
+
+				try {
+					this.transacoes = getFacade().pesquisarTransacao(getLoginUsuarioNaSessao(),
+							this.idCategoriaSelectedItem);
+				} catch (MyMon3yException e) {
+					e.printStackTrace();
+					debug("Não foi possível recuperar as Transacoes cadastradas (buscar Transacoes associadas com Categoria "
+							+ this.idCategoriaSelectedItem + ")!");
+					this.transacoes = new ArrayList<Transacao>();
+				}
+
+			}
+		}
+
+		return transacoes;
+	}
+
+	public void setTransacoes(List<Transacao> transacoes) {
+		this.transacoes = transacoes;
 	}
 
 	public Usuario getUsuarioAtualizar() {
@@ -204,7 +308,7 @@ public class FacadeJSF extends ManagedBean {
 		return ConstantesJSF.SUCESSO;
 	}
 
-	public String apagarCategoria(){
+	public String apagarCategoria() {
 		try {
 			getFacade().removerCategoria(getIdentificadorDoUsuarioNaSessao(), this.categoria.getId());
 			this.categorias = null;
@@ -212,12 +316,24 @@ public class FacadeJSF extends ManagedBean {
 			e.printStackTrace();
 			addMensagemErro(e.getMessage());
 		}
-		
+
 		return ConstantesJSF.BRANCO;
 	}
-	
-	public String atualizarCategoria(){
-		
+
+	public String apagarTransacao() {
+		try {
+			getFacade().removerTransacao(getIdentificadorDoUsuarioNaSessao(), this.transacao.getId());
+			this.transacoes = null;
+		} catch (MyMon3yException e) {
+			e.printStackTrace();
+			addMensagemErro(e.getMessage());
+		}
+
+		return ConstantesJSF.BRANCO;
+	}
+
+	public String atualizarCategoria() {
+
 		try {
 			getFacade().atualizar(this.categoria);
 			this.categoria = new Categoria();
@@ -227,10 +343,10 @@ public class FacadeJSF extends ManagedBean {
 			addMensagemErro(e.getMessage());
 			return ConstantesJSF.FALHA;
 		}
-		
+
 		return ConstantesJSF.SUCESSO;
 	}
-	
+
 	// ================================== MÉTODOS QUE RETORNAM CONSTANTES ==================================
 
 	public String pesquisarCategoria() {
@@ -238,17 +354,27 @@ public class FacadeJSF extends ManagedBean {
 		return "listar_categorias";
 	}
 
+	public String pesquisarTransacao() {
+
+		return "listar_transacoes";
+	}
+
 	public String novaPesquisaCategoria() {
 
 		this.categoria = new Categoria();
 		return "gerenciar_categoria";
 	}
-	
-	//"atualizar_categoria"
+
+	public String novaPesquisaTransacao() {
+
+		return "gerenciar_transacao";
+	}
+
+	// "atualizar_categoria"
 	// ================================== MÉTODOS QUE PREPARAM O CENÁRIO ==================================
 
-	public String prepararAtualizarCategoria(){
-		
+	public String prepararAtualizarCategoria() {
+
 		try {
 			this.categoria = getFacade().getCategoria(getLoginUsuarioNaSessao(), this.categoria.getId());
 		} catch (MyMon3yException e) {
@@ -256,7 +382,20 @@ public class FacadeJSF extends ManagedBean {
 			debug("Não foi possível recuperar do banco a Categoria que deveria ser atualizada! Estado do bean com as informações:");
 			debug(this.categoria);
 		}
-		
+
 		return "atualizar_categoria";
+	}
+
+	public String prepararAtualizarTransacao() {
+
+		try {
+			this.transacao = getFacade().getTransacao(getLoginUsuarioNaSessao(), this.transacao.getId());
+		} catch (MyMon3yException e) {
+			e.printStackTrace();
+			debug("Não foi possível recuperar do banco a Transação que deveria ser atualizada! Estado do bean com as informações:");
+			debug(this.transacao);
+		}
+
+		return "atualizar_transacao";
 	}
 }
