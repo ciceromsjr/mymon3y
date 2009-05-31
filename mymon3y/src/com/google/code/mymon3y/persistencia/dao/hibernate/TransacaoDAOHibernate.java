@@ -62,6 +62,26 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 		});
 		return result;
 	}
+	
+	/**
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNotificacoes(java.util.Date)
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Transacao> getNotificacoes(final Date dataAvisoPrevio)
+			throws PersistenciaMyMon3yException {
+		List<Transacao> result = null;
+
+		result = (List<Transacao>) executarOperacao(new Comando() {
+
+			public Object executar() {
+				Query q = getSession().getNamedQuery("transacao.notificacoes");
+				q.setDate("dataAvisoPrevio", dataAvisoPrevio);
+				return q.list();
+			}
+
+		});
+		return result;
+	}
 
 	/**
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String)

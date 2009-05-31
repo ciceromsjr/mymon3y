@@ -407,6 +407,19 @@ public class FacadeEasyAccept {
 		}
 		return this.sistema.getNotificacoes(login, dataFormatada);
 	}
+	
+	/**
+	 * @see SistemaMyMon3y#getNotificacoes(Date)
+	 */
+	public int getTodasNotificacoes(String data) throws MyMon3yException {
+		Date dataFormatada = null;
+		try {
+			dataFormatada = this.dateFormatTransacao.parse(data);
+		} catch (ParseException e) {
+			throw new MyMon3yException("Data Inválida.");
+		}
+		return this.sistema.getNotificacoes(dataFormatada).size();
+	}
 
 	/**
 	 * @see SistemaMyMon3y#criarRelatorio(String, Date, Date)

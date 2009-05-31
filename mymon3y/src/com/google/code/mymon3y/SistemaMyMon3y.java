@@ -416,6 +416,13 @@ public class SistemaMyMon3y {
 		Usuario usuario = getUsuario(login);
 		return this.gdp.getNotificacoes(usuario.getId(), getDataNormalizada(data));
 	}
+	
+	/**
+	 * @see GerenciadorDePersistencia#getNotificacoes(Date)
+	 */
+	public List<Transacao> getNotificacoes(Date data) throws MyMon3yException {
+		return this.gdp.getNotificacoes(getDataNormalizada(data));
+	}
 
 	/**
 	 * Retorna um Relatório com as Transações que atende a busca.

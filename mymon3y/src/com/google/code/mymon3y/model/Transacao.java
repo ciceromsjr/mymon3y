@@ -55,7 +55,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 		@NamedQuery(name = "transacao.todasTransacoesLoginDoUsuarioIdCategoria", query = "from Transacao t where t.categoria.usuario.login like :loginDoUsuario and t.categoria.id = :idCategoria"),
 		@NamedQuery(name = "transacao.transacoes", query = "from Transacao t where t.categoria.usuario.login like :loginDoUsuario and :dataInicio <= t.data and t.data <= :dataFim"),
 		@NamedQuery(name = "transacao.loginDoUsuario", query = "select count(*) from Transacao t where t.categoria.usuario.login like :loginDoUsuario"),
-		@NamedQuery(name = "transacao.porUsuarioEData", query = "select count(*) from Transacao t where t.categoria.usuario.id = :idDoUsuario and t.dataAvisoPrevio = :data") })
+		@NamedQuery(name = "transacao.porUsuarioEData", query = "select count(*) from Transacao t where t.categoria.usuario.id = :idDoUsuario and t.dataAvisoPrevio = :data"),
+		@NamedQuery(name = "transacao.notificacoes", query = "from Transacao t where :dataAvisoPrevio = t.dataAvisoPrevio") })
 public class Transacao implements Identificavel {
 
 	/**
