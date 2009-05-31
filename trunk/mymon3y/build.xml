@@ -11,12 +11,6 @@
 	<property name="webinf.dir" value="${webroot.dir}/WEB-INF" />
 	<property name="project.distname" value="mymon3y" />
 
-	<path id="cobertura.classpath">
-		<fileset dir="${mymon3y.lib.cobertura}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
-
 	<path id="mymon3y.classpathref">
 		<fileset dir="${mymon3y.lib}">
 			<include name="**/*.jar" />
@@ -42,29 +36,23 @@
 		<pathelement location="${mymon3y.classes-teste}" />
 	</path>
 
-	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
-
 	<!-- LIMPAR -->
 	<target name="limpa" depends="bd-remover-banco" description="Limpa o ambiente">
 		<delete dir="${mymon3y.classes}" />
-		<delete dir="${mymon3y.classes-cobertura}" />
 		<delete dir="${mymon3y.classes-teste}" />
 		<delete dir="${mymon3y.relatorios}" />
 		<delete dir="${mymon3y.docs}" />
 		<delete dir="${mymon3y.release}" />
 		<delete dir="${mymon3y.java2html}" />
 		<delete file="${mymon3y.jar}" />
-		<delete file="cobertura.ser" />
 	</target>
 	<!-- /LIMPAR -->
 
 	<!-- PREPARAR -->
-	<target name="preparar" description="Prepara o ambiente para compilação, testes de unidade e de cobertura">
+	<target name="preparar" description="Prepara o ambiente para compilação, testes de unidade">
 		<mkdir dir="${mymon3y.classes}" />
-		<mkdir dir="${mymon3y.classes-cobertura}" />
 		<mkdir dir="${mymon3y.classes-teste}" />
 		<mkdir dir="${mymon3y.relatorios}" />
-		<mkdir dir="${mymon3y.relatorios.cobertura}" />
 		<mkdir dir="${mymon3y.relatorios.test}" />
 		<mkdir dir="${mymon3y.docs.api}" />
 		<mkdir dir="${mymon3y.release}" />
@@ -108,21 +96,6 @@
 		</javac>
 	</target>
 	<!-- /COMPILAR-TESTES -->
-
-	<!-- COBERTURA-INSTR -->
-	<target name="cobertura-instr" depends="compilar-testes" description="Compila o código principal fazendo a instrumentação necessária para rodar o teste de cobertura">
-		<delete file="cobertura.ser" />
-
-		<cobertura-instrument todir="${mymon3y.classes-cobertura}">
-			<fileset dir="${mymon3y.classes}">
-				<include name="**/*.class" />
-			</fileset>
-			<fileset dir="${mymon3y.classes-teste}">
-				<include name="**/*.class" />
-			</fileset>
-		</cobertura-instrument>
-	</target>
-	<!-- /COBERTURA-INSTR -->
 
 	<!-- JAR -->	
 	<target name="jar" depends="compila" description="Cria o .jar do projeto com código fonte e Class">
@@ -186,14 +159,11 @@
 	<!-- /WAR -->
 	
 	<!-- TESTAR -->
-	<target name="testar" depends="cobertura-instr" description="Executa os testes de unidade e cobertura">
+	<target name="testar" depends="compilar-testes" description="Executa os testes de unidade">
 		<junit fork="yes" printsummary="yes" haltonfailure="no" haltonerror="no">
 
-			<sysproperty key="net.sourceforge.cobertura.datafile" file="${basedir}/cobertura.ser" />
-
-			<classpath location="${mymon3y.classes-cobertura}" />
+			<classpath location="${mymon3y.classes-teste}" />
 			<classpath refid="mymon3y.classpathref" />
-			<classpath refid="cobertura.classpath" />
 
 			<formatter type="xml" />
 			<batchtest fork="yes" todir="${mymon3y.relatorios}">
@@ -211,18 +181,8 @@
 	</target>
 	<!-- /TESTAR -->
 
-	<!-- COBERTURA -->
-	<target name="cobertura" depends="testar" description="Cria os reports do teste de cobertura. O resultado pode ser visto em 'cobertura-index.html'">
-		<cobertura-report format="html" destdir="${mymon3y.relatorios.cobertura}">
-			<fileset dir="${mymon3y.src}">
-				<include name="**/*.java" />
-			</fileset>
-		</cobertura-report>
-	</target>
-	<!-- /COBERTURA -->
-
 	<!-- EASY_ACCEPT-->
-	<target name="testesdeaceitacao" depends="cobertura-instr" description="Executa os testes de aceitação EasyAccept">
+	<target name="testesdeaceitacao" depends="compilar-testes" description="Executa os testes de aceitação EasyAccept">
 		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
 			<classpath refid="mymon3y.classpathref" />
 			<jvmarg value="-Dfile.encoding=UTF-8" />

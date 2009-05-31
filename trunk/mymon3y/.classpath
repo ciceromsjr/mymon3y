@@ -7,7 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib-testes/easyaccept.jar"/>
 	<classpathentry kind="lib" path="lib-hibernate-core/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="lib-hibernate-core/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="lib-hibernate-core/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib-hibernate-core/javassist-3.4.GA.jar"/>
 	<classpathentry kind="lib" path="lib-hibernate-core/jta-1.1.jar"/>
@@ -25,19 +24,15 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib-hibernate-validator/hibernate-validator.jar"/>
 	<classpathentry kind="lib" path="lib/derby.jar"/>
-	<classpathentry kind="lib" path="lib-jsf/commons-beanutils.jar"/>
-	<classpathentry kind="lib" path="lib-jsf/commons-collections.jar"/>
-	<classpathentry kind="lib" path="lib-jsf/commons-digester.jar"/>
-	<classpathentry kind="lib" path="lib-jsf/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/jsf-api.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/jsf-impl.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/jstl.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/standard.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/jsf-facelets.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/phaseTracker.jar"/>
-	<classpathentry kind="lib" path="lib-jsf/el-api.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/el-ri.jar"/>
-	<classpathentry kind="lib" path="lib-jsf/ajax4jsf-1.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/el-api.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="output" path="web2/WEB-INF/classes"/>
 </classpath>
