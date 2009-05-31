@@ -42,12 +42,16 @@ public class ManagedBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private SistemaMyMon3y sm;
-
+	private static final String ID_USUARIO = "ID_USUARIO";
+	
 	public ManagedBean() {
-		this.sm = new SistemaMyMon3y();
 	}
 
+	protected boolean ehFase6RenderResponse(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.getRenderResponse();
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected void guardarNaSessao(String chave, Object valor) {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -84,16 +88,28 @@ public class ManagedBean implements Serializable {
 	}
 
 	protected SistemaMyMon3y getFacade() {
-		return this.sm;
+		return new SistemaMyMon3y();
 	}
 
+	protected void setIdentificadorDoUsuarioNaSessao(Usuario usuario){
+		guardarNaSessao(ID_USUARIO, usuario.getLogin());
+	}
+	
+	protected String getIdentificadorDoUsuarioNaSessao(){
+		return (String) acessarNaSessao(ID_USUARIO);
+	}
+	
+	protected void retirarIdentificadorDoUsuarioDaSessao(){
+		retirarDaSessao(ID_USUARIO);
+	}
+	
 	protected Usuario getUsuarioDaSessao() {
 
-		String loginUsuarioDaSessao = (String) acessarNaSessao(LoginMBean.ID_USUARIO);
+		String loginUsuarioDaSessao = (String) acessarNaSessao(ID_USUARIO);
 		Usuario usuarioDaSessao = null;
 
 		try {
-			usuarioDaSessao = this.sm.getUsuario(loginUsuarioDaSessao);
+			usuarioDaSessao = this.getFacade().getUsuario(loginUsuarioDaSessao);
 		} catch (MyMon3yException e) {
 			debug("TENTEI PEGAR USUÁRIO DA SESSÃO MAS NÃO TEM NENHUM!");
 		}

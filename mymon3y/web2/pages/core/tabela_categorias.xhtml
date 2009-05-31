@@ -1,0 +1,37 @@
+<h:dataTable xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets" value="#{facade.categorias}" var="categoria">
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="ID" />
+        </f:facet>
+        <h:outputText value="#{categoria.id}" />
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Nome" />
+        </f:facet>
+        <h:outputText value="#{categoria.nome}" />
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Operações" />
+        </f:facet>
+
+        <h:commandButton value="Editar" image="/images/icons/edit_icon.gif" action="#{facade.prepararAtualizarCategoria}">
+        	<f:setPropertyActionListener target="#{facade.categoria.id}" value="#{categoria.id}" />
+        </h:commandButton>
+        
+        <h:commandButton value="Apagar" image="/images/icons/delete.gif" action="#{facade.apagarCategoria}">
+        	<f:setPropertyActionListener target="#{facade.categoria.id}" value="#{categoria.id}" />
+        </h:commandButton>
+    </h:column>
+    
+
+</h:dataTable>

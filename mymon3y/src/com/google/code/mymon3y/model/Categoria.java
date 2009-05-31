@@ -56,7 +56,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 @Entity
 @Table(name = "tb_categoria", uniqueConstraints = { @UniqueConstraint(columnNames = { "nome", "fk_usuario" }) })
-@NamedQueries( { @NamedQuery(name = "categoria.nomeCategoriaLoginDoUsuario", query = "select c from Categoria c join c.usuario u where lower(c.nome) = lower(:nome) and u.login like :loginDoUsuario") })
+@NamedQueries( { @NamedQuery(name = "categoria.nomeCategoriaLoginDoUsuario", query = "select c from Categoria c join c.usuario u where lower(c.nome) = lower(:nome) and u.login like :loginDoUsuario"),
+			     @NamedQuery(name = "categorias.nomeCategoriaLoginDoUsuario", query = "select c from Categoria c join c.usuario u where lower(c.nome) like lower(:nome) and u.login like :loginDoUsuario") })
 public class Categoria implements Identificavel {
 
 	/**

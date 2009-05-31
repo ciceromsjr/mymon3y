@@ -20,6 +20,8 @@
  */
 package com.google.code.mymon3y.persistencia.dao.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Query;
 
 import com.google.code.mymon3y.model.Categoria;
@@ -57,6 +59,30 @@ public class CategoriaDAOHibernate extends AbstractGenericHibernateDAO<Categoria
 
 		});
 		fazerAntesDoLoadSessaoFechada(result);
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	/* (non-Javadoc)
+	 * @see com.google.code.mymon3y.persistencia.dao.CategoriaDAO#findsByNomeELoginDoUsuario(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<Categoria> findsByNomeELoginDoUsuario(final String nome, final String login) throws PersistenciaMyMon3yException {
+		List<Categoria> result = null;
+
+		result = (List<Categoria>) executarOperacao(new Comando() {
+
+			public Object executar() {
+
+				Query q = getSession().getNamedQuery("categorias.nomeCategoriaLoginDoUsuario");
+				q.setString("nome", "%" + nome + "%");
+				q.setString("loginDoUsuario", login);
+
+				return q.list();
+			}
+
+		});
+
 		return result;
 	}
 
