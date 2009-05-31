@@ -83,29 +83,53 @@ public class TransacaoDAOHibernate extends AbstractGenericHibernateDAO<Transacao
 		return result;
 	}
 
-	/**
-	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNumeroDeTransacoes(java.lang.String,
-	 *      java.lang.Long)
+	@SuppressWarnings("unchecked")
+	/* (non-Javadoc)
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getTransacoes(java.lang.String)
 	 */
-	public Long getNumeroDeTransacoes(final String login, final Long idCategoria) throws PersistenciaMyMon3yException {
+	@Override
+	public List<Transacao> getTransacoes(final String login) throws PersistenciaMyMon3yException {
+		List<Transacao> result = null;
 
-		Long result = null;
-
-		result = (Long) executarOperacao(new Comando() {
+					
+		result = (List<Transacao>) executarOperacao(new Comando() {
 
 			public Object executar() {
 
-				Query q = getSession().getNamedQuery("transacao.loginDoUsuarioECategoria");
+				Query q = getSession().getNamedQuery("transacao.todasTransacoesLoginDoUsuario");
 				q.setString("loginDoUsuario", login);
-				q.setLong("idCategoria", idCategoria);
 
-				return q.uniqueResult();
+				return q.list();
 			}
 
 		});
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	/* (non-Javadoc)
+	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getTransacoes(java.lang.String, java.lang.Long)
+	 */
+	@Override
+	public List<Transacao> getTransacoes(final String login, final Long idCategoria) throws PersistenciaMyMon3yException {
+		List<Transacao> result = null;
 
+		
+		result = (List<Transacao>) executarOperacao(new Comando() {
+
+			public Object executar() {
+
+				Query q = getSession().getNamedQuery("transacao.todasTransacoesLoginDoUsuarioIdCategoria");
+				q.setString("loginDoUsuario", login);
+				q.setLong("idCategoria", idCategoria);
+
+				return q.list();
+			}
+
+		});
+		return result;
+	}
+	
 	/**
 	 * @see com.google.code.mymon3y.persistencia.dao.TransacaoDAO#getNotificacoes(java.lang.Long, java.util.Date)
 	 */

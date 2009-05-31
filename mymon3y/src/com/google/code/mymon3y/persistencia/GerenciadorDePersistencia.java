@@ -144,6 +144,14 @@ public class GerenciadorDePersistencia {
 		return this.transacaoDAO.getTransacoes(login, inicio, fim);
 	}
 
+	public List<Transacao> getTransacoesByLogin(String login) throws PersistenciaMyMon3yException {
+		return this.transacaoDAO.getTransacoes(login);
+	}
+	
+	public List<Transacao> getTransacoesByLoginEidCategoria(String login, Long idCategoria) throws PersistenciaMyMon3yException {
+		return this.transacaoDAO.getTransacoes(login, idCategoria);
+	}
+	
 	/**
 	 * @see GenericDAO#makeTransient(com.google.code.mymon3y.model.Identificavel)
 	 */
