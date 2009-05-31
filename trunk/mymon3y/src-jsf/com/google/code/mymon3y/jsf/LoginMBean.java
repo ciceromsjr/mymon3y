@@ -43,8 +43,6 @@ public class LoginMBean extends ManagedBean {
 
 	private String senha;
 
-	public static final String ID_USUARIO = "ID_USUARIO";
-
 	public LoginMBean() {
 
 	}
@@ -77,7 +75,7 @@ public class LoginMBean extends ManagedBean {
 		
 		boolean loginValido = sm.validoLoginESenha(usuario, senha); 
 		if(loginValido){
-			guardarNaSessao(ID_USUARIO, usuario.getLogin());
+			setIdentificadorDoUsuarioNaSessao(usuario);
 		}
 		
 		return loginValido ? ConstantesJSF.SUCESSO_LOGIN : ConstantesJSF.FALHA_LOGIN;
@@ -88,10 +86,10 @@ public class LoginMBean extends ManagedBean {
 	}
 	
 	public String logoff() {
-		Object idUsuario = acessarNaSessao(ID_USUARIO);
+		Object idUsuario = getIdentificadorDoUsuarioNaSessao();
 		
 		if(idUsuario != null){
-			retirarDaSessao(ID_USUARIO);
+			retirarIdentificadorDoUsuarioDaSessao();
 		}
 		
 		return ConstantesJSF.SUCESSO;

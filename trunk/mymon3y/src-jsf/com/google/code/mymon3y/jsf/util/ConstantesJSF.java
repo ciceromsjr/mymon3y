@@ -28,6 +28,8 @@ package com.google.code.mymon3y.jsf.util;
  */
 public class ConstantesJSF {
 
+	public static final String BRANCO = "";
+
 	public static String SUCESSO = "sucesso";
 	
 	public static String FALHA = "falha";

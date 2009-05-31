@@ -38,8 +38,8 @@ import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 import com.google.code.mymon3y.persistencia.GerenciadorDePersistencia;
 import com.google.code.mymon3y.persistencia.InvalidPropertiesException;
-import com.google.code.mymon3y.util.OFXImport;
 import com.google.code.mymon3y.util.Hasher;
+import com.google.code.mymon3y.util.OFXImport;
 
 /**
  * Fachada principal do sistema.
@@ -94,8 +94,10 @@ public class SistemaMyMon3y {
 	/**
 	 * Cria um novo Usuário no sistema.
 	 * 
-	 * @param usuario Novo usuário.
-	 * @throws MyMon3yException Caso algum erro ocorra.
+	 * @param usuario
+	 *            Novo usuário.
+	 * @throws MyMon3yException
+	 *             Caso algum erro ocorra.
 	 */
 	public void criarUsuario(Usuario usuario) throws MyMon3yException {
 		Usuario usuarioExistente = this.gdp.getUsuarioByLogin(usuario.getLogin());
@@ -191,6 +193,10 @@ public class SistemaMyMon3y {
 		return this.gdp.getCategoriaByNomeELoginDoUsuario(login, nome);
 	}
 
+	private Categoria getCategoriaById(Long idCategoria) throws MyMon3yException {
+		return this.gdp.getCategoriaById(idCategoria);
+	}
+	
 	/**
 	 * Retorna a Categoria associada com o login e cujo id seja igual ao passado como parâmetro.
 	 * 
@@ -225,12 +231,7 @@ public class SistemaMyMon3y {
 	public Long adicionarCategoria(String login, Categoria categoria) throws MyMon3yException {
 		Usuario usuario = getUsuario(login);
 		validar(categoria);
-
-		Categoria categoriaExistente = getCategoriaByNomeELoginDoUsuario(login, categoria.getNome());
-
-		if (categoriaExistente != null) {
-			throw new MyMon3yException("Esta Categoria já existe.");
-		}
+		validarCategoriaInexistente(login, categoria);
 
 		usuario.addCategorias(categoria);
 		categoria.setUsuario(usuario);
@@ -240,11 +241,37 @@ public class SistemaMyMon3y {
 		return categoria.getId();
 	}
 
+	private void validarCategoriaInexistente(String login, Categoria categoria) throws MyMon3yException {
+		validarCategoriaInexistente(getCategoriaByNomeELoginDoUsuario(login, categoria.getNome()), categoria);
+	}
+
+	private void validarCategoriaInexistente(Categoria categoria) throws MyMon3yException {
+		//Pode ser que a categoria passada como parâmetro não tenha associação com seu dono
+		String login = getCategoriaById(categoria.getId()).getUsuario().getLogin();
+		validarCategoriaInexistente(login, categoria);
+	}
+
+	private void validarCategoriaInexistente(Categoria categoriaExistente, Categoria novaCategoria) throws MyMon3yException {
+		if(categoriaExistente == null || novaCategoria == null){
+			return;
+		}
+		
+		if(categoriaExistente.getId().equals(novaCategoria.getId())){
+			return;
+		}
+		
+		if(categoriaExistente.getNome().equalsIgnoreCase(novaCategoria.getNome())){
+			throw new MyMon3yException("Esta Categoria já existe.");
+		}
+		
+	}
+	
 	/**
 	 * @see GerenciadorDePersistencia#atualizar(Categoria)
 	 */
 	public void atualizar(Categoria categoria) throws MyMon3yException {
 		validar(categoria);
+		validarCategoriaInexistente(categoria);
 		this.gdp.atualizar(categoria);
 	}
 
@@ -382,21 +409,21 @@ public class SistemaMyMon3y {
 	 */
 	public void removerUsuario(String login, String senha) throws MyMon3yException {
 		Usuario usuario = getUsuario(login);
-		if(!validoLoginESenha(usuario, senha)){
+		if (!validoLoginESenha(usuario, senha)) {
 			throw new MyMon3yException("Login/Senha errada.");
 		}
 		this.gdp.removerUsuario(usuario);
 	}
 
 	public boolean validoLoginESenha(Usuario usuario, String senha) {
-		if(usuario == null || senha == null){
+		if (usuario == null || senha == null) {
 			return false;
 		}
 		String senhaVerdadeira = usuario.getSenha();
 		String senhaInformada = Hasher.getSha256(senha);
 		return senhaVerdadeira.equals(senhaInformada);
 	}
-	
+
 	/**
 	 * @see GerenciadorDePersistencia#getNotificacoes(Long, Date)
 	 */
@@ -440,6 +467,17 @@ public class SistemaMyMon3y {
 		for (Transacao t : list) {
 			adicionarTransacao(login, getCategoriaByNomeELoginDoUsuario(login, "Outro").getId(), t);
 		}
+	}
+
+	/**
+	 * Busca Categoras pelo nome.
+	 * 
+	 * @param nome
+	 *            Nome a ser buscado.
+	 * @return Lista de Categorias que satisfazem a busca.
+	 */
+	public List<Categoria> pesquisarCategorias(String login, String nome) throws MyMon3yException {
+		return this.gdp.getCategoriasByNomeELoginDoUsuario(login, nome);
 	}
 
 }

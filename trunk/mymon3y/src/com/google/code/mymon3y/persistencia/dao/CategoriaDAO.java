@@ -20,6 +20,8 @@
  */
 package com.google.code.mymon3y.persistencia.dao;
 
+import java.util.List;
+
 import com.google.code.mymon3y.model.Categoria;
 import com.google.code.mymon3y.persistencia.PersistenciaMyMon3yException;
 
@@ -44,5 +46,18 @@ public interface CategoriaDAO extends GenericDAO<Categoria, Long> {
 	 *             Caso algum erro de persistência ocorra.
 	 */
 	Categoria findByNomeELoginDoUsuario(String nome, String login) throws PersistenciaMyMon3yException;
+
+	/**
+	 * Encontra Categorias com base no seu nome e no login do Usuário dono.
+	 * 
+	 * @param nome
+	 *            Nome da Categoria.
+	 * @param login
+	 *            Login do Úsuário dono.
+	 * @return Categorias buscada ou null caso não seja encontrada.
+	 * @throws PersistenciaMyMon3yException
+	 *             Caso algum erro de persistência ocorra.
+	 */
+	List<Categoria> findsByNomeELoginDoUsuario(String nome, String login) throws PersistenciaMyMon3yException;
 
 }

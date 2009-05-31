@@ -105,6 +105,67 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/pages/gerenciar_categoria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>criar_categoria</from-outcome>
+			<to-view-id>/pages/criar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listar_categorias</from-outcome>
+			<to-view-id>/pages/listar_categorias.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/criar_categoria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/gerenciar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/criar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/gerenciar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>/pages/listar_categorias.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>gerenciar_categoria</from-outcome>
+			<to-view-id>/pages/gerenciar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>criar_categoria</from-outcome>
+			<to-view-id>/pages/criar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>atualizar_categoria</from-outcome>
+			<to-view-id>/pages/atualizar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/atualizar_categoria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/listar_categorias.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/listar_categorias.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/atualizar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 	<!-- /NAVIGATION RULEs -->
 
 	<!-- MESSAGE BUNDLEs -->
@@ -133,9 +194,11 @@
      </application>
 	<!-- /MESSAGE BUNDLEs -->
 	
+	<!-- 
 	<lifecycle>
 		<phase-listener>org.exadel.jsf.PhaseTracker</phase-listener>
 	</lifecycle>
+	-->
 	
 
 </faces-config>

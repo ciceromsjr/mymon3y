@@ -179,4 +179,8 @@ public class GerenciadorDePersistencia {
 		return this.transacaoDAO.getNotificacoes(idDoUsuario, data);
 	}
 
+	public List<Categoria> getCategoriasByNomeELoginDoUsuario(String login, String nome) throws PersistenciaMyMon3yException {
+		return this.categoriaDAO.findsByNomeELoginDoUsuario(nome, login);
+	}
+
 }
