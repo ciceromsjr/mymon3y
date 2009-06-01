@@ -66,6 +66,66 @@
 	<td>62,00</td>
 	<td></td>
 </tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@src=&quot;/mymon3y/images/icons/delete.gif&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/mymon3y/pages/logout.jsf</td>
+	<td></td>
+</tr>
 
 </tbody></table>
 </body>
