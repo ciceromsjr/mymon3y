@@ -1,4 +1,4 @@
-O GarbageCollector do Java mantem referência quando um classloader carrega uma classe dinamicamente. Para evitar um estouro de memória no uso da aplicação, inicialize o tomcat com os seguintes parâmetros:
+O GarbageCollector do Java mantem referências quando um classloader carrega uma classe dinamicamente. Para evitar um estouro de memória no uso da aplicação, inicialize o tomcat com os seguintes parâmetros:
 
 -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled
 
@@ -10,7 +10,7 @@ A linha:
 
 org.apache.el.parser.COERCE_TO_ZERO=false
 
-O projeto faz uso do banco de dados MySQL. Você precisa executar as seguintes linhas como administrador para configurá-lo:
+O projeto faz uso do banco de dados MySQL. Você precisa executar os seguintes comandos como administrador para configurá-lo:
 
 DROP DATABASE IF EXISTS mymon3y;
 DROP USER mymon3y;
@@ -19,5 +19,6 @@ CREATE USER mymon3y IDENTIFIED BY 'mymon3y';
 GRANT ALL PRIVILEGES ON mymon3y.* TO mymon3y@"%";
 
 Em seguida, para que as tabelas sejam geradas, execute a seguinte task do ant: bd-gerar-banco-mysql
+
 OBS: Caso algum erro ocorra e as tabelas não sejam geradas, tente repetir o processo.
 Caso ainda assim as tabelas não sejam geradas, por favor entrar em contato com os desenvolvedores.
