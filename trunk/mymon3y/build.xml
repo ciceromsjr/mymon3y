@@ -40,7 +40,7 @@
 	</path>
 
 	<!-- LIMPAR -->
-	<target name="limpa" depends="bd-remover-banco" description="Limpa o ambiente">
+	<target name="limpa" description="Limpa o ambiente">
 		<delete dir="${mymon3y.classes}" />
 		<delete dir="${mymon3y.classes-teste}" />
 		<delete dir="${mymon3y.relatorios}" />
@@ -307,10 +307,44 @@
 	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="mymon3y.classpathref" />
 
 	<!-- BD-REMOVER-BANCO -->
-	<target name="bd-remover-banco" description="Remove o Esquema Logico no Banco de Dados">
-		<delete dir="${mymon3y.db}" />
+	<target name="bd-remover-banco" depends="bd-remover-banco-mysql" description="Remove o Esquema Logico no Banco de Dados">
 	</target>
 	<!-- /BD-REMOVER-BANCO -->
+	
+    <!-- BD-REMOVER-BANCO-MYSQL -->
+    <target name="bd-remover-banco-mysql" depends="compila" description="Remove o Esquema Logico no Banco de Dados MySQL">
+            <hibernatetool destdir="${mymon3y.base}">
+                    <annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
+                    <hbm2ddl drop="true" create="false" export="true" delimiter=";" format="false" />
+            </hibernatetool>
+            <!--
+            dir="${mymon3y.classes}" 
+            classpathref="mymon3y.classpathref"
+                    <classpath refid="mymon3y.classpathref" />
+            <java dir="${mymon3y.classes}"  classname="com.google.code.mymon3y.persistencia.ManipuladorDeBanco" fork="true">
+                    <arg value="apagar" />
+                    <classpath>
+                            <path refid="mymon3y.classpathref" />
+                    </classpath>
+            </java>
+            -->
+    </target>
+    <!-- /BD-REMOVER-BANCO -->
+	
+    <!-- BD-GERAR-BANCO-MYSQL -->
+    <target name="bd-gerar-banco-mysql" depends="compila, bd-remover-banco-mysql" description="Gera o Esquema Logico no Banco de Dados MySQL">
+            <hibernatetool destdir="${mymon3y.base}">
+                    <annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
+                    <hbm2ddl drop="true" create="true" export="true" delimiter=";" format="false" />
+            </hibernatetool>
+            <!--
+            <java dir="${mymon3y.classes}" classname="com.google.code.mymon3y.persistencia.ManipuladorDeBanco" fork="true">
+                    <arg value="gerar" />
+                    <classpath refid="mymon3y.classpathref" />
+            </java>
+            -->
+    </target>
+    <!-- /BD-GERAR-BANCO -->
 
 	<!-- AJUDA -->
 	<target name="ajuda" description="Imprime o comando a ser executado para acessar esta ajuda">

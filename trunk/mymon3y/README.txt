@@ -17,3 +17,7 @@ DROP USER mymon3y;
 CREATE DATABASE mymon3y;
 CREATE USER mymon3y IDENTIFIED BY 'mymon3y';
 GRANT ALL PRIVILEGES ON mymon3y.* TO mymon3y@"%";
+
+Em seguida, para que as tabelas sejam geradas, execute a seguinte task do ant: bd-gerar-banco-mysql
+OBS: Caso algum erro ocorra e as tabelas não sejam geradas, tente repetir o processo.
+Caso ainda assim as tabelas não sejam geradas, por favor entrar em contato com os desenvolvedores.
