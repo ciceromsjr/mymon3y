@@ -10,12 +10,10 @@ A linha:
 
 org.apache.el.parser.COERCE_TO_ZERO=false
 
-Caso deseje preparar o MyMon3y para utilizar o MySQL, basta executar os seguintes comandos SQL:
+O projeto faz uso do banco de dados MySQL. Você precisa executar as seguintes linhas como administrador para configurá-lo:
 
 DROP DATABASE IF EXISTS mymon3y;
 DROP USER mymon3y;
 CREATE DATABASE mymon3y;
 CREATE USER mymon3y IDENTIFIED BY 'mymon3y';
 GRANT ALL PRIVILEGES ON mymon3y.* TO mymon3y@"%";
-
-Alterando também o arquivo de configuração do hibernate para fazer uso do conector do MySQL.

@@ -6,7 +6,7 @@
 
 	<session-factory>
 
-
+		<!-- Derby...
 		<property name="hibernate.connection.driver_class">
 			org.apache.derby.jdbc.EmbeddedDriver
 		</property>
@@ -23,9 +23,8 @@
 		</property>
 
 	    <property name="hibernate.hbm2ddl.auto">update</property>
-
+		-->
 	
-		<!-- MySQl...
 		<property name="hibernate.connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
@@ -40,7 +39,6 @@
 		<property name="hibernate.dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
-		-->
 
 		<!--
 			<property name="hibernate.hbm2ddl.auto">create</property>
