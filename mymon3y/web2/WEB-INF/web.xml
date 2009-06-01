@@ -52,18 +52,16 @@
 		<param-value>com.sun.facelets.FaceletViewHandler</param-value>
 	</context-param>
 
-<!-- 
+	<!-- Autenticação para acessar algumas páginas do sistema (estar logado) -->
 	<filter>
 		<filter-name>Filtro Autenticacao</filter-name>
 		<filter-class>com.google.code.mymon3y.jsf.controledeacesso.AutenticacaoFiltro</filter-class>
 	</filter>
- -->	
-<!-- 
+
 	<filter-mapping>
 		<filter-name>Filtro Autenticacao</filter-name>
 		<url-pattern>/pages/*</url-pattern>
 	</filter-mapping>
--->
  
 	<filter>
 		<display-name>RichFaces Filter</display-name>
@@ -79,15 +77,14 @@
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 
-<!-- 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/erro.xhtml</location>
+		<location>/erro.jsp</location>
 	</error-page>
+
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
--->
 
 	<!-- Faces Servlet -->
 	<servlet>
