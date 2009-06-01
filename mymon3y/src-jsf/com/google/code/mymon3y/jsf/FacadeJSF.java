@@ -20,11 +20,15 @@
  */
 package com.google.code.mymon3y.jsf;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import com.google.code.mymon3y.MyMon3yException;
 import com.google.code.mymon3y.jsf.converters.CreditoDebitoConverter;
@@ -82,6 +86,8 @@ public class FacadeJSF extends ManagedBean {
 
 	private Date dataFinalRelatorio;
 
+	private String importarDados;
+
 	@SuppressWarnings("serial")
 	private List<SelectItem> EH_CREDITO_SELECT_ITEMS = new ArrayList<SelectItem>() {
 
@@ -112,6 +118,14 @@ public class FacadeJSF extends ManagedBean {
 
 	public void setConfirmacaoDeSenha(String confirmacaoDeSenha) {
 		this.confirmacaoDeSenha = confirmacaoDeSenha;
+	}
+
+	public String getImportarDados() {
+		return importarDados;
+	}
+
+	public void setImportarDados(String importarDados) {
+		this.importarDados = importarDados;
 	}
 
 	public Usuario getUsuario() {
@@ -493,11 +507,24 @@ public class FacadeJSF extends ManagedBean {
 			addMensagemErro(e.getMessage());
 			return ConstantesJSF.FALHA;
 		}
-		
-		if(this.relatorio.isEmpty()){
+
+		if (this.relatorio.isEmpty()) {
 			addMensagemErro("Nenhuma transação encontrada");
 		}
-		
+
+		return ConstantesJSF.SUCESSO;
+	}
+
+	public String importarDados() {
+		try {
+			getFacade().importarConteudoOFX(getLoginUsuarioNaSessao(), this.importarDados);
+		} catch (Exception e) {
+			addMensagemErro("OFX inválido");
+			return ConstantesJSF.FALHA;
+		}
+
+		addMensagemSucesso("Dados importados com sucesso.");
+
 		return ConstantesJSF.SUCESSO;
 	}
 
