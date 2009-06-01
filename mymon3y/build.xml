@@ -15,6 +15,9 @@
 		<fileset dir="${mymon3y.lib}">
 			<include name="**/*.jar" />
 		</fileset>
+		<fileset dir="${mymon3y.lib.mail}">
+			<include name="**/*.jar" />
+		</fileset>
 		<fileset dir="${mymon3y.lib.testes}">
 			<include name="**/*.jar" />
 		</fileset>
@@ -85,6 +88,10 @@
 			<classpath refid="mymon3y.classpathref" />
 			<include name="**/*.java" />
 		</javac>
+		<javac srcdir="${mymon3y.src-jsf}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
+			<classpath refid="mymon3y.classpathref" />
+			<include name="**/*.java" />
+		</javac>
 	</target>
 	<!-- /COMPILAR -->
 
@@ -126,14 +133,22 @@
 	<!-- TOMCAT-CLEAR -->
 	<target name="tomcat-context-clear">
 		<delete dir="${webinf.dir}/lib"/>
+		<delete dir="${webinf.dir}/classes"/>
 		<mkdir dir="${webinf.dir}/lib" />
+		<mkdir dir="${webinf.dir}/classes" />
 	</target>
 	<!-- /TOMCAT-CLEAR -->
 	
 	<!-- TOMCAT -->
-	<target name="tomcat-context" depends="tomcat-context-clear">
+	<target name="tomcat-context" depends="tomcat-context-clear, compila">
+		<copy todir="${webinf.dir}/classes">
+			<fileset dir="${mymon3y.classes}" includes="**/*.class" />
+			<fileset dir="${mymon3y.src}" includes="**/*.xml" />
+			<fileset dir="${mymon3y.src-jsf}" includes="**/*.properties" />
+		</copy>
 		<copy todir="${webinf.dir}/lib">
 			<fileset dir="${mymon3y.lib}" includes="*.jar" />
+			<fileset dir="${mymon3y.lib.mail}" includes="*.jar" />
 	 		<fileset dir="${mymon3y.lib.hibernate.annotations}" includes="*.jar"/>
 		 	<fileset dir="${mymon3y.lib.hibernate.core}" includes="*.jar"/>
 		  	<fileset dir="${mymon3y.lib.hibernate.validator}" includes="*.jar"/>
