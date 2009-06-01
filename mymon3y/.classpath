@@ -34,5 +34,13 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/el-api.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib-mail/aspirin.jar"/>
+	<classpathentry kind="lib" path="lib-mail/dsn.jar"/>
+	<classpathentry kind="lib" path="lib-mail/imap.jar"/>
+	<classpathentry kind="lib" path="lib-mail/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib-mail/pop3.jar"/>
+	<classpathentry kind="lib" path="lib-mail/smtp.jar"/>
+	<classpathentry kind="lib" path="lib-jsf/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib-mail/dnsjava-1.6.4.jar"/>
 	<classpathentry kind="output" path="web2/WEB-INF/classes"/>
 </classpath>
