@@ -7,3 +7,5 @@ expect 1 getNotificacoes login=fulano@gmail.com data="17/03/2009"
 expect 1 getNotificacoes login=fulano@gmail.com data="16/03/2009"
 expect 0 getNotificacoes login=fulano@gmail.com data="15/03/2009"
 expect 1 getNotificacoes login=fulano@gmail.com data="14/03/2009"
+
+zerarSistema
