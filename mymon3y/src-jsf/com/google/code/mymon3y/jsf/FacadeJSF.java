@@ -21,6 +21,7 @@
 package com.google.code.mymon3y.jsf;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -29,6 +30,7 @@ import com.google.code.mymon3y.MyMon3yException;
 import com.google.code.mymon3y.jsf.converters.CreditoDebitoConverter;
 import com.google.code.mymon3y.jsf.util.ConstantesJSF;
 import com.google.code.mymon3y.model.Categoria;
+import com.google.code.mymon3y.model.Relatorio;
 import com.google.code.mymon3y.model.Transacao;
 import com.google.code.mymon3y.model.Usuario;
 
@@ -76,11 +78,20 @@ public class FacadeJSF extends ManagedBean {
 
 	private List<SelectItem> ehCreditoSelectItems;
 
+	private Date dataInicialRelatorio;
+
+	private Date dataFinalRelatorio;
+
 	@SuppressWarnings("serial")
-	private List<SelectItem> EH_CREDITO_SELECT_ITEMS = new ArrayList<SelectItem>(){{
-		add(new SelectItem(CreditoDebitoConverter.CREDITO));
-		add(new SelectItem(CreditoDebitoConverter.DEBITO));
-	}};
+	private List<SelectItem> EH_CREDITO_SELECT_ITEMS = new ArrayList<SelectItem>() {
+
+		{
+			add(new SelectItem(CreditoDebitoConverter.CREDITO));
+			add(new SelectItem(CreditoDebitoConverter.DEBITO));
+		}
+	};
+
+	private List<String> relatorio;
 
 	public FacadeJSF() {
 		this.usuario = getUsuarioDaSessao();
@@ -109,6 +120,30 @@ public class FacadeJSF extends ManagedBean {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Date getDataInicialRelatorio() {
+		return dataInicialRelatorio;
+	}
+
+	public void setDataInicialRelatorio(Date dataInicialRelatorio) {
+		this.dataInicialRelatorio = dataInicialRelatorio;
+	}
+
+	public Date getDataFinalRelatorio() {
+		return dataFinalRelatorio;
+	}
+
+	public List<String> getRelatorio() {
+		return relatorio;
+	}
+
+	public void setRelatorio(List<String> relatorio) {
+		this.relatorio = relatorio;
+	}
+
+	public void setDataFinalRelatorio(Date dataFinalRelatorio) {
+		this.dataFinalRelatorio = dataFinalRelatorio;
 	}
 
 	public List<SelectItem> getEhCreditoSelectItems() {
@@ -428,11 +463,12 @@ public class FacadeJSF extends ManagedBean {
 		return ConstantesJSF.BRANCO;
 	}
 
-	public String atualizarTransacao(){
+	public String atualizarTransacao() {
 		try {
-			if(!this.transacao.getCategoria().getId().equals(this.idNovaCategoriaSelectedItem)){
+			if (!this.transacao.getCategoria().getId().equals(this.idNovaCategoriaSelectedItem)) {
 				debug("Atualizando transação mudando a Categoria");
-				getFacade().editarTransacao(getLoginUsuarioNaSessao(), this.transacao, this.idNovaCategoriaSelectedItem);
+				getFacade()
+						.editarTransacao(getLoginUsuarioNaSessao(), this.transacao, this.idNovaCategoriaSelectedItem);
 			} else {
 				debug("Atualizando transação NÃO mudando a Categoria");
 				getFacade().atualizar(this.transacao);
@@ -444,10 +480,27 @@ public class FacadeJSF extends ManagedBean {
 			addMensagemErro(e.getMessage());
 			return ConstantesJSF.FALHA;
 		}
+
+		return ConstantesJSF.SUCESSO;
+	}
+
+	public String gerarRelatorio() {
+
+		try {
+			this.relatorio = getFacade().criarRelatorio(getLoginUsuarioNaSessao(), this.dataInicialRelatorio,
+					this.dataFinalRelatorio).getTransacoesCSV();
+		} catch (MyMon3yException e) {
+			addMensagemErro(e.getMessage());
+			return ConstantesJSF.FALHA;
+		}
+		
+		if(this.relatorio.isEmpty()){
+			addMensagemErro("Nenhuma transação encontrada");
+		}
 		
 		return ConstantesJSF.SUCESSO;
 	}
-	
+
 	// ================================== MÉTODOS QUE RETORNAM CONSTANTES ==================================
 
 	public String pesquisarCategoria() {
@@ -469,6 +522,11 @@ public class FacadeJSF extends ManagedBean {
 	public String novaPesquisaTransacao() {
 
 		return "gerenciar_transacao";
+	}
+
+	public String novoRelatorio() {
+
+		return "relatorios";
 	}
 
 	// "atualizar_categoria"

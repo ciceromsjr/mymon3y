@@ -59,16 +59,13 @@
 						<li><a href="/mymon3y/pages/editar_perfil.jsf">Editar Perfil</a></li>
 					</h:panelGroup>						
 					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">
-						<!--
-						<li><a href="/mymon3y/pages/gerenciar_grupo.jsf">Gerenciar Grupo</a></li>
-						-->
 						<li><a href="/mymon3y/pages/gerenciar_categoria.jsf">Gerenciar Categorias</a></li>
 					</h:panelGroup>
 					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">
-						<!-- 
-						<li><a href="/mymon3y/pages/gerenciar_contato.jsf">Gerenciar Contato</a></li>
-						 -->
 						<li><a href="/mymon3y/pages/gerenciar_transacao.jsf">Gerenciar Transações</a></li>
+					</h:panelGroup>						
+					<h:panelGroup rendered="#{sessionScope.ID_USUARIO != null}">
+						<li><a href="/mymon3y/pages/relatorios.jsf">Relatórios</a></li>
 					</h:panelGroup>						
 				</ul>
 			</div>
