@@ -123,7 +123,7 @@
 	<!-- /TOMCAT-CLEAR -->
 	
 	<!-- TOMCAT -->
-	<target name="tomcat-context" depends="tomcat-context-clear, compila">
+	<target name="tomcat-context" depends="tomcat-context-clear, compila-jsf">
 		<copy todir="${webinf.dir}/classes">
 			<fileset dir="${mymon3y.classes}" includes="**/*.class" />
 			<fileset dir="${mymon3y.src}" includes="**/*.xml" />
