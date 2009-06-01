@@ -42,5 +42,6 @@
 	<classpathentry kind="lib" path="lib-mail/smtp.jar"/>
 	<classpathentry kind="lib" path="lib-jsf/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib-mail/dnsjava-1.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-2_3.jar"/>
 	<classpathentry kind="output" path="web2/WEB-INF/classes"/>
 </classpath>
