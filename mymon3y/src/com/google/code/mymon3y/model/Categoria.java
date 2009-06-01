@@ -78,7 +78,7 @@ public class Categoria implements Identificavel {
 	 */
 	@NotNull(message = "Nome inválido.")
 	@NotEmpty(message = "Nome inválido.")
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String nome;
 
 	/**
