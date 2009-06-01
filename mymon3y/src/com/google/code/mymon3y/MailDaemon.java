@@ -22,6 +22,16 @@ import com.google.code.mymon3y.model.Usuario;
 
 public class MailDaemon {
 
+	private static MailDaemon instance;
+	
+	public synchronized static MailDaemon getInstance(SistemaMyMon3y sistema) {
+		if (instance == null) {
+			instance = new MailDaemon(sistema);
+			instance.start();
+		}
+		return instance;
+	}
+	
 	public class MailThread implements Runnable {
 
 		private SistemaMyMon3y sistema;
@@ -50,7 +60,7 @@ public class MailDaemon {
 	private SistemaMyMon3y sistema;
 	private ScheduledExecutorService schedulerExecutor;
 
-	public MailDaemon(SistemaMyMon3y sistema) {
+	private MailDaemon(SistemaMyMon3y sistema) {
 		this.sistema = sistema;
 		this.schedulerExecutor = Executors.newSingleThreadScheduledExecutor();
 	}
