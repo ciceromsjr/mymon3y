@@ -49,7 +49,20 @@ import com.google.code.mymon3y.util.Util;
  * 
  */
 public class SistemaMyMon3y {
+	
+	private static SistemaMyMon3y instance = new SistemaMyMon3y();
+	
+	/**
+	 * @return
+	 */
+	public static SistemaMyMon3y getInstance() {
+		if(instance == null){
+			instance = new SistemaMyMon3y();
+		}
+		return instance;
+	}
 
+	
 	/**
 	 * Lida com a persistência das entidades.
 	 */
@@ -502,5 +515,5 @@ public class SistemaMyMon3y {
 	public List<Transacao> pesquisarTransacao(String login, Long idCategoria) throws MyMon3yException {
 		return this.gdp.getTransacoesByLoginEidCategoria(login, idCategoria);
 	}
-	
+
 }
