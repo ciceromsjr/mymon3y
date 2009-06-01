@@ -161,7 +161,7 @@ public class OFXImport {
 			if (data == null || amnt == Integer.MAX_VALUE || memo == null) {
 				// transacao incompleta, ignore
 			} else {
-				Transacao t = new Transacao(memo, data, amnt, "", null, amnt > 0);
+				Transacao t = new Transacao(memo, data, amnt > 0 ? amnt : -amnt, "", null, amnt > 0);
 				transacoes.add(t);
 			}
 			data = null;
