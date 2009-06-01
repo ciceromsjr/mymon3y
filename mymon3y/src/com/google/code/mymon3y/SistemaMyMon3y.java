@@ -468,6 +468,23 @@ public class SistemaMyMon3y {
 	}
 
 	/**
+	 * Adiciona as Transações importando-as de texto do arquivo OFX exportado pelo Banco do Brasil.
+	 * 
+	 * @param login
+	 *            Login do Usuário.
+	 * @param ofx
+	 *            String com o OFX.
+	 * @see OFXImport#readOFX(String)
+	 */
+	public void importarConteudoOFX(String login, String conteudo) throws MyMon3yException, SAXException, IOException,
+			ParserConfigurationException {
+		List<Transacao> list = OFXImport.readConteudoOFX(conteudo);
+		for (Transacao t : list) {
+			adicionarTransacao(login, getCategoriaByNomeELoginDoUsuario(login, "Outro").getId(), t);
+		}
+	}
+	
+	/**
 	 * Busca Categoras pelo nome.
 	 * 
 	 * @param nome

@@ -3,6 +3,9 @@ package com.google.code.mymon3y.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringBufferInputStream;
+import java.io.StringReader;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -66,12 +69,12 @@ public class OFXImport {
 		 * Lê uma tag.
 		 * 
 		 * @param fis
-		 *            {@link FileInputStream} com a entrada.
+		 *            {@link InputStream} com a entrada.
 		 * @return Uma tag.
 		 * @throws IOException
 		 *             Caso algum erro de IO ocorra.
 		 */
-		private String readTag(FileInputStream fis) throws IOException {
+		private String readTag(InputStream fis) throws IOException {
 			StringBuilder sb = new StringBuilder();
 			int a;
 			while ((a = fis.read()) != -1 && ((char) a) != '>') {
@@ -84,12 +87,12 @@ public class OFXImport {
 		 * Faz a leitura do conteúdo de uma tag.
 		 * 
 		 * @param fis
-		 *            {@link FileInputStream} com a entrada.
+		 *            {@link InputStream} com a entrada.
 		 * @return Conteúdo da tag.
 		 * @throws IOException
 		 *             Caso algum erro de IO ocorra.
 		 */
-		private String readContent(FileInputStream fis) throws IOException {
+		private String readContent(InputStream fis) throws IOException {
 			StringBuilder sb = new StringBuilder();
 			int a;
 			while ((a = fis.read()) != -1 && ((char) a) != '<') {
@@ -101,13 +104,12 @@ public class OFXImport {
 		/**
 		 * Realiza o <i>parsing</i> de um arquivo.
 		 * 
-		 * @param f
-		 *            Arquivo.
+		 * @param fis
+		 *            InputStream de leitura.
 		 * @throws IOException
 		 *             Caso algum erro de IO ocorra.
 		 */
-		public void parse(File f) throws IOException {
-			FileInputStream fis = new FileInputStream(f);
+		public void parse(InputStream fis) throws IOException {
 			int a;
 			while ((a = fis.read()) != -1) {
 				if (((char) a) == '<') {
@@ -207,12 +209,21 @@ public class OFXImport {
 			ParserConfigurationException {
 		OFX ofx = new OFX();
 		OFXParser ofxP = new OFXParser(ofx);
-		ofxP.parse(new File(arquivo));
+		FileInputStream fis = new FileInputStream(arquivo);
+		ofxP.parse(fis);
 		return ofx.transacoes;
 	}
 
 	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
 		System.out.println(readOFX("resources/extrato.ofx"));
+	}
+
+	public static List<Transacao> readConteudoOFX(String conteudo) throws IOException {
+		OFX ofx = new OFX();
+		OFXParser ofxP = new OFXParser(ofx);
+		StringBufferInputStream sbif = new StringBufferInputStream(conteudo);
+		ofxP.parse(sbif);
+		return ofx.transacoes;
 	}
 
 }
