@@ -88,13 +88,22 @@
 			<classpath refid="mymon3y.classpathref" />
 			<include name="**/*.java" />
 		</javac>
-		<javac srcdir="${mymon3y.src-jsf}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
-			<classpath refid="mymon3y.classpathref" />
-			<include name="**/*.java" />
-		</javac>
 	</target>
 	<!-- /COMPILAR -->
 
+	<!-- COMPILAR-JSF -->
+		<target name="compila-jsf" depends="compila" description="Compila o código JSF">
+			<javac srcdir="${mymon3y.src-jsf}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
+				<classpath refid="mymon3y.classpathref" />
+				<include name="**/*.java" />
+			</javac>
+			<copy todir="${mymon3y.classes}">
+				<fileset dir="${mymon3y.src}" includes="**/*.xml" />
+				<fileset dir="${mymon3y.src-jsf}" includes="**/*.properties" />
+			</copy>
+		</target>
+		<!-- /COMPILAR-JSF -->
+	
 	<!-- COMPILAR-TESTES -->
 	<target name="compilar-testes" depends="compila" description="Compila os códigos de teste de unidade">
 		<javac srcdir="${mymon3y.src-testes}" destdir="${mymon3y.classes-teste}" debug="on" optimize="on" encoding="UTF-8">
@@ -103,32 +112,6 @@
 		</javac>
 	</target>
 	<!-- /COMPILAR-TESTES -->
-
-	<!-- JAR -->	
-	<target name="jar" depends="compila" description="Cria o .jar do projeto com código fonte e Class">
-		<jar destfile="${mymon3y.jar}">
-			<manifest>
-				<attribute name="Built-By" value="${mymon3y.nome}" />
-				<attribute name="Implementation-Version" value="${mymon3y.versao}" />
-				<!--
-					<attribute name="Main-Class" value="${mymon3y.classe-}" />
-					<attribute name="Class-Path" value="mymon3y.jar" />
-				-->
-			</manifest>
-			<fileset dir="${mymon3y.classes}">
-				<include name="**/*.class" />
-			</fileset>
-			<fileset dir="${mymon3y.src}">
-				<include name="**/*.java" />
-				<include name="**/*.xml" />
-			</fileset>
-			<zipgroupfileset dir="${mymon3y.lib}" includes="*.jar" />
-		  	<zipgroupfileset dir="${mymon3y.lib.hibernate.annotations}" includes="*.jar"/>
-		  	<zipgroupfileset dir="${mymon3y.lib.hibernate.core}" includes="*.jar"/>
-		  	<zipgroupfileset dir="${mymon3y.lib.hibernate.validator}" includes="*.jar"/>
-		</jar>
-	</target>
-	<!-- /JAR -->
 
 	<!-- TOMCAT-CLEAR -->
 	<target name="tomcat-context-clear">
@@ -155,20 +138,26 @@
 			<fileset dir="${mymon3y.lib.jsf}"> 
 				<include name="*.jar"/>
 				<exclude name="**/el-api.jar"/>
+				<exclude name="**/servlet-2_3.jar"/>
 			</fileset>
 		</copy>
 	</target>
 	<!-- /TOMCAT -->
 	
 	<!-- WAR -->
-	<target name="war" depends="jar">
+	<target name="war" depends="compila-jsf, tomcat-context-clear">
 		<war basedir="${webroot.dir}" warfile="${mymon3y.war}" webxml="${webinf.dir}/web.xml">
-			  <fileset file="${webinf.dir}/faces-config.xml" />
-			  <fileset dir="${webroot.dir}" includes="**/*">
-			      <exclude name="**/.svn*" />
-			  </fileset>
-			  <lib dir="${mymon3y.lib.jsf}"/>
-			  <lib file="${mymon3y.jar}"/>
+			  <fileset dir="${webroot.dir}" includes="**/*" />
+			  <lib dir="${mymon3y.lib}"/>
+			  <lib dir="${mymon3y.lib.mail}"/>
+			  <lib dir="${mymon3y.lib.hibernate.annotations}"/>
+			  <lib dir="${mymon3y.lib.hibernate.core}"/>
+			  <lib dir="${mymon3y.lib.hibernate.validator}"/>
+			  <lib dir="${mymon3y.lib.jsf}">
+			 	<exclude name="**/el-api.jar"/>
+				<exclude name="**/servlet-2_3.jar"/>
+			  </lib>
+			  <classes dir="${mymon3y.classes}"/>
 		</war>
 	</target>
 	<!-- /WAR -->
