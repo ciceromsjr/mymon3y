@@ -22,6 +22,7 @@ package com.google.code.mymon3y.jsf;
 
 import javax.faces.event.PhaseEvent;
 
+import com.google.code.mymon3y.MailDaemon;
 import com.google.code.mymon3y.MyMon3yException;
 import com.google.code.mymon3y.SistemaMyMon3y;
 import com.google.code.mymon3y.jsf.util.ConstantesJSF;
@@ -64,6 +65,7 @@ public class LoginMBean extends ManagedBean {
 	}
 
 	public String logar() {
+		MailDaemon.getInstance(SistemaMyMon3y.getInstance());
 		SistemaMyMon3y sm = new SistemaMyMon3y();
 		Usuario usuario = null;
 		
