@@ -314,6 +314,7 @@
     <!-- BD-REMOVER-BANCO-MYSQL -->
     <target name="bd-remover-banco-mysql" depends="compila" description="Remove o Esquema Logico no Banco de Dados MySQL">
             <hibernatetool destdir="${mymon3y.base}">
+            		<classpath refid="mymon3y.classpathref" />
                     <annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
                     <hbm2ddl drop="true" create="false" export="true" delimiter=";" format="false" />
             </hibernatetool>
@@ -334,6 +335,7 @@
     <!-- BD-GERAR-BANCO-MYSQL -->
     <target name="bd-gerar-banco-mysql" depends="compila, bd-remover-banco-mysql" description="Gera o Esquema Logico no Banco de Dados MySQL">
             <hibernatetool destdir="${mymon3y.base}">
+            		<classpath refid="mymon3y.classpathref" />
                     <annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
                     <hbm2ddl drop="true" create="true" export="true" delimiter=";" format="false" />
             </hibernatetool>
