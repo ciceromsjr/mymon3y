@@ -266,6 +266,22 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/pages/importar_dados.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/importar_dados.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/importar_dados.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>importar_dados</from-outcome>
+			<to-view-id>/pages/importar_dados.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 	<!-- /NAVIGATION RULEs -->
 
 	<!-- MESSAGE BUNDLEs -->
