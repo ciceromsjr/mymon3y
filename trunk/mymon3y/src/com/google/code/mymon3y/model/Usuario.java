@@ -107,8 +107,7 @@ public class Usuario implements Identificavel {
 	 * Construtor vazio.
 	 */
 	public Usuario() {
-		super();
-		this.categorias = new HashSet<Categoria>();
+		this(null, null);
 	}
 
 	/**
@@ -120,18 +119,17 @@ public class Usuario implements Identificavel {
 	 *            Senha do Usuário.
 	 */
 	public Usuario(String login, String senha) {
-		this();
 		this.login = login;
 		this.senha = senha;
 		this.criptografada = false;
 		inicializarCategorias();
-
 	}
 
 	/**
 	 * Inicialização das Categorias padrões.
 	 */
 	private void inicializarCategorias() {
+		this.categorias = new HashSet<Categoria>();
 		this.categorias.add(new Categoria(this, "Outro"));
 		this.categorias.add(new Categoria(this, "Automóvel"));
 		this.categorias.add(new Categoria(this, "Despesas Bancárias"));
