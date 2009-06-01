@@ -24,7 +24,7 @@ public class MoedaConverter implements Converter {
 		}
 		
 		String[] strings = value.split(",");
-		return Integer.parseInt(strings[0]) * 100 + Integer.parseInt(strings[1]);
+		return Integer.parseInt(strings[0]) * 100 + Integer.parseInt(strings[1].length() > 1 ? strings[1] : strings[1] + "0");
 	}
 
 	public String getAsString(FacesContext facesContext, UIComponent uIComponent, Object object) {
