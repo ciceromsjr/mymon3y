@@ -21,7 +21,6 @@
 package com.google.code.mymon3y.jsf.controledeacesso;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
