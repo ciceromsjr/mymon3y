@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition template="/templates/layout.xhtml">
+
+	<ui:define name="pageTitle">MyMon3y</ui:define>
+
+	<ui:define name="pageHeader">Criar Transação</ui:define>
+
+	<ui:define name="body">
+
+		<r:mensagem id="form" />
+
+		<h:form id="form">
+
+			<fieldset>
+				<legend>
+					<h:outputText value="Criar Transação" />
+				</legend>
+				<h:panelGrid columns="1" cellpadding="0" cellspacing="0">
+					<r:panelGroupDadoDeEntrada id="descricao" label="Descrição:" value="#{facade.transacao.descricao}" source="" size="48"/>
+					
+					<r:panelGroupInputTextArea id="comentario" label="Comentário:" atributo="#{facade.transacao.comentario}" rows="5" cols="40" required="false"/>
+					
+					<r:panelGroupRadio id="ehCredito" atributo="#{facade.ehCredito}" source="#{facade.ehCreditoSelectItems}" label="Crédito?" />
+ 					
+					<r:panelGroupData id="data" label="Data:" value="#{facade.transacao.data}" />
+					
+					<r:panelGroupData id="dataAvisoPrevio" label="Data do Aviso Prévio:" value="#{facade.transacao.dataAvisoPrevio}" required="false" />
+					
+					<h:panelGroup>
+						<h:panelGrid id="valorPanelGrid" columns="1"
+							styleClass="panelGridInputs" cellpadding="0" cellspacing="0">
+							<h:panelGroup>
+								<h:outputText value="Valor:" styleClass="rotulos" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:message styleClass="error" for="valor" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:inputText id="valor" value="#{facade.transacao.valor}" required="true" size="20" styleClass="edit" >
+									<f:validator validatorId="MoedaValidator" />
+									<f:converter  converterId="MoedaConverter" />
+								</h:inputText>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGroup>
+					
+					<r:panelGroupComboBox id="categorias" label="Categorias:" value="#{facade.idNovaCategoriaSelectedItem}" source="#{facade.novaCategoriasSelectItems}" />
+					
+				</h:panelGrid>
+			</fieldset>
+
+			<r:botoesCadastrar action="#{facade.criarTransacao}" label="Criar"/>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

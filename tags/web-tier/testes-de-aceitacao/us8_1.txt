@@ -1,0 +1,26 @@
+# User Story 8 - Notificação de Transação
+
+# Verificar as Transações que devem ser notificadas pelo sistema num determinado dia.
+# As notificações são enviadas diariamente.
+
+zerarSistema
+
+criarUsuario login=fulano@gmail.com senha=12345
+
+idCatAlimentacao=getIdCategoria login=fulano@gmail.com nome="Alimentação"
+
+expect 0 getNotificacoes login=fulano@gmail.com data="17/03/2009"
+
+criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="5,00" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="0" credito="false"
+criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="5,00" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="1" credito="false"
+criarTransacao login=fulano@gmail.com descricao="Almoço em Inês" data="17/03/2009" valor="5,00" idCategoria=${idCatAlimentacao} comentario="Fígado, Estrogonofe e Linguíça" ndias="3" credito="false"
+
+expect 1 getNotificacoes login=fulano@gmail.com data="17/03/2009"
+expect 1 getNotificacoes login=fulano@gmail.com data="16/03/2009"
+expect 0 getNotificacoes login=fulano@gmail.com data="15/03/2009"
+expect 1 getNotificacoes login=fulano@gmail.com data="14/03/2009"
+
+expect 1 getTodasNotificacoes data="17/03/2009"
+expect 1 getTodasNotificacoes data="16/03/2009"
+expect 0 getTodasNotificacoes data="15/03/2009"
+expect 1 getTodasNotificacoes data="14/03/2009"

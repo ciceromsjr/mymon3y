@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition>
+<a4j:region id="regiao#{id}" selfRendered="false">
+	<r:mensagem id="form" />
+
+	<fieldset><legend><h:outputText
+		value="#{label}" /></legend> <h:panelGrid columns="3" id="PanelServicosUrbanos" >
+
+		<h:outputText value="#{rotulos.tiposDeServicosUrbanos}"
+			styleClass="rotulos" />
+		<h:panelGroup value="#{rotulos.tiposDeServicosUrbanos}" />
+		
+		<h:outputText styleClass="rotulos"
+			value="#{rotulos.servicosUrbanosSelecionados}" />
+
+		<h:panelGroup>
+			<h:selectManyListbox id="servicosUrbanosSelecionaveis" size="6"
+				styleClass="selectMany"
+				value="#{gerenciadorDeFaceDeQuadra.servicosUrbanosSelecionaveisSelecionados}">
+				<f:selectItems
+					value="#{gerenciadorDeFaceDeQuadra.servicosUrbanosSelecionaveis}" />
+				<f:converter
+					converterId="FaceDeQuadraConversorDeTipoDeServicoUrbano" />
+			</h:selectManyListbox>
+		</h:panelGroup>
+
+		<h:panelGrid columns="1">
+			<a4j:commandButton value="#{rotulos.adicionar}"
+				styleClass="botoesLista"
+				reRender="servicosUrbanosSelecionaveis,servicosUrbanosAdicionados"
+				actionListener="#{gerenciadorDeFaceDeQuadra.adicionaServicosUrbanos}"
+				title="#{rotulos.titleAdicionar}" />
+			<a4j:commandButton value="#{rotulos.adicionarTodos}"
+				styleClass="botoesLista"
+				reRender="servicosUrbanosSelecionaveis,servicosUrbanosAdicionados"
+				actionListener="#{gerenciadorDeFaceDeQuadra.adicionaTodosOsServicosUrbanos}"
+				title="#{rotulos.titleAdicionarTodos}" />
+			<a4j:commandButton value="#{rotulos.remover}"
+				styleClass="botoesLista"
+				reRender="servicosUrbanosSelecionaveis,servicosUrbanosAdicionados"
+				actionListener="#{gerenciadorDeFaceDeQuadra.removeServicosUrbanos}"
+				title="#{rotulos.titleRemover}" />
+			<a4j:commandButton value="#{rotulos.removerTodos}"
+				styleClass="botoesLista"
+				reRender="servicosUrbanosSelecionaveis,servicosUrbanosAdicionados"
+				actionListener="#{gerenciadorDeFaceDeQuadra.removeTodosOsServicosUrbanos}"
+				title="#{rotulos.titleRemoverTodos}" />
+		</h:panelGrid>
+
+		<h:panelGroup>
+			<h:selectManyListbox id="servicosUrbanosAdicionados" size="6"
+				styleClass="selectMany"
+				value="#{gerenciadorDeFaceDeQuadra.servicosUrbanosAdicionadosSelecionados}">
+				<f:selectItems
+					value="#{gerenciadorDeFaceDeQuadra.servicosUrbanosAdicionados}" />
+				<f:converter
+					converterId="FaceDeQuadraConversorDeTipoDeServicoUrbano" />
+			</h:selectManyListbox>
+		</h:panelGroup>
+
+	</h:panelGrid></fieldset>
+
+</a4j:region></ui:composition>
+</html>

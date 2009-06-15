@@ -1,0 +1,5 @@
+# User Story 4 - Remoção de Categoria (Teste de Persistência)
+
+# Permitir a remoção de Categorias que não possuem Transação associada.
+
+expectError "Categoria inexistente." getIdCategoria login=fulano@gmail.com nome="Categoria 1"
