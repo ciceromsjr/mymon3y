@@ -1,5 +1,0 @@
-# User Story 5 - Remoção de Conta (Teste de Persistência)
-
-# Permitir a remoção de uma conta de Usuário.
-
-criarUsuario login=fulano@gmail.com senha=12345

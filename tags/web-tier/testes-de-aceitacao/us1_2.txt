@@ -1,8 +1,0 @@
-# User Story 1 - Criação/edição de Conta (Teste de Persistência)
-
-#Permitir a um usuário criar uma conta no MyMon3y. Deve ser fornecido um email, que servirá de login, e uma senha.
-
-expectError "Login não disponível." criarUsuario login=fulano@gmail.com senha=12345
-
-expect "fulano@gmail.com" getAtributoUsuario login=fulano@gmail.com atributo="login"
-expect "WZRHGrsBESr8wYFZ9sx0tPURuZgG2lmzyvWpwXPKz8U=" getAtributoUsuario login=fulano@gmail.com atributo="senha"
