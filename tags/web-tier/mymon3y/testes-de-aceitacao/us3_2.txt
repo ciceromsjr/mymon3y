@@ -1,0 +1,14 @@
+# User Story 3 - Criação/edição/remoção de uma Transação (Teste de Persistência)
+
+# Permitir a inclusão de uma Transação, fornecendo:
+#
+#    * Descrição;
+#    * Data;
+#    * Valor;
+#    * Comentário;
+#    * O número de dias que um lembrete (e-mail) deve ser enviado antes da data;
+#    * Se a transação é um crédito ou débito.
+
+expect "1" getNumeroDeTransacoes login=fulano@gmail.com
+
+expectError "Login inexistente." getNumeroDeTransacoes login=beltrano@gmail.com

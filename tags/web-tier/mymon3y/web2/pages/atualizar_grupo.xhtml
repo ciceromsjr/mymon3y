@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets">
+
+<ui:composition template="/templates/layout.xhtml">
+
+	<ui:define name="pageTitle">MyMon3y</ui:define>
+
+	<ui:define name="pageHeader">Atualizar Grupo</ui:define>
+
+	<ui:define name="body">
+
+		<r:mensagem id="form" />
+
+		<h:form id="form">
+
+			<a4j:keepAlive beanName="facade" />
+
+			<fieldset><legend><h:outputText
+				value="Atualizar Grupo" /></legend> <h:panelGrid columns="3" cellpadding="0"
+				cellspacing="0">
+
+				<r:panelGroupDadoDeEntrada id="nome" label="Nome:"
+					value="#{facade.grupo.nome}" />
+
+				<h:panelGrid>
+					<r:panelGroupRadio id="ehEditavel" atributo="#{facade.ehEditavel}"
+						label="Editável?" />
+				</h:panelGrid>
+
+			</h:panelGrid></fieldset>
+
+			<r:botoesCadastrar action="#{facade.atualizarGrupo}"
+				label="Atualizar" />
+
+			<!-- TODO Colocar a listagem dos contatos que fazem parte do grupo, possibilitando remover contatos do Grupo -->
+
+			<fieldset><legend><h:outputText
+				value="Remover Contatos do Grupo" /></legend><legend><h:outputText
+				value="" /></legend> <h:dataTable var="contato" id="table"
+				value="#{facade.contatosDoGrupo}" rows="#{constantes.numColunas}"
+				styleClass="dataTable" headerClass="ordersHeader"
+				footerClass="ordersFooter" rowClasses="evenRow,oddRow">
+
+				<r:colunaAtributo bean="#{contato}" rotulo="Nome" atributo="nome" />
+
+				<r:colunaAtributo bean="#{contato}" rotulo="E-mail" atributo="email" />
+
+				<r:colunaAtributo bean="#{contato}" rotulo="Aniversário"
+					atributo="aniversario" />
+
+				<r:colunaAtributo bean="#{contato.dono}" rotulo="Dono do Contato"
+					atributo="login" />
+
+				<h:column id="colunaRemoverContato">
+					<f:facet name="header">
+						<h:outputText value="Ediçao" />
+					</f:facet>
+					<h:commandButton value="Remover" id="botaoRemoverContato"
+						styleClass="botaoCentro" title="Excluir Contato"
+						image="/images/icons/delete.gif"
+						actionListener="#{facade.removerContatoAction}"
+						action="#{facade.removerContatoDoGrupo}">
+						<f:param id="idRemover" name="idRemover" value="#{contato.id}" />
+					</h:commandButton>
+				</h:column>
+
+
+			</h:dataTable></fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

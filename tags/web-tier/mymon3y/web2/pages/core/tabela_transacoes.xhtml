@@ -1,0 +1,89 @@
+<h:dataTable xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets" styleClass="dataTable"
+	headerClass="ordersHeader" footerClass="ordersFooter"
+	rowClasses="evenRow,oddRow" value="#{facade.transacoes}" var="transacao">
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="ID" />
+        </f:facet>
+        <h:outputText value="#{transacao.id}" />
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Descrição" />
+        </f:facet>
+        <h:outputText value="#{transacao.descricao}" />
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Data" />
+        </f:facet>
+        <h:outputText value="#{transacao.data}" >
+        	<f:converter  converterId="DataConverter" />
+        </h:outputText>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Valor monetário" />
+        </f:facet>
+        <h:outputText value="#{transacao.valor}" >
+        	<f:converter  converterId="MoedaConverter" />
+        </h:outputText>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Comentário" />
+        </f:facet>
+        <h:outputText value="#{transacao.comentario}" />
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Data do aviso prévio" />
+        </f:facet>
+        <h:outputText value="#{transacao.dataAvisoPrevio}" >
+        	<f:converter  converterId="DataConverter" />
+        </h:outputText>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Crédito?" />
+        </f:facet>
+        <h:outputText value="#{transacao.credito}" >
+        	<f:converter  converterId="CreditoDebitoConverter" />
+        </h:outputText>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Categoria" />
+        </f:facet>
+        <h:outputText value="#{transacao.categoria.nome}" />
+    </h:column>
+    
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="Operações" />
+        </f:facet>
+
+        <h:commandButton value="Editar" styleClass="botaoEsquerda imagemLink" image="/images/icons/edit_icon.gif" action="#{facade.prepararAtualizarTransacao}">
+        	<f:setPropertyActionListener target="#{facade.transacao.id}" value="#{transacao.id}" />
+        </h:commandButton>
+        
+        <h:commandButton value="Apagar" styleClass="botaoDireita" image="/images/icons/delete.gif" action="#{facade.apagarTransacao}">
+        	<f:setPropertyActionListener target="#{facade.transacao.id}" value="#{transacao.id}" />
+        </h:commandButton>
+    </h:column>
+    
+
+</h:dataTable>

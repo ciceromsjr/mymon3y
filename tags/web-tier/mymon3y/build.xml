@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Build para o projeto de MyMon3y -->
+
+<project basedir="." default="compila" name="MyMon3y">
+
+	<property file="build.properties" />
+
+	<property name="build.dir" value="build" />
+	<property name="webroot.dir" value="${basedir}/web2" />
+	<property name="webinf.dir" value="${webroot.dir}/WEB-INF" />
+	<property name="project.distname" value="mymon3y" />
+
+	<path id="mymon3y.classpathref">
+		<fileset dir="${mymon3y.lib}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${mymon3y.lib.mail}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${mymon3y.lib.testes}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${mymon3y.lib.hibernate.annotations}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${mymon3y.lib.hibernate.core}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${mymon3y.lib.hibernate.validator}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${mymon3y.lib.jsf}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${mymon3y.src}" />
+		<pathelement location="${mymon3y.src-testes}" />
+		<pathelement location="${mymon3y.classes}" />
+		<pathelement location="${mymon3y.classes-teste}" />
+	</path>
+
+	<!-- LIMPAR -->
+	<target name="limpa" description="Limpa o ambiente">
+		<delete dir="${mymon3y.classes}" />
+		<delete dir="${mymon3y.classes-teste}" />
+		<delete dir="${mymon3y.relatorios}" />
+		<delete dir="${mymon3y.docs}" />
+		<delete dir="${mymon3y.release}" />
+		<delete dir="${mymon3y.java2html}" />
+		<delete file="${mymon3y.jar}" />
+	</target>
+	<!-- /LIMPAR -->
+
+	<!-- PREPARAR -->
+	<target name="preparar" description="Prepara o ambiente para compilação, testes de unidade">
+		<mkdir dir="${mymon3y.classes}" />
+		<mkdir dir="${mymon3y.classes-teste}" />
+		<mkdir dir="${mymon3y.relatorios}" />
+		<mkdir dir="${mymon3y.relatorios.test}" />
+		<mkdir dir="${mymon3y.docs.api}" />
+		<mkdir dir="${mymon3y.release}" />
+		<mkdir dir="${mymon3y.java2html}" />
+	</target>
+	<!-- /PREPARAR -->
+
+	<!-- JAVADOC -->
+	<target name="javadoc" depends="preparar" description="Cria a documentação javadoc do projeto. O resultado pode ser visto em 'api-index.html'">
+		<javadoc destdir="docs/api" author="false" version="false" use="true" windowtitle="${profilechecker.docs.api}" encoding="UTF-8">
+			<classpath refid="mymon3y.classpathref" />
+			<fileset dir="src" defaultexcludes="yes">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="src-testes" defaultexcludes="yes">
+				<include name="**/*.java" />
+			</fileset>
+		</javadoc>
+	</target>
+	<!-- /JAVADOC -->
+
+	<!-- Alias para JAVADOC -->
+	<target name="doc" depends="javadoc" description="Alias para a tag javadoc">
+	</target>
+	<!-- /Alias para JAVADOC -->
+
+	<!-- COMPILAR -->
+	<target name="compila" depends="preparar" description="Compila o código principal">
+		<javac srcdir="${mymon3y.src}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
+			<classpath refid="mymon3y.classpathref" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+	<!-- /COMPILAR -->
+
+	<!-- COMPILAR-JSF -->
+		<target name="compila-jsf" depends="compila" description="Compila o código JSF">
+			<javac srcdir="${mymon3y.src-jsf}" destdir="${mymon3y.classes}" debug="on" optimize="on" encoding="UTF-8">
+				<classpath refid="mymon3y.classpathref" />
+				<include name="**/*.java" />
+			</javac>
+			<copy todir="${mymon3y.classes}">
+				<fileset dir="${mymon3y.src}" includes="**/*.xml" />
+				<fileset dir="${mymon3y.src-jsf}" includes="**/*.properties" />
+			</copy>
+		</target>
+		<!-- /COMPILAR-JSF -->
+	
+	<!-- COMPILAR-TESTES -->
+	<target name="compilar-testes" depends="compila" description="Compila os códigos de teste de unidade">
+		<javac srcdir="${mymon3y.src-testes}" destdir="${mymon3y.classes-teste}" debug="on" optimize="on" encoding="UTF-8">
+			<classpath refid="mymon3y.classpathref" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+	<!-- /COMPILAR-TESTES -->
+
+	<!-- TOMCAT-CLEAR -->
+	<target name="tomcat-context-clear" description="Limpa o contexto da aplicação web">
+		<delete dir="${webinf.dir}/lib"/>
+		<delete dir="${webinf.dir}/classes"/>
+		<mkdir dir="${webinf.dir}/lib" />
+		<mkdir dir="${webinf.dir}/classes" />
+	</target>
+	<!-- /TOMCAT-CLEAR -->
+	
+	<!-- TOMCAT -->
+	<target name="tomcat-context" depends="tomcat-context-clear, compila-jsf" description="Prepara o contexto da aplicação web">
+		<copy todir="${webinf.dir}/classes">
+			<fileset dir="${mymon3y.classes}" includes="**/*.class" />
+			<fileset dir="${mymon3y.src}" includes="**/*.xml" />
+			<fileset dir="${mymon3y.src-jsf}" includes="**/*.properties" />
+		</copy>
+		<copy todir="${webinf.dir}/lib">
+			<fileset dir="${mymon3y.lib}" includes="*.jar" />
+			<fileset dir="${mymon3y.lib.mail}" includes="*.jar" />
+	 		<fileset dir="${mymon3y.lib.hibernate.annotations}" includes="*.jar"/>
+		 	<fileset dir="${mymon3y.lib.hibernate.core}" includes="*.jar"/>
+		  	<fileset dir="${mymon3y.lib.hibernate.validator}" includes="*.jar"/>
+			<fileset dir="${mymon3y.lib.jsf}"> 
+				<include name="*.jar"/>
+				<exclude name="**/el-api.jar"/>
+				<exclude name="**/servlet-2_3.jar"/>
+			</fileset>
+		</copy>
+	</target>
+	<!-- /TOMCAT -->
+	
+	<!-- WAR -->
+	<target name="war" depends="compila-jsf, tomcat-context-clear">
+		<war basedir="${webroot.dir}" warfile="${mymon3y.war}" webxml="${webinf.dir}/web.xml">
+			  <fileset dir="${webroot.dir}" includes="**/*" />
+			  <lib dir="${mymon3y.lib}"/>
+			  <lib dir="${mymon3y.lib.mail}"/>
+			  <lib dir="${mymon3y.lib.hibernate.annotations}"/>
+			  <lib dir="${mymon3y.lib.hibernate.core}"/>
+			  <lib dir="${mymon3y.lib.hibernate.validator}"/>
+			  <lib dir="${mymon3y.lib.jsf}">
+			 	<exclude name="**/el-api.jar"/>
+				<exclude name="**/servlet-2_3.jar"/>
+			  </lib>
+			  <classes dir="${mymon3y.classes}"/>
+		</war>
+	</target>
+	<!-- /WAR -->
+	
+	<!-- TESTAR -->
+	<target name="testar" depends="compilar-testes" description="Executa os testes de unidade">
+		<junit fork="yes" printsummary="yes" haltonfailure="no" haltonerror="no">
+
+			<classpath location="${mymon3y.classes-teste}" />
+			<classpath refid="mymon3y.classpathref" />
+
+			<formatter type="xml" />
+			<batchtest fork="yes" todir="${mymon3y.relatorios}">
+				<fileset dir="${mymon3y.src-testes}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${mymon3y.relatorios.test}">
+			<fileset dir="${mymon3y.relatorios}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${mymon3y.relatorios.test}" />
+		</junitreport>
+	</target>
+	<!-- /TESTAR -->
+
+	<!-- EASY_ACCEPT-->
+	<target name="testesdeaceitacao" depends="compilar-testes" description="Executa os testes de aceitação EasyAccept">
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us1_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us1_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us2_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us2_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us3_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us3_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us4_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us4_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us5_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us5_2.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us6_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us7_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us8_1.txt" />
+		</java>
+		<java classname="easyaccept.EasyAccept" fork="true" failonerror="true" maxmemory="512m" classpathref="mymon3y.classpathref">
+			<classpath refid="mymon3y.classpathref" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<arg value="com.google.code.mymon3y.FacadeEasyAccept" />
+			<arg value="testes-de-aceitacao/us8_2.txt" />
+		</java>
+	</target>
+	<!-- /EASY_ACCEPT -->
+
+	<!-- Alias para EASY_ACCEPT -->
+	<target name="testa" depends="testesdeaceitacao" description="Alias para a tag testesdeaceitacao">
+	</target>
+	<!-- /Alias para EASY_ACCEPT -->
+	
+	<!-- RELEASE //TODO -->
+	<!--
+	<target name="release" depends="testar, cobertura, javadoc, makejar" description="Cria uma release do projeto">
+		<zip destfile="${mymon3y.release}/mymon3y.zip">
+			<zipfileset dir="${mymon3y.docs}" prefix="docs" />
+			<zipfileset file="${junit.jar}" prefix="lib" />
+			<zipfileset file="${mymon3y.jar}" />
+		</zip>
+		<checksum file="${mymon3y.release}/mymon3y.zip" />
+	</target>
+-->
+	<!-- /RELEASE -->
+
+	<!-- JAVA2HTML -->
+	<taskdef name="java2html" classname="com.java2html.Java2HTMLTask" classpathref="mymon3y.classpathref" />
+
+	<target name="java2html" depends="preparar" description="Cria o visualizador HTML do código-fonte. O resultado pode ser visto em 'java2html-index.html'">
+		<java2html title="MyMon3y" simple="no" tabsize="4" marginsize="2" header="true" footer="false" destination="${mymon3y.java2html}">
+			<fileset dir="${mymon3y.src}">
+				<include name="**/*.java" />
+			</fileset>
+		</java2html>
+	</target>
+	<!-- /JAVA2HTML -->
+
+	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="mymon3y.classpathref" />
+
+	<!-- BD-REMOVER-BANCO -->
+	<target name="bd-remover-banco" depends="bd-remover-banco-mysql" description="Remove o Esquema Logico no Banco de Dados">
+	</target>
+	<!-- /BD-REMOVER-BANCO -->
+	
+    <!-- BD-REMOVER-BANCO-MYSQL -->
+    <target name="bd-remover-banco-mysql" depends="compila" description="Remove o Esquema Logico no Banco de Dados MySQL">
+            <hibernatetool destdir="${mymon3y.base}">
+            		<classpath refid="mymon3y.classpathref" />
+                    <annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
+                    <hbm2ddl drop="true" create="false" export="true" delimiter=";" format="false" />
+            </hibernatetool>
+            <!--
+            dir="${mymon3y.classes}" 
+            classpathref="mymon3y.classpathref"
+                    <classpath refid="mymon3y.classpathref" />
+            <java dir="${mymon3y.classes}"  classname="com.google.code.mymon3y.persistencia.ManipuladorDeBanco" fork="true">
+                    <arg value="apagar" />
+                    <classpath>
+                            <path refid="mymon3y.classpathref" />
+                    </classpath>
+            </java>
+            -->
+    </target>
+    <!-- /BD-REMOVER-BANCO -->
+	
+    <!-- BD-GERAR-BANCO-MYSQL -->
+    <target name="bd-gerar-banco-mysql" depends="compila, bd-remover-banco-mysql" description="Gera o Esquema Logico no Banco de Dados MySQL">
+            <hibernatetool destdir="${mymon3y.base}">
+            		<classpath refid="mymon3y.classpathref" />
+                    <annotationconfiguration configurationfile="${mymon3y.src}/hibernate.cfg.xml" />
+                    <hbm2ddl drop="true" create="true" export="true" delimiter=";" format="false" />
+            </hibernatetool>
+            <!--
+            <java dir="${mymon3y.classes}" classname="com.google.code.mymon3y.persistencia.ManipuladorDeBanco" fork="true">
+                    <arg value="gerar" />
+                    <classpath refid="mymon3y.classpathref" />
+            </java>
+            -->
+    </target>
+    <!-- /BD-GERAR-BANCO -->
+
+	<!-- AJUDA -->
+	<target name="ajuda" description="Imprime o comando a ser executado para acessar esta ajuda">
+		<echo>Projeto Remember The Contact</echo>
+		<echo>Para acessar a ajuda execute: ant -p</echo>
+	</target>
+	<!-- /AJUDA -->
+
+</project>

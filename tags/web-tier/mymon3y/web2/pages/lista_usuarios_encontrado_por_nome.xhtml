@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets"
+	xmlns:j4j="http://javascript4jsf.dev.java.net/">
+<head>
+
+<link rel="stylesheet" type="text/css"
+	href="/mymon3y/css/layout.css" />
+<link rel="StyleSheet" type="text/css"
+	href="/mymon3y/css/estilos.css" media="screen" />
+
+<title>Exibe Usuários</title>
+<script type="text/javascript">
+
+	function update(place) {
+		window.opener.updatePlace(place);
+	}	
+
+</script>
+
+</head>
+<body>
+<div id="popup"><f:view>
+	<h:form>
+
+		<a4j:keepAlive beanName="facade" />
+
+		<fieldset><legend><h:outputText
+			value="Selecione o usuário:" /></legend> <h:dataTable var="usuario"
+			value="#{facade.usuariosCadastrados}" rows="#{constantes.numColunas}"
+			styleClass="dataTable" headerClass="ordersHeader"
+			footerClass="ordersFooter" rowClasses="evenRow,oddRow" width="90%">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Selecionar" />
+				</f:facet>
+				<h:selectOneRadio title="#{usuario.login}" style="margin-left:40px"
+					onmousedown="update(this.title);" value="#{usuario.login}"
+					onclick="return false">
+					<f:selectItem />
+				</h:selectOneRadio>
+			</h:column>
+			<r:colunaAtributo bean="#{usuario}" rotulo="Nome" atributo="nome" />
+
+			<r:colunaAtributo bean="#{usuario}" rotulo="Login" atributo="login" />
+
+		</h:dataTable></fieldset>
+	</h:form>
+</f:view></div>
+</body>
+</html>

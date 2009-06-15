@@ -1,0 +1,61 @@
+<table xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+	xmlns:r="http://www.mymon3y.com/facelets" border="0"
+	width="98%" cellpadding="4" cellspacing="4" class="tabelaDetalhes">
+	<tr class="tituloDetalhes">
+		<td colspan="4" class="linhaAtributo"><h:outputText
+			value="Dados do Grupo" styleClass="escopoDetalhes" /></td>
+	</tr>
+	<tr class="linhaDetalhes">
+		<td class="linhaAtributo"><h:outputText value="Nome:"
+			styleClass="rotuloDetalhes" /> <h:outputText id="nome"
+			value="#{facade.grupo.nome}" styleClass="exibir" /></td>
+		<td colspan="3" class="linhaAtributo"><h:outputText
+			value="Nível de Permissão:" styleClass="rotuloDetalhes" /> <h:outputText
+			id="nivelDePermissao" value="#{facade.grupo.nivelDePermissao}"
+			styleClass="exibir" /></td>
+	</tr>
+
+	<tr class="tituloDetalhes">
+		<td colspan="4" class="linhaAtributo"><h:outputText
+			value="Contatos Pertencentes a Este Grupo:"
+			styleClass="escopoDetalhes" /></td>
+	</tr>
+	<tr class="linhaDetalhes">
+		<td class="tituloDetalhes"><h:outputText value="Nome"
+			style="font-weight:bold" styleClass="exibir" /></td>
+		<td class="linhaAtributo"><h:outputText
+			value="E-mail" style="font-weight:bold"
+			styleClass="exibir" /></td>
+		<td class="linhaAtributo"><h:outputText
+			value="Aniversário" style="font-weight:bold"
+			styleClass="exibir" /></td>
+		<td class="linhaAtributo"><h:outputText
+			value="Dono do Contato" style="font-weight:bold"
+			styleClass="exibir" /></td>
+	</tr>
+
+	<c:if test="${facade.numContatosDoGrupo == 0}">
+		<tr class="linhaDetalhes">
+			<td colspan="4" class="linhaAtributo"></td>
+		</tr>
+	</c:if>
+
+	<c:forEach var="contato" items="${facade.contatosDoGrupo}">
+		<tr class="linhaDetalhes">
+			<td class="linhaAtributo"><h:outputText value="- ${contato.nome}"
+				styleClass="exibir" /></td>
+			<td class="linhaAtributo"><h:outputText value="- ${contato.email}"
+				styleClass="exibir" /></td>
+			<td class="linhaAtributo"><h:outputText
+				value="- ${contato.aniversarioFormatado}" styleClass="exibir" /></td>
+						<td class="linhaAtributo"><h:outputText
+				value="- ${contato.dono.login}" styleClass="exibir" /></td>
+		</tr>
+	</c:forEach>
+
+</table>

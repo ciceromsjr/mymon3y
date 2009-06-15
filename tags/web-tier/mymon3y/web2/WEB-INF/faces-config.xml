@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+       http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+	
+	<!-- VALIDATORs -->
+	<validator>
+		<validator-id>MoedaValidator</validator-id>
+		<validator-class>com.google.code.mymon3y.jsf.validators.MoedaValidator</validator-class>
+	</validator>
+	<!-- /VALIDATORs -->
+
+	<!-- CONVERTERs -->
+	<converter>
+		<converter-id>DataConverter</converter-id>
+		<converter-class>com.google.code.mymon3y.jsf.converters.DataConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>CreditoDebitoConverter</converter-id>
+		<converter-class>com.google.code.mymon3y.jsf.converters.CreditoDebitoConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>MoedaConverter</converter-id>
+		<converter-class>com.google.code.mymon3y.jsf.converters.MoedaConverter</converter-class>
+	</converter>
+	<!-- /CONVERTERs -->
+
+	<!-- MANAGED BEANs -->
+	<managed-bean>
+		<managed-bean-name>login</managed-bean-name>
+		<managed-bean-class>com.google.code.mymon3y.jsf.LoginMBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>facade</managed-bean-name>
+		<managed-bean-class>com.google.code.mymon3y.jsf.FacadeJSF</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- /MANAGED BEANs -->
+	
+	<!-- NAVIGATION RULEs -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha_login</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso_login</from-outcome>
+			<to-view-id>/pages/bemvindo.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/registrar.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/registrar_usuario_sucesso.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/registrar.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/registrar_usuario_sucesso.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>efetuar_login</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/logout.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/editar_perfil.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>excluir_conta</from-outcome>
+			<to-view-id>/pages/excluir_conta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/detalhar_usuario.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/bemvindo.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/excluir_conta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/excluir_conta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/logout.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/gerenciar_categoria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>criar_categoria</from-outcome>
+			<to-view-id>/pages/criar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listar_categorias</from-outcome>
+			<to-view-id>/pages/listar_categorias.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/criar_categoria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/gerenciar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/criar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/gerenciar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>/pages/listar_categorias.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>gerenciar_categoria</from-outcome>
+			<to-view-id>/pages/gerenciar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>criar_categoria</from-outcome>
+			<to-view-id>/pages/criar_categoria.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>atualizar_categoria</from-outcome>
+			<to-view-id>/pages/atualizar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/atualizar_categoria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/listar_categorias.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/listar_categorias.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/atualizar_categoria.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/gerenciar_transacao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>criar_transacao</from-outcome>
+			<to-view-id>/pages/criar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listar_transacoes</from-outcome>
+			<to-view-id>/pages/listar_transacoes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/listar_transacoes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>gerenciar_transacao</from-outcome>
+			<to-view-id>/pages/gerenciar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>criar_transacao</from-outcome>
+			<to-view-id>/pages/criar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>atualizar_transacao</from-outcome>
+			<to-view-id>/pages/atualizar_transacao.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/criar_transacao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/gerenciar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/criar_transacao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/gerenciar_transacao.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/atualizar_transacao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/pages/listar_transacoes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/listar_transacoes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/atualizar_transacao.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/relatorios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/principal.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/apresentar_relatorio.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/relatorios.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/apresentar_relatorio.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>relatorios</from-outcome>
+			<to-view-id>/pages/relatorios.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/importar_dados.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/pages/importar_dados.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/pages/importar_dados.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>importar_dados</from-outcome>
+			<to-view-id>/pages/importar_dados.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- /NAVIGATION RULEs -->
+
+	<!-- MESSAGE BUNDLEs -->
+	<application>
+		<locale-config>
+			<default-locale>br</default-locale>
+			<supported-locale>br</supported-locale>
+		</locale-config>
+		<message-bundle>
+			com.google.code.mymon3y.jsf.messageresource.ApplicationMessages</message-bundle>
+	</application>
+
+	<application>
+		<locale-config>
+			<default-locale>br</default-locale>
+			<supported-locale>br</supported-locale>
+		</locale-config>
+		<message-bundle>
+			com.google.code.mymon3y.jsf.messageresource.ApplicationRotulos</message-bundle>
+	</application>
+	
+	<!-- Indicação para o JSF 1.2 saber de onde tirar as mensagens de erro -->	
+     <application>
+         <message-bundle>com.google.code.mymon3y.jsf.messageresource.ApplicationMessages</message-bundle>
+         <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+     </application>
+	<!-- /MESSAGE BUNDLEs -->
+	
+	<!-- 
+	<lifecycle>
+		<phase-listener>org.exadel.jsf.PhaseTracker</phase-listener>
+	</lifecycle>
+	-->
+	
+
+</faces-config>
